@@ -1,0 +1,27 @@
+{
+  "name": "my-lib",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "preinstall": "node ../../scripts/preinstall.mjs",
+    "dev": "yarn node ../../scripts/dev.mjs",
+    "build": "yarn node ../../scripts/build.mjs",
+    "lint": "yarn node ../../scripts/lint.mjs",
+    "version": "yarn node ../../scripts/version.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^6.4.0",
+    "@types/react": "^17",
+    "@types/react-dom": "^17"
+  }
+}

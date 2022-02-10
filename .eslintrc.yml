@@ -1,0 +1,61 @@
+root: true
+
+env:
+  browser: true
+  node: true
+
+extends:
+  - eslint:recommended
+  - plugin:yml/standard
+  - plugin:sonarjs/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+  - plugin:react/jsx-runtime
+  - plugin:storybook/recommended
+
+overrides:
+  - files:
+      - "*.ts"
+      - "*.tsx"
+    rules:
+      no-undef: off
+  - files:
+      - "*.yml"
+      - "*.yaml"
+    parser: yaml-eslint-parser
+
+parser: "@typescript-eslint/parser"
+
+plugins:
+  - sonarjs
+  - react
+  - react-hooks
+  - "@typescript-eslint"
+
+rules:
+  no-useless-concat: error
+  require-await: error
+  "@typescript-eslint/ban-ts-comment": off
+  "@typescript-eslint/consistent-type-imports": warn
+  "@typescript-eslint/explicit-module-boundary-types": off
+  "@typescript-eslint/no-empty-function": off
+  "@typescript-eslint/no-empty-interface":
+    - warn
+    - allowSingleExtends: true
+  "@typescript-eslint/no-explicit-any": off
+  react/prop-types: off
+  react/self-closing-comp: warn
+  react-hooks/exhaustive-deps:
+    - warn
+    - additionalHooks: useRecoilCallback
+  sonarjs/no-nested-template-literals: off
+  sonarjs/prefer-immediate-return: off
+
+ignorePatterns:
+  - "/packages/*/coverage"
+  - "/packages/*/dist"
+
+settings:
+  react:
+    version: latest

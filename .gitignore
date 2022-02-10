@@ -1,0 +1,13 @@
+/node_modules
+
+/.yarn/*
+!/.yarn/cache
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/releases
+!/.yarn/sdks
+
+/packages/*/coverage
+/packages/*/dist
+
+.DS_Store
