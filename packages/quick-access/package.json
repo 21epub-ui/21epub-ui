@@ -1,0 +1,38 @@
+{
+  "name": "@21epub-ui/quick-access",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "preinstall": "node ../../scripts/preinstall.mjs",
+    "dev": "yarn node ../../scripts/dev.mjs",
+    "build": "yarn node ../../scripts/build.mjs",
+    "lint": "yarn node ../../scripts/lint.mjs",
+    "version": "yarn node ../../scripts/version.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@ant-design/colors": "^6.0.0",
+    "@ant-design/icons": "^4.7.0",
+    "antd": "^4.18.0",
+    "react-is": ">=16.8.0",
+    "react-query": "^3.34.14",
+    "styled-components": "^5.3.3",
+    "umi-request": "^1.4.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^6.4.0",
+    "@types/react": "^17",
+    "@types/react-dom": "^17",
+    "@types/react-is": "^17",
+    "@types/styled-components": "^5"
+  }
+}
