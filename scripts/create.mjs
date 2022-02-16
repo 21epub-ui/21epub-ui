@@ -8,15 +8,15 @@ const argv = process.argv.slice(2)
 const [packageName] = argv
 
 if (packageName !== undefined) {
-  const outputPath = path.resolve('packages', packageName)
+  const dirPath = path.resolve('packages', packageName)
 
   const { name: rootPackageName } = await fs.readJSON('package.json')
   const packageScope = getScope(rootPackageName)
 
-  await generateConfig(outputPath, 'package.json', {
+  await generateConfig(dirPath, 'package.json', {
     name: `${packageScope}/${packageName}`,
   })
-  await generateConfig(outputPath, 'tsconfig.json')
+  await generateConfig(dirPath, 'tsconfig.json')
 
   await execute('yarn')
 }
