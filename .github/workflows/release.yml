@@ -27,4 +27,4 @@ jobs:
       - name: Publish packages
         run: yarn run release
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
