@@ -1,3 +1,5 @@
+import type { DropDownProps } from 'antd'
+
 export interface LinkData {
   id: string
   title: string
@@ -6,7 +8,8 @@ export interface LinkData {
 
 export type LinkList = LinkData[]
 
-export interface QuickAccessProps {
+export interface QuickAccessProps extends DropDownProps {
   id: string
   type: 'cbt' | 'quiz' | 'doc'
+  style: React.CSSProperties
 }

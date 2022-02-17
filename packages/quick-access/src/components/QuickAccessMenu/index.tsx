@@ -6,7 +6,13 @@ import fetchQuickAccess from '../../api/fetchQuickAccess'
 import type { QuickAccessProps } from '../../index.types'
 import { MenuItem, MenuItemGroup } from './styles'
 
-const QuickAccessMenu: React.FC<QuickAccessProps> = ({ id, type }) => {
+const QuickAccessMenu: React.FC<QuickAccessProps> = ({
+  id,
+  type,
+  style,
+  overlayStyle,
+  ...props
+}) => {
   const quickAccess = useQuery(['quickAccess', id, type], ({ queryKey }) => {
     return fetchQuickAccess(queryKey[1], queryKey[2])
   })
@@ -29,7 +35,8 @@ const QuickAccessMenu: React.FC<QuickAccessProps> = ({ id, type }) => {
 
   return (
     <Dropdown
-      overlayStyle={{ width: '200px' }}
+      {...props}
+      overlayStyle={{ width: '200px', ...overlayStyle }}
       overlay={
         <Menu>
           {menus.map(({ id, title, value }) => (
@@ -50,7 +57,7 @@ const QuickAccessMenu: React.FC<QuickAccessProps> = ({ id, type }) => {
         </Menu>
       }
     >
-      <Button size="small">
+      <Button size="small" style={style}>
         <DownOutlined />
       </Button>
     </Dropdown>
