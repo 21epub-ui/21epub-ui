@@ -1,9 +1,9 @@
 {
   "name": "@21epub-ui/quick-access",
   "version": "0.1.2",
-  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
