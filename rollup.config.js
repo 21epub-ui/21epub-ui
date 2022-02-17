@@ -21,7 +21,7 @@ export default [
         format: 'cjs',
       },
       {
-        file: `${outputDir}/index.mjs`,
+        file: `${outputDir}/index.esm.js`,
         sourcemap: true,
         format: 'es',
       },
