@@ -8,8 +8,8 @@ export interface LinkData {
 
 export type LinkList = LinkData[]
 
-export interface QuickAccessProps extends DropDownProps {
+export interface QuickAccessProps extends Omit<DropDownProps, 'overlay'> {
   id: string
   type: 'cbt' | 'quiz' | 'doc'
-  style: React.CSSProperties
+  style?: React.CSSProperties
 }
