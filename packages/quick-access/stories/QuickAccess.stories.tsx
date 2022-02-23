@@ -7,9 +7,9 @@ export default {
   component: QuickAccess,
 } as ComponentMeta<typeof QuickAccess>
 
-const Template: ComponentStory<typeof QuickAccess> = (args) => {
-  return <QuickAccess {...args} />
-}
+const Template: ComponentStory<typeof QuickAccess> = (args) => (
+  <QuickAccess {...args} />
+)
 
 export const Default = Template.bind({})
 
