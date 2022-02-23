@@ -14,9 +14,9 @@ const genStories = (dirPath, { name }) => {
       component: ${name},
     } as ComponentMeta<typeof ${name}>
 
-    const Template: ComponentStory<typeof ${name}> = (args) => {
-      return <${name} {...args} />
-    }
+    const Template: ComponentStory<typeof ${name}> = (args) => (
+      <${name} {...args} />
+    )
 
     export const Default = Template.bind({})
 
