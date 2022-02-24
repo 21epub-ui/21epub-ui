@@ -13,7 +13,7 @@ if (changed !== 0) {
   process.exitCode = 1
 } else {
   const argv = process.argv.slice(2)
-  const [strategy = 'patch'] = argv
+  const [strategy] = argv
 
   await execute(`yarn version ${strategy}`)
   await execute('yarn stage')
