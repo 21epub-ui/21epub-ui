@@ -1,4 +1,4 @@
-# 21Epub Components
+# 21Epub UI
 
 ## Getting Started
 
