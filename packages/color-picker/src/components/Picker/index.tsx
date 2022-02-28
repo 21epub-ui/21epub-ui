@@ -56,7 +56,6 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     setVisible,
     style,
     position,
-    ...rest
   } = props
 
   const [initColor, setInitColor] = useState(color)
@@ -148,7 +147,6 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               onChangeComplete?.(color)
             }}
             presetColors={[]}
-            {...rest}
           />
           <Space>
             {['r', 'g', 'b', 'a'].map((item) => (

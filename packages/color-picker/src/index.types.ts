@@ -1,4 +1,6 @@
-import type { SketchPickerProps } from 'react-color'
+import type { CSSProperties, MouseEvent, ReactNode, RefObject } from 'react'
+
+type ComponentTypes = 'label' | 'indicator' | 'picker'
 
 /**
  * @param label label
@@ -11,10 +13,11 @@ import type { SketchPickerProps } from 'react-color'
  * @param onChangeComplete 颜色值修改完成时回调
  * @param renderIndicator 自定义颜色指示器 render 函数
  */
-export interface ColorPickerProps
-  extends Omit<SketchPickerProps, 'ref' | 'onChange' | 'onChangeComplete'> {
+export interface ColorPickerProps {
+  className?: string
   label?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
+  styles?: Record<ComponentTypes, CSSProperties>
   color?: string
   palettes?: string[][]
   historySize?: number
@@ -22,9 +25,9 @@ export interface ColorPickerProps
   onChange?: (color: string) => void
   onChangeComplete?: (color: string) => void
   renderIndicator?: (props: {
-    ref: React.RefObject<any>
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void
-  }) => React.ReactNode
+    ref: RefObject<any>
+    onClick: (e: MouseEvent<HTMLDivElement>) => void
+  }) => ReactNode
 }
 
 export interface Position {

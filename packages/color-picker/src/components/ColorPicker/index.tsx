@@ -7,6 +7,7 @@ import { ColorRect, ColorRectContainer, Container } from './styles'
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
   className,
+  styles = {},
   label,
   style,
   color = '#000000',
@@ -72,10 +73,10 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 
   return (
     <Container className={className} style={style}>
-      {label && <Label>{getLabel(label)}</Label>}
+      {label && <Label style={styles.label}>{getLabel(label)}</Label>}
       {!renderIndicator ? (
         <div ref={indicator} onClick={onClick}>
-          <ColorRectContainer disabled={disabled}>
+          <ColorRectContainer style={styles.indicator} disabled={disabled}>
             <ColorRect color={color} />
           </ColorRectContainer>
         </div>
@@ -84,6 +85,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       )}
       <Picker
         ref={picker}
+        style={styles.picker}
         position={pickerPosition}
         color={color}
         visible={pickerVisible}
