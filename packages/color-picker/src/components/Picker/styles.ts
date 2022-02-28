@@ -13,14 +13,8 @@ export const Container = styled.div`
   box-shadow: rgb(0 0 0 / 15%) 0px 0px 0px 1px, rgb(0 0 0 / 15%) 0px 8px 16px;
   cursor: default;
 
-  .sketch-picker {
-    > *:first-child {
-      cursor: pointer;
-    }
-
-    > *:nth-child(3) {
-      display: none !important;
-    }
+  .sketch-picker > *:nth-child(3) {
+    display: none !important;
   }
 `
 

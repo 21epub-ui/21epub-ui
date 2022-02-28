@@ -6,7 +6,7 @@ import { SketchPicker } from 'react-color'
 import ReactDOM from 'react-dom'
 import getColorHistory from '../../helpers/getColorHistory'
 import updateColorHistory from '../../helpers/updateColorHistory'
-import { Position } from '../../index.types'
+import type { Position } from '../../index.types'
 import getRgbString from '../../utils/getRgbString'
 import Button from '../Button'
 import ColorInput from '../ColorInput'
@@ -132,6 +132,8 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
               default: {
                 picker: { boxShadow: 'none', padding: 0 },
                 color: { display: 'none' },
+                hue: { cursor: 'pointer' },
+                alpha: { cursor: 'pointer' },
               },
             }}
             color={currColor}
