@@ -3,8 +3,6 @@ import type { CSSProperties, MouseEvent, ReactNode, RefObject } from 'react'
 type ComponentTypes = 'label' | 'indicator' | 'picker'
 
 /**
- * @param label label
- * @param style style
  * @param color 需要透明度时请传入 rgba 格式的颜色数值
  * @param palettes 色板配置
  * @param historySize 历史颜色数量
