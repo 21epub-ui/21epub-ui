@@ -11,7 +11,7 @@ import getRgbString from '../../utils/getRgbString'
 import Button from '../Button'
 import ColorInput from '../ColorInput'
 import { ColorRect } from '../ColorPicker/styles'
-import Input from '../Input'
+import NumberInput from '../NumberInput'
 import Swatches from '../Swatches'
 import {
   Actions,
@@ -149,20 +149,29 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             presetColors={[]}
           />
           <Space>
-            {['r', 'g', 'b', 'a'].map((item) => (
-              <Input
-                key={item}
-                label={item.toUpperCase()}
-                value={colord(currColor).toRgb()[item]}
-                onChange={(e) => {
-                  const newColor = {
-                    ...colord(currColor).toRgb(),
-                    [item]: parseInt(e.target.value, 10) || 0,
-                  }
-                  onColorChange(getRgbString(newColor))
-                }}
-              />
-            ))}
+            {['r', 'g', 'b', 'a'].map((item) => {
+              const isAlpha = item === 'a'
+
+              return (
+                <NumberInput
+                  key={item}
+                  label={item.toUpperCase()}
+                  min={0}
+                  max={isAlpha ? 1 : 255}
+                  step={isAlpha ? 0.1 : 1}
+                  controls={false}
+                  value={colord(currColor).toRgb()[item]}
+                  onChange={(value) => {
+                    const color = colord(currColor).toRgb()
+                    const newColor = {
+                      ...color,
+                      [item]: value ?? color[item],
+                    }
+                    onColorChange(getRgbString(newColor))
+                  }}
+                />
+              )
+            })}
           </Space>
         </Palette>
         <Actions>

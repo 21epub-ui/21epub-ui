@@ -1,8 +1,7 @@
-import type { CSSProperties, MouseEvent, ReactNode, RefObject } from 'react'
-
 type ComponentTypes = 'label' | 'indicator' | 'picker'
 
 /**
+ * @param styles 子组件样式
  * @param color 需要透明度时请传入 rgba 格式的颜色数值
  * @param palettes 色板配置
  * @param historySize 历史颜色数量
@@ -14,8 +13,8 @@ type ComponentTypes = 'label' | 'indicator' | 'picker'
 export interface ColorPickerProps {
   className?: string
   label?: string
-  style?: CSSProperties
-  styles?: Record<ComponentTypes, CSSProperties>
+  style?: React.CSSProperties
+  styles?: Record<ComponentTypes, React.CSSProperties>
   color?: string
   palettes?: string[][]
   historySize?: number
@@ -23,9 +22,9 @@ export interface ColorPickerProps {
   onChange?: (color: string) => void
   onChangeComplete?: (color: string) => void
   renderIndicator?: (props: {
-    ref: RefObject<any>
-    onClick: (e: MouseEvent<HTMLDivElement>) => void
-  }) => ReactNode
+    ref: React.RefObject<any>
+    onClick: (e: React.MouseEvent<HTMLDivElement>) => void
+  }) => React.ReactNode
 }
 
 export interface Position {
