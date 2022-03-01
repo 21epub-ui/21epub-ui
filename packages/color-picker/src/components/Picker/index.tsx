@@ -62,7 +62,14 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const [currColor, setCurrColor] = useState(color)
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
-  const colorHistory = getColorHistory(historySize)
+  const maxPaletteLength = palettes.reduce((prev, curr) => {
+    const length = curr.length
+
+    return length > prev ? length : prev
+  }, 0)
+
+  const defaultHistorySize = (7 - maxPaletteLength) * palettes.length
+  const colorHistory = getColorHistory(historySize ?? defaultHistorySize)
 
   useEffect(() => {
     const element = document.createElement('div')
