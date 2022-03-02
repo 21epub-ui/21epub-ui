@@ -6,7 +6,7 @@ import { SketchPicker } from 'react-color'
 import ReactDOM from 'react-dom'
 import getColorHistory from '../../helpers/getColorHistory'
 import updateColorHistory from '../../helpers/updateColorHistory'
-import type { Position } from '../../index.types'
+import type { ColorPickerProps, Position } from '../../index.types'
 import getRgbString from '../../utils/getRgbString'
 import Button from '../Button'
 import ColorInput from '../ColorInput'
@@ -33,16 +33,21 @@ DefaultPalette.unshift(
   ['#bfbfbf', '#8c8c8c', '#595959', '#262626', '#000000']
 )
 
-interface Props {
+interface Props
+  extends Pick<
+    ColorPickerProps,
+    | 'style'
+    | 'color'
+    | 'palettes'
+    | 'historySize'
+    | 'localStorageKey'
+    | 'onChange'
+    | 'onChangeComplete'
+  > {
   color: string
-  palettes?: string[][]
-  historySize?: number
-  onChange?: (color: string) => void
-  onChangeComplete?: (color: string) => void
   visible: boolean
   setVisible: (visible: boolean) => void
   position?: Position
-  style?: React.CSSProperties
 }
 
 const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -50,6 +55,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     color,
     palettes = DefaultPalette,
     historySize,
+    localStorageKey,
     onChange,
     onChangeComplete,
     visible,
@@ -69,7 +75,10 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   }, 0)
 
   const defaultHistorySize = (7 - maxPaletteLength) * palettes.length
-  const colorHistory = getColorHistory(historySize ?? defaultHistorySize)
+  const colorHistory = getColorHistory(
+    historySize ?? defaultHistorySize,
+    localStorageKey
+  )
 
   useEffect(() => {
     const element = document.createElement('div')
@@ -87,7 +96,11 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     if (visible) {
       setInitColor(color)
     } else if (initColor !== color) {
-      updateColorHistory(color)
+      updateColorHistory(
+        color,
+        historySize ?? defaultHistorySize,
+        localStorageKey
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible])

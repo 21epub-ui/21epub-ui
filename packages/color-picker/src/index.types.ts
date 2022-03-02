@@ -18,6 +18,7 @@ export interface ColorPickerProps {
   color?: string
   palettes?: string[][]
   historySize?: number
+  localStorageKey?: string
   disabled?: boolean
   onChange?: (color: string) => void
   onChangeComplete?: (color: string) => void

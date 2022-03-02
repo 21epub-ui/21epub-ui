@@ -1,8 +1,12 @@
 import { colord } from 'colord'
+import { defaultLocalStorageKey } from '../config'
 
-const getColorHistory = (length = Infinity): string[] => {
+const getColorHistory = (
+  length = Infinity,
+  key = defaultLocalStorageKey
+): string[] => {
   try {
-    const value = localStorage.getItem('color-picker-history')
+    const value = localStorage.getItem(key)
 
     if (!value) return []
 
