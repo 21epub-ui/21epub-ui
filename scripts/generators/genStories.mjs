@@ -2,20 +2,20 @@ import fs from 'fs-extra'
 import { resolve } from 'path'
 import dedent from '../utils/dedent.mjs'
 
-const genStories = (dirPath, { name }) => {
-  const filePath = resolve(dirPath, 'stories', `${name}.stories.tsx`)
+const genStories = (dirPath, { componentName }) => {
+  const filePath = resolve(dirPath, 'stories', `${componentName}.stories.tsx`)
 
   const template = dedent(`
     import type { ComponentMeta, ComponentStory } from '@storybook/react'
-    import { ${name} } from '../src'
+    import { ${componentName} } from '../src'
 
     export default {
-      title: '${name}/Default',
-      component: ${name},
-    } as ComponentMeta<typeof ${name}>
+      title: '${componentName}/Default',
+      component: ${componentName},
+    } as ComponentMeta<typeof ${componentName}>
 
-    const Template: ComponentStory<typeof ${name}> = (args) => (
-      <${name} {...args} />
+    const Template: ComponentStory<typeof ${componentName}> = (args) => (
+      <${componentName} {...args} />
     )
 
     export const Default = Template.bind({})

@@ -1,11 +1,11 @@
 import outputJson from '../utils/outputJson.mjs'
 import { resolve } from 'path'
 
-const genPackage = (dirPath, { name }) => {
+const genPackage = (dirPath, { packageName }) => {
   const filePath = resolve(dirPath, 'package.json')
 
   const template = {
-    name,
+    name: packageName,
     version: '0.0.0',
     main: 'dist/index.js',
     module: 'dist/index.esm.js',

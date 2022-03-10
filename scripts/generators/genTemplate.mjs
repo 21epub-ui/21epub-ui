@@ -2,17 +2,23 @@ import fs from 'fs-extra'
 import { resolve } from 'path'
 import dedent from '../utils/dedent.mjs'
 
-const genTemplate = (dirPath, { name }) => {
-  const filePath = resolve(dirPath, 'src', 'components', name, 'index.tsx')
+const genTemplate = (dirPath, { componentName }) => {
+  const filePath = resolve(
+    dirPath,
+    'src',
+    'components',
+    componentName,
+    'index.tsx'
+  )
 
   const template = dedent(`
-    import type { ${name}Props } from '../../index.types'
+    import type { ${componentName}Props } from '../../index.types'
 
-    const ${name}: React.FC<${name}Props> = ({ ...props }) => {
+    const ${componentName}: React.FC<${componentName}Props> = ({ ...props }) => {
       return <div {...props} />
     }
 
-    export default ${name}
+    export default ${componentName}
   `)
 
   return fs.outputFile(filePath, template)
