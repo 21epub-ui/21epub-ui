@@ -12,7 +12,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   style,
   color = '#000000',
   disabled,
-  renderIndicator,
+  onRenderIndicator,
   ...props
 }) => {
   const [pickerVisible, setPickerVisible] = useState(false)
@@ -74,14 +74,14 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   return (
     <Container className={className} style={style}>
       {label && <Label style={styles.label}>{getLabel(label)}</Label>}
-      {!renderIndicator ? (
+      {!onRenderIndicator ? (
         <div ref={indicator} onClick={onClick}>
           <ColorRectContainer style={styles.indicator} disabled={disabled}>
             <ColorRect color={color} />
           </ColorRectContainer>
         </div>
       ) : (
-        renderIndicator({ onClick, ref: indicator })
+        onRenderIndicator({ onClick, ref: indicator })
       )}
       <Picker
         ref={picker}

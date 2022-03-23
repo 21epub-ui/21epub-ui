@@ -36,7 +36,7 @@ export interface ColorPickerProps {
   /**
    * 自定义颜色指示器 render 函数
    */
-  renderIndicator?: (props: {
+  onRenderIndicator?: (props: {
     ref: React.RefObject<any>
     onClick: (e: React.MouseEvent<HTMLDivElement>) => void
   }) => React.ReactNode
