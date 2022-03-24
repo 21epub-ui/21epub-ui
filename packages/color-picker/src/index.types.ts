@@ -41,8 +41,3 @@ export interface ColorPickerProps {
     onClick: (e: React.MouseEvent<HTMLDivElement>) => void
   }) => React.ReactNode
 }
-
-export interface Position {
-  x: number
-  y: number
-}

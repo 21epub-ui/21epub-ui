@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import getLabel from '../../utils/getLabel'
-import type { ColorPickerProps, Position } from '../../index.types'
+import type { ColorPickerProps } from '../../index.types'
 import { Label } from '../Input/styles'
 import Picker from '../Picker'
 import { ColorRect, ColorRectContainer, Container } from './styles'
+
+type Position = Record<'left' | 'top', number>
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
   className,
@@ -48,26 +50,23 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     const pickerWidth = rect.width
     const pickerHeight = rect.height
 
-    const innerHeight = document.body.clientHeight
-    const innerWidth = document.body.clientWidth
-
-    const x =
-      innerWidth - mousePosition.x > pickerWidth
-        ? mousePosition.x
+    const left =
+      innerWidth - mousePosition.left > pickerWidth
+        ? mousePosition.left
         : innerWidth - pickerWidth
-    const y =
-      innerHeight - mousePosition.y > pickerHeight
-        ? mousePosition.y
+    const top =
+      innerHeight - mousePosition.top > pickerHeight
+        ? mousePosition.top
         : innerHeight - pickerHeight
 
     setMousePosition(undefined)
-    setPickerPosition({ x, y })
+    setPickerPosition({ left, top })
   }, [mousePosition, pickerVisible])
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (disabled) return
 
-    setMousePosition({ x: e.clientX, y: e.clientY })
+    setMousePosition({ left: e.clientX, top: e.clientY })
     setPickerVisible(!pickerVisible)
   }
 
@@ -85,11 +84,13 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       )}
       <Picker
         ref={picker}
-        style={styles.picker}
-        position={pickerPosition}
+        style={{
+          ...pickerPosition,
+          ...styles.picker,
+        }}
         color={color}
         visible={pickerVisible}
-        setVisible={setPickerVisible}
+        onVisibleChange={setPickerVisible}
         {...props}
       />
     </Container>
