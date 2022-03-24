@@ -1,5 +1,6 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import 'antd/dist/antd.css'
+import { useState } from 'react'
 import { ColorPicker } from '../src'
 
 export default {
@@ -7,10 +8,8 @@ export default {
   component: ColorPicker,
 } as ComponentMeta<typeof ColorPicker>
 
-const Template: ComponentStory<typeof ColorPicker> = (args) => (
-  <ColorPicker {...args} />
-)
+export const Default: ComponentStory<typeof ColorPicker> = () => {
+  const [color, setColor] = useState<string>()
 
-export const Default = Template.bind({})
-
-Default.args = {}
+  return <ColorPicker color={color} onChange={setColor} />
+}
