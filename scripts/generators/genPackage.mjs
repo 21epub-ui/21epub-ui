@@ -25,7 +25,7 @@ const genPackage = (dirPath, { packageName }) => {
     },
     dependencies: {
       '@emotion/react': '^11.9.0',
-      '@emotion/styled': '^11.8.1',
+      '@emotion/styled': '^11.8.0',
     },
     devDependencies: {
       '@storybook/react': '^6.4.0',
