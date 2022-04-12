@@ -23,6 +23,10 @@ const genPackage = (dirPath, { packageName }) => {
       react: '>=16.8.0',
       'react-dom': '>=16.8.0',
     },
+    dependencies: {
+      '@emotion/react': '^11.9.0',
+      '@emotion/styled': '^11.8.1',
+    },
     devDependencies: {
       '@storybook/react': '^6.4.0',
       '@types/react': '^17',
