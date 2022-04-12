@@ -25,6 +25,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@21epub-ui/media@workspace:packages/media":
+  version: 0.0.0-use.local
+  resolution: "@21epub-ui/media@workspace:packages/media"
+  dependencies:
+    "@emotion/react": ^11.9.0
+    "@emotion/styled": ^11.8.0
+    "@storybook/react": ^6.4.0
+    "@types/react": ^17
+    "@types/react-dom": ^17
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  languageName: unknown
+  linkType: soft
+
 "@21epub-ui/quick-access@workspace:packages/quick-access":
   version: 0.0.0-use.local
   resolution: "@21epub-ui/quick-access@workspace:packages/quick-access"

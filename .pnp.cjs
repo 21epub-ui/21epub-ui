@@ -25,6 +25,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/color-picker"\
       },\
       {\
+        "name": "@21epub-ui/media",\
+        "reference": "workspace:packages/media"\
+      },\
+      {\
         "name": "@21epub-ui/quick-access",\
         "reference": "workspace:packages/quick-access"\
       }\
@@ -33,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
       ["@21epub-ui/color-picker", ["workspace:packages/color-picker"]],\
+      ["@21epub-ui/media", ["workspace:packages/media"]],\
       ["@21epub-ui/quick-access", ["workspace:packages/quick-access"]],\
       ["@21epub-ui/root", ["workspace:."]]\
     ],\
@@ -102,6 +107,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["antd", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:4.18.6"],\
             ["colord", "npm:2.9.2"],\
             ["react-color", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:2.19.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@21epub-ui/media", [\
+        ["workspace:packages/media", {\
+          "packageLocation": "./packages/media/",\
+          "packageDependencies": [\
+            ["@21epub-ui/media", "workspace:packages/media"],\
+            ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.0"],\
+            ["@emotion/styled", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.8.1"],\
+            ["@storybook/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:6.4.18"],\
+            ["@types/react", "npm:17.0.38"],\
+            ["@types/react-dom", "npm:17.0.11"]\
           ],\
           "linkType": "SOFT"\
         }]\
