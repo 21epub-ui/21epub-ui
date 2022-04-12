@@ -1,6 +1,6 @@
 import { grey } from '@ant-design/colors'
 import { Menu } from 'antd'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 export const MenuItemGroup = styled(Menu.ItemGroup)`
   font-size: 12px;

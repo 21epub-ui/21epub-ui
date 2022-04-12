@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import background from '../../assets/transparent.png'
 
 export const Container = styled.div`

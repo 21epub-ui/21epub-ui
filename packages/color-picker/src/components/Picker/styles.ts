@@ -1,5 +1,5 @@
 import { Space } from 'antd'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import backslash from '../../assets/backslash.svg'
 import { ColorRect } from '../ColorPicker/styles'
 
