@@ -1,0 +1,27 @@
+export const uploadUrl = '/v3/api/material/personal'
+
+const uploadFile = (
+  params: {
+    id: string
+    file: File
+    compress?: boolean
+  },
+  addListeners: (xhr: XMLHttpRequest) => void
+) => {
+  const formData = new FormData()
+  const xhr = new XMLHttpRequest()
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined) return
+
+    formData.append(key, value instanceof Blob ? value : value.toString())
+  })
+
+  xhr.open('POST', uploadUrl)
+  addListeners(xhr)
+  xhr.send(formData)
+
+  return xhr
+}
+
+export default uploadFile
