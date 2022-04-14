@@ -55,7 +55,3 @@ rules:
 ignorePatterns:
   - "/packages/*/coverage"
   - "/packages/*/dist"
-
-settings:
-  react:
-    version: latest
