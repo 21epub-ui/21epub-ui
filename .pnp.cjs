@@ -31,15 +31,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {\
         "name": "@21epub-ui/quick-access",\
         "reference": "workspace:packages/quick-access"\
+      },\
+      {\
+        "name": "@21epub-ui/uploader",\
+        "reference": "workspace:packages/uploader"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
       ["@21epub-ui/color-picker", ["workspace:packages/color-picker"]],\
-      ["@21epub-ui/media", ["workspace:packages/media"]],\
+      ["@21epub-ui/media", ["virtual:1e785396e53d2b27b8e16379fe67e7bc621f4c9743dad021a844830a335425e6aabb2d94c147d5cb32b05705ced28036bf88a0af90fe88341d0dd8db6822d3f8#workspace:packages/media", "workspace:packages/media"]],\
       ["@21epub-ui/quick-access", ["workspace:packages/quick-access"]],\
-      ["@21epub-ui/root", ["workspace:."]]\
+      ["@21epub-ui/root", ["workspace:."]],\
+      ["@21epub-ui/uploader", ["workspace:packages/uploader"]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -112,6 +117,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@21epub-ui/media", [\
+        ["virtual:1e785396e53d2b27b8e16379fe67e7bc621f4c9743dad021a844830a335425e6aabb2d94c147d5cb32b05705ced28036bf88a0af90fe88341d0dd8db6822d3f8#workspace:packages/media", {\
+          "packageLocation": "./.yarn/__virtual__/@21epub-ui-media-virtual-5fc8c1b70f/1/packages/media/",\
+          "packageDependencies": [\
+            ["@21epub-ui/media", "virtual:1e785396e53d2b27b8e16379fe67e7bc621f4c9743dad021a844830a335425e6aabb2d94c147d5cb32b05705ced28036bf88a0af90fe88341d0dd8db6822d3f8#workspace:packages/media"],\
+            ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.0"],\
+            ["@emotion/styled", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.8.1"],\
+            ["@storybook/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:6.4.21"],\
+            ["@types/react", "npm:17.0.38"],\
+            ["@types/react-dom", "npm:17.0.11"],\
+            ["react", null],\
+            ["react-dom", null]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "SOFT"\
+        }],\
         ["workspace:packages/media", {\
           "packageLocation": "./packages/media/",\
           "packageDependencies": [\
@@ -189,6 +214,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tslib", "npm:2.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"],\
             ["yaml-eslint-parser", "npm:0.5.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@21epub-ui/uploader", [\
+        ["workspace:packages/uploader", {\
+          "packageLocation": "./packages/uploader/",\
+          "packageDependencies": [\
+            ["@21epub-ui/uploader", "workspace:packages/uploader"],\
+            ["@21epub-ui/media", "virtual:1e785396e53d2b27b8e16379fe67e7bc621f4c9743dad021a844830a335425e6aabb2d94c147d5cb32b05705ced28036bf88a0af90fe88341d0dd8db6822d3f8#workspace:packages/media"],\
+            ["@ant-design/colors", "npm:6.0.0"],\
+            ["@ant-design/icons", "virtual:cd81e1183d8e76c350d75b708ebc1b8eca7e08baebfcb771eefcadc8b05f68bd501fbac8aa07e51c136c5497a3fd2f2deed1b3a64202a156ba345a6c9935ead1#npm:4.7.0"],\
+            ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.0"],\
+            ["@emotion/styled", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.8.1"],\
+            ["@storybook/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:6.4.21"],\
+            ["@types/react", "npm:17.0.38"],\
+            ["@types/react-dom", "npm:17.0.11"],\
+            ["@webtoon/psd", "npm:0.1.0"],\
+            ["antd", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:4.18.6"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -8330,6 +8374,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@webassemblyjs/ast", "npm:1.9.0"],\
             ["@webassemblyjs/wast-parser", "npm:1.9.0"],\
             ["@xtuc/long", "npm:4.2.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@webtoon/psd", [\
+        ["npm:0.1.0", {\
+          "packageLocation": "./.yarn/cache/@webtoon-psd-npm-0.1.0-ddb345e086-b06563264a.zip/node_modules/@webtoon/psd/",\
+          "packageDependencies": [\
+            ["@webtoon/psd", "npm:0.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

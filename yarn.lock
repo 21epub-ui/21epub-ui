@@ -25,7 +25,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@21epub-ui/media@workspace:packages/media":
+"@21epub-ui/media@workspace:^, @21epub-ui/media@workspace:packages/media":
   version: 0.0.0-use.local
   resolution: "@21epub-ui/media@workspace:packages/media"
   dependencies:
@@ -104,6 +104,26 @@ __metadata:
     tslib: ^2.3.1
     typescript: ^4.6.3
     yaml-eslint-parser: ^0.5.0
+  languageName: unknown
+  linkType: soft
+
+"@21epub-ui/uploader@workspace:packages/uploader":
+  version: 0.0.0-use.local
+  resolution: "@21epub-ui/uploader@workspace:packages/uploader"
+  dependencies:
+    "@21epub-ui/media": "workspace:^"
+    "@ant-design/colors": ^6.0.0
+    "@ant-design/icons": ^4.7.0
+    "@emotion/react": ^11.9.0
+    "@emotion/styled": ^11.8.0
+    "@storybook/react": ^6.4.0
+    "@types/react": ^17
+    "@types/react-dom": ^17
+    "@webtoon/psd": ^0.1.0
+    antd: ^4.18.0
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
   languageName: unknown
   linkType: soft
 
@@ -3672,7 +3692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:^6.4.21":
+"@storybook/react@npm:^6.4.0, @storybook/react@npm:^6.4.21":
   version: 6.4.21
   resolution: "@storybook/react@npm:6.4.21"
   dependencies:
@@ -4627,6 +4647,13 @@ __metadata:
     "@webassemblyjs/wast-parser": 1.9.0
     "@xtuc/long": 4.2.2
   checksum: 3d1e1b2e84745a963f69acd1c02425b321dd2e608e11dabc467cae0c9a808962bc769ec9afc46fbcea7188cc1e47d72370da762d258f716fb367cb1a7865c54b
+  languageName: node
+  linkType: hard
+
+"@webtoon/psd@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@webtoon/psd@npm:0.1.0"
+  checksum: b06563264a2b67773ecde452eb89fc3403ac6b85ba0e71d2c4924fc10bfa015dd2b2897a3d39d43b459457a9b82bedec6ff32f99ae5c316716b3abea14b18423
   languageName: node
   linkType: hard
 
