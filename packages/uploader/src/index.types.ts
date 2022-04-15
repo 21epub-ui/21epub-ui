@@ -19,6 +19,6 @@ export interface UploaderProps
   accept?: string[]
   category?: string
   compressible?: boolean
-  onReceive?: (file: RcFile) => void | File[] | Promise<File[]>
+  onReceive?: (file: RcFile) => void | File[] | Promise<File[] | undefined>
   onUploaded?: (file: RcFile) => void
 }
