@@ -40,7 +40,7 @@ interface CardProps {
   status?: UploadFileStatus
 }
 
-export const Card = styled.div`
+export const Card = styled.div<CardProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +49,7 @@ export const Card = styled.div`
   width: 104px;
   height: 104px;
   border: 1px solid
-    ${({ status }: CardProps) => (status === 'error' ? red.primary : '#d9d9d9')};
+    ${({ status }) => (status === 'error' ? red.primary : '#d9d9d9')};
   cursor: default;
   transition: border-color 0.3s;
   border-radius: 2px;
