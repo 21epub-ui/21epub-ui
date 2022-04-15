@@ -164,15 +164,14 @@ const Uploader: React.FC<UploaderProps> = ({
           ) : (
             <Cards wrap align="start">
               {fileList.map((item) => (
-                <Card
-                  status={item.status}
-                  key={item.uid}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Tooltip title={item.name}>
+                <Tooltip key={item.uid} title={item.name}>
+                  <Card
+                    status={item.status}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Status file={item} />
-                  </Tooltip>
-                </Card>
+                  </Card>
+                </Tooltip>
               ))}
             </Cards>
           )}
