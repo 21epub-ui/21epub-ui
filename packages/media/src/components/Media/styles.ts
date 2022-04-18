@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import background from '../../assets/transparent.png'
 
 export const Container = styled.div`
   display: flex;
@@ -6,6 +7,8 @@ export const Container = styled.div`
   justify-content: center;
   width: inherit;
   height: inherit;
+  background-image: url(${background});
+  background-repeat: round;
 `
 
 export const StyledImage = styled.img`

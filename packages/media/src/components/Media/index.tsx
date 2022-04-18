@@ -38,11 +38,16 @@ const StyledMedia: React.FC<MediaProps> = ({
 /**
  * 使媒体标签在容器内居中并等比缩放
  */
-const Media: React.FC<MediaProps> = ({ style, type, ...mediaProps }) => {
+const Media: React.FC<MediaProps> = ({
+  className,
+  style,
+  type,
+  ...mediaProps
+}) => {
   const [mediaType, setMediaType] = useState(type)
 
   return (
-    <Container style={style}>
+    <Container className={className} style={style}>
       <StyledMedia
         onError={(e) => {
           setMediaType('image')
