@@ -70,7 +70,3 @@ export const Actions = styled.div`
 export const StyledButton = styled(Button)`
   border-radius: 50px;
 `
-
-export const Label = styled.span`
-  user-select: none;
-`

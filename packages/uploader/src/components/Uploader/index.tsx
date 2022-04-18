@@ -1,6 +1,6 @@
 import { InboxOutlined } from '@ant-design/icons'
-import { Checkbox, message, Space, Tooltip, Upload } from 'antd'
-import type { UploadFile } from 'antd/lib/upload/interface'
+import { message, Tooltip, Upload } from 'antd'
+import type { RcFile, UploadFile, UploadProps } from 'antd/lib/upload/interface'
 import { useEffect, useState } from 'react'
 import uploadFile, { uploadUrl } from '../../api/uploadFile'
 import type { UploaderProps } from '../../index.types'
@@ -9,7 +9,6 @@ import {
   Actions,
   Card,
   Cards,
-  Label,
   ModalBody,
   StyledButton,
   StyledModal,
@@ -24,14 +23,12 @@ const Uploader: React.FC<UploaderProps> = ({
   visible,
   onVisibleChange,
   accept,
-  category,
-  compressible,
+  data,
   onReceive,
   onUploaded,
   ...props
 }) => {
   const [fileList, setFileList] = useState<UploadFile[]>([])
-  const [compress, setCompress] = useState(compressible)
 
   useEffect(() => {
     setFileList([])
@@ -50,13 +47,13 @@ const Uploader: React.FC<UploaderProps> = ({
   }
 
   const uploadFiles = (files: UploadFile[]) => {
-    const newFileList: UploadFile[] = files.map((item) => ({
+    const uploadList: UploadFile[] = files.map((item) => ({
       ...item,
       status: 'uploading',
     }))
-    setFileList(newFileList)
+    setFileList((fileList) => fileList.concat(uploadList))
 
-    newFileList.forEach((file) => {
+    const requestList = uploadList.map(async (file) => {
       if (file.originFileObj === undefined) return
 
       const onProgress = (e: ProgressEvent<EventTarget>) => {
@@ -76,10 +73,11 @@ const Uploader: React.FC<UploaderProps> = ({
 
         updateFile({
           ...file,
-          percent: checkSuccess(status) ? 100 : 0,
           status: checkSuccess(status) ? 'done' : 'error',
+          percent: checkSuccess(status) ? 100 : 0,
+          response: JSON.parse(xhr.response),
         })
-        if (file.originFileObj !== undefined) onUploaded?.(file.originFileObj)
+        onUploaded?.(file.originFileObj as RcFile)
       }
 
       const addListeners = (xhr: XMLHttpRequest) => {
@@ -87,15 +85,13 @@ const Uploader: React.FC<UploaderProps> = ({
         xhr.addEventListener('loadend', (e) => onLoadEnd(e, xhr))
       }
 
-      uploadFile(
-        {
-          compress,
-          id: category ?? 'all',
-          file: file.originFileObj,
-        },
-        addListeners
-      )
+      const params =
+        typeof data === 'function' ? await data(file.originFileObj) : data
+
+      uploadFile({ ...params, file: file.originFileObj }, addListeners)
     })
+
+    Promise.all(requestList)
   }
 
   return (
@@ -110,7 +106,7 @@ const Uploader: React.FC<UploaderProps> = ({
         <StyledUpload
           action={uploadUrl}
           accept={accept?.join()}
-          data={{ id: category ?? 'all', compress }}
+          data={data as UploadProps['data']}
           multiple
           fileList={fileList}
           showUploadList={false}
@@ -123,6 +119,10 @@ const Uploader: React.FC<UploaderProps> = ({
 
                 return {
                   uid,
+                  name: item.name,
+                  size: item.size,
+                  type: item.type,
+                  lastModified: item.lastModified,
                   originFileObj: item,
                 } as UploadFile
               })
@@ -149,17 +149,6 @@ const Uploader: React.FC<UploaderProps> = ({
                 <InboxOutlined />
               </p>
               <p className="ant-upload-text">点击或拖拽文件到此处</p>
-              {compressible && (
-                <Space
-                  onClick={(e) => {
-                    setCompress(!compress)
-                    e.stopPropagation()
-                  }}
-                >
-                  <Checkbox checked={compress} />
-                  <Label>压缩素材</Label>
-                </Space>
-              )}
             </div>
           ) : (
             <Cards wrap align="start">
@@ -180,7 +169,10 @@ const Uploader: React.FC<UploaderProps> = ({
           {failureList.length !== 0 && (
             <StyledButton
               type="primary"
-              onClick={() => uploadFiles(failureList)}
+              onClick={() => {
+                setFileList([])
+                uploadFiles(failureList)
+              }}
             >
               失败重传
             </StyledButton>

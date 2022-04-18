@@ -1,7 +1,7 @@
 import type { ModalProps } from 'antd'
 import type { RcFile } from 'antd/lib/upload'
 
-export type MediaTypes = 'image' | 'audio' | 'video' | 'archive' | string
+export type UploadParams = Record<string, string | number | Blob | undefined>
 
 export interface UploaderProps
   extends Omit<
@@ -17,8 +17,7 @@ export interface UploaderProps
   > {
   onVisibleChange?: (visible: boolean) => void
   accept?: string[]
-  category?: string
-  compressible?: boolean
+  data?: UploadParams | ((file: RcFile) => UploadParams | Promise<UploadParams>)
   onReceive?: (file: RcFile) => void | File[] | Promise<File[] | undefined>
   onUploaded?: (file: RcFile) => void
 }

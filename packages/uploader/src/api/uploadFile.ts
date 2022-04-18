@@ -1,11 +1,7 @@
 export const uploadUrl = '/v3/api/material/personal'
 
 const uploadFile = (
-  params: {
-    id: string
-    file: File
-    compress?: boolean
-  },
+  params: Record<string, string | number | Blob | undefined>,
   addListeners: (xhr: XMLHttpRequest) => void
 ) => {
   const formData = new FormData()
