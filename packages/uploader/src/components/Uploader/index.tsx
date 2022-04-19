@@ -36,10 +36,10 @@ const Uploader: React.FC<UploaderProps> = ({
 
   const failureList = fileList.filter((item) => item.status === 'error')
 
-  const updateFile = (file: UploadFile) => {
+  const updateFile = (patch: Partial<UploadFile>) => {
     setFileList((files) => {
       return files.map((item) => {
-        if (item.uid === file.uid) return file
+        if (item.uid === patch.uid) return { ...item, ...patch }
 
         return item
       })
@@ -56,11 +56,13 @@ const Uploader: React.FC<UploaderProps> = ({
     const requestList = uploadList.map(async (file) => {
       if (file.originFileObj === undefined) return
 
+      const { uid } = file
+
       const onProgress = (e: ProgressEvent<EventTarget>) => {
         const percent = (e.loaded / e.total) * 100
 
         updateFile({
-          ...file,
+          uid,
           percent: e.lengthComputable ? percent : undefined,
         })
       }
@@ -71,13 +73,15 @@ const Uploader: React.FC<UploaderProps> = ({
       ) => {
         const status = xhr.status
 
-        updateFile({
+        const result: UploadFile = {
           ...file,
           status: checkSuccess(status) ? 'done' : 'error',
           percent: checkSuccess(status) ? 100 : 0,
           response: JSON.parse(xhr.response),
-        })
-        onUploaded?.(file)
+        }
+
+        updateFile(result)
+        onUploaded?.(result)
       }
 
       const addListeners = (xhr: XMLHttpRequest) => {
