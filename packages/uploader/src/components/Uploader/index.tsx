@@ -1,6 +1,6 @@
 import { InboxOutlined } from '@ant-design/icons'
 import { message, Tooltip, Upload } from 'antd'
-import type { RcFile, UploadFile, UploadProps } from 'antd/lib/upload/interface'
+import type { UploadFile, UploadProps } from 'antd/lib/upload/interface'
 import { useEffect, useState } from 'react'
 import uploadFile, { uploadUrl } from '../../api/uploadFile'
 import type { UploaderProps } from '../../index.types'
@@ -77,7 +77,7 @@ const Uploader: React.FC<UploaderProps> = ({
           percent: checkSuccess(status) ? 100 : 0,
           response: JSON.parse(xhr.response),
         })
-        onUploaded?.(file.originFileObj as RcFile)
+        onUploaded?.(file)
       }
 
       const addListeners = (xhr: XMLHttpRequest) => {

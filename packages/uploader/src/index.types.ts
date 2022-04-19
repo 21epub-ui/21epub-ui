@@ -1,5 +1,6 @@
 import type { ModalProps } from 'antd'
 import type { RcFile } from 'antd/lib/upload'
+import type { UploadFile } from 'antd/lib/upload/interface'
 
 export type UploadParams = Record<
   string,
@@ -26,5 +27,5 @@ export interface UploaderProps
   accept?: string[]
   data?: UploadParams | ((file: RcFile) => UploadParams | Promise<UploadParams>)
   onReceive?: (file: RcFile) => void | FileList | Promise<void | FileList>
-  onUploaded?: (file: RcFile) => void
+  onUploaded?: (file: UploadFile) => void
 }

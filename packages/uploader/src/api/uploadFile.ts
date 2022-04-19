@@ -2,7 +2,7 @@ export const uploadUrl = '/v3/api/material/personal'
 
 const uploadFile = (
   params: Record<string, string | number | Blob | undefined>,
-  addListeners: (xhr: XMLHttpRequest) => void
+  callback: (xhr: XMLHttpRequest) => void
 ) => {
   const formData = new FormData()
   const xhr = new XMLHttpRequest()
@@ -14,7 +14,7 @@ const uploadFile = (
   })
 
   xhr.open('POST', uploadUrl)
-  addListeners(xhr)
+  callback(xhr)
   xhr.send(formData)
 
   return xhr
