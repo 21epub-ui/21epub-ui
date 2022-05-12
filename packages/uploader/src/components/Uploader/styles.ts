@@ -1,7 +1,5 @@
-import { red } from '@ant-design/colors'
-import { Button, Modal, Space, Upload } from 'antd'
-import type { UploadFileStatus } from 'antd/lib/upload/interface'
 import styled from '@emotion/styled'
+import { Button, Modal, Upload } from 'antd'
 
 const { Dragger } = Upload
 
