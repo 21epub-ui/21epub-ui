@@ -1,14 +1,11 @@
-import { InboxOutlined } from '@ant-design/icons'
-import { message, Tooltip, Upload } from 'antd'
+import { message, Upload } from 'antd'
 import type { UploadFile, UploadProps } from 'antd/lib/upload/interface'
 import { useEffect, useState } from 'react'
 import uploadFile, { uploadUrl } from '../../api/uploadFile'
 import type { UploaderProps } from '../../index.types'
-import Status from '../Status'
+import Cards from '../Cards'
 import {
   Actions,
-  Card,
-  Cards,
   DropZone,
   ModalBody,
   StyledButton,
@@ -148,29 +145,7 @@ const Uploader: React.FC<UploaderProps> = ({
             if (file.status === 'done') onUploaded?.(file)
           }}
         >
-          {fileList.length === 0 ? (
-            children || (
-              <div>
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">点击或拖拽文件到此处</p>
-              </div>
-            )
-          ) : (
-            <Cards wrap align="start">
-              {fileList.map((item) => (
-                <Tooltip key={item.uid} title={item.name}>
-                  <Card
-                    status={item.status}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <Status file={item} />
-                  </Card>
-                </Tooltip>
-              ))}
-            </Cards>
-          )}
+          {fileList.length === 0 ? children : <Cards fileList={fileList} />}
         </DropZone>
         <Actions>
           {failureList.length !== 0 && (

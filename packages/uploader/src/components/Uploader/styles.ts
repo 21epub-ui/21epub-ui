@@ -27,33 +27,15 @@ export const DropZone = styled(Dragger)`
   overflow-y: auto;
 
   .ant-upload.ant-upload-btn {
+    display: flex;
+    flex-direction: column;
     padding: 16px;
+
+    .ant-upload-drag-container {
+      display: flex;
+      flex-direction: column;
+    }
   }
-`
-
-export const Cards = styled(Space)`
-  width: 100%;
-  height: 100%;
-`
-
-interface CardProps {
-  status?: UploadFileStatus
-}
-
-export const Card = styled.div<CardProps>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: white;
-  width: 104px;
-  height: 104px;
-  border: 1px solid
-    ${({ status }) => (status === 'error' ? red.primary : '#d9d9d9')};
-  cursor: default;
-  transition: border-color 0.3s;
-  border-radius: 2px;
-  user-select: none;
 `
 
 export const Actions = styled.div`
@@ -61,7 +43,7 @@ export const Actions = styled.div`
   flex-direction: column;
   position: absolute;
   left: 0;
-  bottom: 30px;
+  bottom: 40px;
   width: 100%;
   align-items: center;
   justify-content: center;
