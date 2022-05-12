@@ -25,6 +25,10 @@ export const ModalBody = styled.div`
 
 export const DropZone = styled(Dragger)`
   overflow-y: auto;
+
+  .ant-upload.ant-upload-btn {
+    padding: 16px;
+  }
 `
 
 export const Cards = styled(Space)`
