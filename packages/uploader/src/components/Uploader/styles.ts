@@ -24,16 +24,18 @@ export const ModalBody = styled.div`
 `
 
 export const DropZone = styled(Dragger)`
+  padding: 16px;
   overflow-y: auto;
 
   .ant-upload.ant-upload-btn {
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 0;
 
     .ant-upload-drag-container {
       display: flex;
       flex-direction: column;
+      height: 100%;
     }
   }
 `
