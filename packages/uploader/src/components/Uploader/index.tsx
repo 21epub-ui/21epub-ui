@@ -9,10 +9,10 @@ import {
   Actions,
   Card,
   Cards,
+  DropZone,
   ModalBody,
   StyledButton,
   StyledModal,
-  StyledUpload,
 } from './styles'
 
 const checkFileSize = (size: number) => size / 1024 ** 2 <= 200
@@ -26,6 +26,7 @@ const Uploader: React.FC<UploaderProps> = ({
   data,
   onReceive,
   onUploaded,
+  children,
   ...props
 }) => {
   const [fileList, setFileList] = useState<UploadFile[]>([])
@@ -107,7 +108,7 @@ const Uploader: React.FC<UploaderProps> = ({
       {...props}
     >
       <ModalBody>
-        <StyledUpload
+        <DropZone
           action={uploadUrl}
           accept={accept?.join()}
           data={data as UploadProps['data']}
@@ -148,12 +149,14 @@ const Uploader: React.FC<UploaderProps> = ({
           }}
         >
           {fileList.length === 0 ? (
-            <div>
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">点击或拖拽文件到此处</p>
-            </div>
+            children || (
+              <div>
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">点击或拖拽文件到此处</p>
+              </div>
+            )
           ) : (
             <Cards wrap align="start">
               {fileList.map((item) => (
@@ -168,7 +171,7 @@ const Uploader: React.FC<UploaderProps> = ({
               ))}
             </Cards>
           )}
-        </StyledUpload>
+        </DropZone>
         <Actions>
           {failureList.length !== 0 && (
             <StyledButton

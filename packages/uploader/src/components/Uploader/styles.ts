@@ -23,12 +23,8 @@ export const ModalBody = styled.div`
   height: 50vh;
 `
 
-export const StyledUpload = styled(Dragger)`
+export const DropZone = styled(Dragger)`
   overflow-y: auto;
-
-  .ant-upload.ant-upload-btn {
-    padding: 16px;
-  }
 `
 
 export const Cards = styled(Space)`
