@@ -4,8 +4,7 @@ import { Space } from 'antd'
 import type { UploadFileStatus } from 'antd/lib/upload/interface'
 
 export const Container = styled(Space)`
-  width: 100%;
-  height: 100%;
+  padding-bottom: 16px;
 `
 
 interface CardProps {
