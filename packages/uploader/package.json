@@ -26,7 +26,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.0",
     "@webtoon/psd": "^0.1.0",
-    "antd": "^4.18.0"
+    "antd": "4.20.0"
   },
   "devDependencies": {
     "@storybook/react": "^6.4.0",
