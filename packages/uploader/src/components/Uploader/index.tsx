@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import uploadFile, { uploadUrl } from '../../api/uploadFile'
 import type { UploaderProps } from '../../index.types'
 import Cards from '../Cards'
+import checkFileSize from './helpers/checkFileSize'
+import checkStatus from './helpers/checkStatus'
 import {
   Actions,
   DropZone,
@@ -11,10 +13,6 @@ import {
   StyledButton,
   StyledModal,
 } from './styles'
-
-const checkFileSize = (size: number) => size / 1024 ** 2 <= 200
-
-const checkSuccess = (status: number) => status >= 200 && status < 300
 
 const Uploader: React.FC<UploaderProps> = ({
   visible,
@@ -73,8 +71,8 @@ const Uploader: React.FC<UploaderProps> = ({
 
         const result: UploadFile = {
           ...file,
-          status: checkSuccess(status) ? 'done' : 'error',
-          percent: checkSuccess(status) ? 100 : 0,
+          status: checkStatus(status) ? 'done' : 'error',
+          percent: checkStatus(status) ? 100 : 0,
           response: JSON.parse(xhr.response),
         }
 
@@ -98,6 +96,7 @@ const Uploader: React.FC<UploaderProps> = ({
 
   return (
     <StyledModal
+      centered
       visible={visible}
       width="fit-content"
       footer={null}
