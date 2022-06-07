@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import dedent from '../utils/dedent.mjs'
 
 const genReadMe = (dirPath, { packageName, componentName }) => {
-  const filePath = resolve(dirPath, 'src', 'README.md')
+  const filePath = resolve(dirPath, 'README.md')
 
   const template = dedent(`
     # ${packageName}
