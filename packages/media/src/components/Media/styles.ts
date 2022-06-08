@@ -11,17 +11,17 @@ export const Container = styled.div`
   background-repeat: round;
 `
 
-export const StyledImage = styled.img`
+export const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
 `
 
-export const StyledVideo = styled.video`
+export const Video = styled.video`
   max-width: 100%;
   max-height: 100%;
 `
 
-export const StyledAudio = styled.audio`
+export const Audio = styled.audio`
   max-width: 100%;
   max-height: 100%;
 `

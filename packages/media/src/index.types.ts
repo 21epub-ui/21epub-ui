@@ -3,11 +3,11 @@ export type HTMLMediaElement =
   | HTMLVideoElement
   | HTMLAudioElement
 
-export type MediaTypes = 'image' | 'audio' | 'video' | string
+export type MediaType = 'image' | 'audio' | 'video' | string
 
 export interface MediaProps extends React.HTMLAttributes<HTMLMediaElement> {
   src?: string
-  type?: MediaTypes
+  type?: MediaType
   style?: React.CSSProperties
   controls?: boolean
   controlsList?: string

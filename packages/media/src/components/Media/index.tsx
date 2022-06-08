@@ -1,37 +1,41 @@
 import { useState } from 'react'
 import type { MediaProps } from '../../index.types'
 import fallback from '../../assets/fallback.png'
-import { Container, StyledAudio, StyledImage, StyledVideo } from './styles'
+import { Container, Audio, Image, Video } from './styles'
 
-const StyledMedia: React.FC<MediaProps> = ({
-  type = 'image',
+const Content: React.FC<MediaProps> = ({
+  type,
   controls,
   controlsList,
   disablePictureInPicture,
   ...mediaProps
 }) => {
   switch (type) {
-    case 'image':
-      return <StyledImage {...mediaProps} />
-    case 'video':
+    case 'image': {
+      return <Image {...mediaProps} />
+    }
+    case 'video': {
       return (
-        <StyledVideo
+        <Video
           controls={controls}
           controlsList={controlsList}
           disablePictureInPicture={disablePictureInPicture}
           {...mediaProps}
         />
       )
-    case 'audio':
+    }
+    case 'audio': {
       return (
-        <StyledAudio
+        <Audio
           controls={controls}
           controlsList={controlsList}
           {...mediaProps}
         />
       )
-    default:
-      return <StyledImage {...mediaProps} />
+    }
+    default: {
+      return null
+    }
   }
 }
 
@@ -41,20 +45,20 @@ const StyledMedia: React.FC<MediaProps> = ({
 const Media: React.FC<MediaProps> = ({
   className,
   style,
-  type,
+  type = 'image',
   ...mediaProps
 }) => {
   const [mediaType, setMediaType] = useState(type)
 
   return (
     <Container className={className} style={style}>
-      <StyledMedia
+      <Content
+        type={mediaType}
         onError={(e) => {
           setMediaType('image')
           e.currentTarget.src = fallback
         }}
         {...mediaProps}
-        type={mediaType}
       />
     </Container>
   )
