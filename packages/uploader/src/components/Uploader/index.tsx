@@ -1,7 +1,7 @@
 import { message, Upload } from 'antd'
 import type { UploadFile, UploadProps } from 'antd/lib/upload/interface'
 import { useEffect, useState } from 'react'
-import uploadFile, { uploadUrl } from '../../api/uploadFile'
+import uploadFile from '../../api/uploadFile'
 import type { UploaderProps } from '../../index.types'
 import Cards from '../Cards'
 import checkFileSize from './helpers/checkFileSize'
@@ -16,6 +16,7 @@ import {
 
 const Uploader: React.FC<UploaderProps> = ({
   visible,
+  uploadUrl,
   onVisibleChange,
   accept,
   data,
@@ -88,7 +89,11 @@ const Uploader: React.FC<UploaderProps> = ({
       const params =
         typeof data === 'function' ? await data(file.originFileObj) : data
 
-      uploadFile({ ...params, file: file.originFileObj }, addListeners)
+      uploadFile(
+        uploadUrl,
+        { ...params, file: file.originFileObj },
+        addListeners
+      )
     })
 
     Promise.all(requestList)

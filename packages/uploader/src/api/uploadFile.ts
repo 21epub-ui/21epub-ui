@@ -1,6 +1,5 @@
-export const uploadUrl = '/v3/api/material/personal'
-
 const uploadFile = (
+  url: string,
   params: Record<string, string | number | Blob | undefined>,
   callback: (xhr: XMLHttpRequest) => void
 ) => {
@@ -13,7 +12,7 @@ const uploadFile = (
     formData.append(key, value instanceof Blob ? value : value.toString())
   })
 
-  xhr.open('POST', uploadUrl)
+  xhr.open('POST', url)
   callback(xhr)
   xhr.send(formData)
 

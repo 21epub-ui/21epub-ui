@@ -23,9 +23,10 @@ export interface UploaderProps
     | 'cancelText'
     | 'okButtonProps'
   > {
-  onVisibleChange?: (visible: boolean) => void
+  uploadUrl: string
   accept?: string[]
   data?: UploadParams | ((file: RcFile) => UploadParams | Promise<UploadParams>)
+  onVisibleChange?: (visible: boolean) => void
   onReceive?: (file: RcFile) => void | FileList | Promise<void | FileList>
   onUploaded?: (file: UploadFile) => void
 }

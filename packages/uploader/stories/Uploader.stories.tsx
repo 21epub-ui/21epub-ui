@@ -15,7 +15,11 @@ const Template: ComponentStory<typeof Uploader> = () => {
   return (
     <>
       <Button onClick={() => setVisible(true)}>Upload</Button>
-      <Uploader visible={visible} onVisibleChange={() => setVisible(false)} />
+      <Uploader
+        uploadUrl="/v3/api/material/personal/"
+        visible={visible}
+        onVisibleChange={() => setVisible(false)}
+      />
     </>
   )
 }
