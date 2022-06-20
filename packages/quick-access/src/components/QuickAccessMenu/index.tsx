@@ -1,10 +1,25 @@
 import { DownOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Menu } from 'antd'
+import { Button, Dropdown } from 'antd'
 import { useQuery } from 'react-query'
-import fetchRecentHistory from '../../api/fetchRecentHistory'
 import fetchQuickAccess from '../../api/fetchQuickAccess'
-import type { QuickAccessProps } from '../../index.types'
-import { MenuItem, MenuItemGroup } from './styles'
+import fetchRecentHistory from '../../api/fetchRecentHistory'
+import type { LinkData, QuickAccessProps } from '../../index.types'
+import { Link, StyledMenu } from './styles'
+
+const getMenuItem = (
+  data: LinkData,
+  target: React.HTMLAttributeAnchorTarget
+) => {
+  return {
+    key: data.id,
+    title: data.title,
+    label: (
+      <Link rel="noopener noreferrer" href={data.url} target={target}>
+        {data.title}
+      </Link>
+    ),
+  }
+}
 
 const QuickAccessMenu: React.FC<QuickAccessProps> = ({
   id,
@@ -20,42 +35,33 @@ const QuickAccessMenu: React.FC<QuickAccessProps> = ({
     return fetchRecentHistory(queryKey[1])
   })
 
-  const menus = [
+  const menuItems = [
     {
-      id: 'quickAccess',
-      title: '快捷打开',
-      value: quickAccess.data,
+      key: 'quickAccess',
+      label: '快捷打开',
+      children: quickAccess.data,
     },
     {
-      id: 'recentHistory',
-      title: '最近使用',
-      value: recentHistory.data,
+      key: 'recentHistory',
+      label: '最近使用',
+      children: recentHistory.data,
     },
-  ]
+  ].map(({ key, label, children }) => {
+    return {
+      key,
+      label,
+      type: 'group',
+      children: children?.map((item) => {
+        return getMenuItem(item, key === 'quickAccess' ? '_blank ' : '_self')
+      }),
+    }
+  })
 
   return (
     <Dropdown
       {...props}
       overlayStyle={{ width: '200px', ...overlayStyle }}
-      overlay={
-        <Menu>
-          {menus.map(({ id, title, value }) => (
-            <MenuItemGroup key={title} title={title}>
-              {value?.map((item) => (
-                <MenuItem key={item.id}>
-                  <a
-                    rel="noopener noreferrer"
-                    href={item.url}
-                    target={id === 'quickAccess' ? '_blank ' : '_self'}
-                  >
-                    {item.title}
-                  </a>
-                </MenuItem>
-              ))}
-            </MenuItemGroup>
-          ))}
-        </Menu>
-      }
+      overlay={<StyledMenu items={menuItems} />}
     >
       <Button size="small" style={style}>
         <DownOutlined />
