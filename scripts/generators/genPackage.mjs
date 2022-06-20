@@ -20,17 +20,15 @@ const genPackage = (dirPath, { packageName }) => {
       version: 'yarn node ../../scripts/version.mjs',
     },
     peerDependencies: {
-      react: '>=16.8.0',
-      'react-dom': '>=16.8.0',
-    },
-    dependencies: {
-      '@emotion/react': '^11.9.0',
-      '@emotion/styled': '^11.8.0',
+      '@emotion/react': '>=11.0.0',
+      '@emotion/styled': '>=11.0.0',
+      react: '>=16.14.0',
     },
     devDependencies: {
-      '@storybook/react': '^6.4.0',
+      '@emotion/react': '^11.9.3',
+      '@emotion/styled': '^11.9.3',
+      '@storybook/react': '^6.5.9',
       '@types/react': '^17',
-      '@types/react-dom': '^17',
     },
   }
 
