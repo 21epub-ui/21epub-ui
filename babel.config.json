@@ -3,9 +3,16 @@
     [
       "@babel/preset-env",
       {
-        "corejs": { "version": "3.21", "proposals": true },
+        "corejs": { "version": "3.23", "proposals": true },
         "modules": false,
         "useBuiltIns": "entry"
+      }
+    ],
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic",
+        "importSource": "@emotion/react"
       }
     ]
   ]
