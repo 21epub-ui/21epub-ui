@@ -73,7 +73,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.19.0"],\
             ["@yarnpkg/shell", "npm:3.2.0"],\
             ["babel-loader", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:8.2.4"],\
-            ["chalk", "npm:4.1.2"],\
             ["core-js", "npm:3.21.1"],\
             ["eslint", "npm:8.13.0"],\
             ["eslint-plugin-react", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:7.29.4"],\
@@ -194,7 +193,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.19.0"],\
             ["@yarnpkg/shell", "npm:3.2.0"],\
             ["babel-loader", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:8.2.4"],\
-            ["chalk", "npm:4.1.2"],\
             ["core-js", "npm:3.21.1"],\
             ["eslint", "npm:8.13.0"],\
             ["eslint-plugin-react", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:7.29.4"],\

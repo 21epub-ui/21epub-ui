@@ -1,15 +1,14 @@
 import { execute } from '@yarnpkg/shell'
-import chalk from 'chalk'
 import fs from 'fs-extra'
 import simpleGit from 'simple-git'
-import printError from './utils/printError.mjs'
+import printer from './utils/printer.mjs'
 
 const git = simpleGit()
 
 const { changed } = await git.diffSummary()
 
 if (changed !== 0) {
-  printError('Git working directory not clean.')
+  console.error(printer.red('Git working directory not clean.'))
   process.exitCode = 1
 } else {
   const argv = process.argv.slice(2)
@@ -28,6 +27,6 @@ if (changed !== 0) {
   await git.commit(message)
   await git.addAnnotatedTag(tagName, message)
 
-  console.log(`\ntagging release ${chalk.bold(tagName)}`)
-  console.log(`Run \`${chalk.bold(command)}\` to publish`)
+  console.log(`\ntagging release ${printer.bold(tagName)}`)
+  console.log(`Run \`${printer.bold(command)}\` to publish`)
 }
