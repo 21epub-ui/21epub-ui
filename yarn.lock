@@ -69,6 +69,7 @@ __metadata:
     "@babel/preset-react": ^7.17.12
     "@commitlint/cli": ^17.0.2
     "@commitlint/config-conventional": ^17.0.2
+    "@emotion/react": ^11.9.3
     "@rollup/plugin-babel": ^5.3.1
     "@rollup/plugin-eslint": ^8.0.2
     "@rollup/plugin-typescript": ^8.3.3

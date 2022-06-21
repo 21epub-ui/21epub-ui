@@ -12,7 +12,7 @@
     "bootstrap": "node ./scripts/bootstrap.mjs",
     "create": "yarn node ./scripts/create.mjs",
     "release": "yarn node ./scripts/release.mjs",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 --no-open",
     "build-storybook": "build-storybook"
   },
   "packageManager": "yarn@3.2.1",
@@ -22,6 +22,7 @@
     "@babel/preset-react": "^7.17.12",
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
+    "@emotion/react": "^11.9.3",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-eslint": "^8.0.2",
     "@rollup/plugin-typescript": "^8.3.3",
