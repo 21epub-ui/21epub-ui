@@ -16,21 +16,20 @@
     "version": "yarn node ../../scripts/version.mjs"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "@emotion/react": ">=11.0.0",
+    "@emotion/styled": ">=11.0.0",
+    "react": ">=16.14.0"
   },
   "dependencies": {
     "@21epub-ui/media": "workspace:^",
     "@ant-design/colors": "^6.0.0",
     "@ant-design/icons": "^4.7.0",
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.0",
-    "@webtoon/psd": "^0.1.0",
-    "antd": "4.20.0"
+    "antd": "^4.21.0"
   },
   "devDependencies": {
-    "@storybook/react": "^6.4.0",
-    "@types/react": "^17",
-    "@types/react-dom": "^17"
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@storybook/react": "^6.5.9",
+    "@types/react": "^17"
   }
 }
