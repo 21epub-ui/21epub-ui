@@ -15,6 +15,7 @@ __metadata:
     "@storybook/react": ^6.5.9
     "@types/react": ^17
     "@types/react-color": ^2
+    "@types/react-dom": ^17
     antd: ^4.21.0
     colord: ^2.9.2
     react-color: ^2.19.3
@@ -22,6 +23,7 @@ __metadata:
     "@emotion/react": ">=11.0.0"
     "@emotion/styled": ">=11.0.0"
     react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   languageName: unknown
   linkType: soft
 
@@ -4885,6 +4887,15 @@ __metadata:
     "@types/react": "*"
     "@types/reactcss": "*"
   checksum: 4bcf262cee8430f4c16895f6852dd9e326de770c560f0ca25296ab923d49a6b0028f00bd082304ef500d7d0e8d606e9cba2c783e065e82af3eee6b6c6227e055
+  languageName: node
+  linkType: hard
+
+"@types/react-dom@npm:^17":
+  version: 17.0.17
+  resolution: "@types/react-dom@npm:17.0.17"
+  dependencies:
+    "@types/react": ^17
+  checksum: 23caf98aa03e968811560f92a2c8f451694253ebe16b670929b24eaf0e7fa62ba549abe9db0ac028a9d8a9086acd6ab9c6c773f163fa21224845edbc00ba6232
   languageName: node
   linkType: hard
 
