@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import { resolve } from 'path'
 import dedent from '../utils/dedent.mjs'
 
-const genTypesIndex = (dirPath, { componentName }) => {
+const genTypes = (dirPath, { componentName }) => {
   const filePath = resolve(dirPath, 'src', 'index.types.ts')
 
   const template = dedent(`
@@ -12,4 +12,4 @@ const genTypesIndex = (dirPath, { componentName }) => {
   return fs.outputFile(filePath, template)
 }
 
-export default genTypesIndex
+export default genTypes

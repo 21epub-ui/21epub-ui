@@ -3,16 +3,16 @@ import eslint from '@rollup/plugin-eslint'
 import typescript from '@rollup/plugin-typescript'
 import url from '@rollup/plugin-url'
 import fs from 'fs'
-import path from 'path'
+import { resolve } from 'path'
 
 const extensions = ['.ts', '.tsx', '.js', '.jsx']
-const inputPath = path.resolve('src')
+const inputPath = resolve('src')
 const outputDir = 'dist'
 
 export default [
   {
     input: extensions
-      .map((ext) => path.resolve(inputPath, `index${ext}`))
+      .map((ext) => resolve(inputPath, `index${ext}`))
       .find((file) => fs.existsSync(file)),
     output: [
       {
@@ -35,6 +35,7 @@ export default [
         babelHelpers: 'bundled',
       }),
       typescript({
+        include: ['src/**/*', '../../typings/*'],
         declaration: true,
         declarationDir: outputDir,
       }),
