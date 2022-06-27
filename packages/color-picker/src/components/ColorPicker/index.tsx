@@ -9,7 +9,7 @@ type Position = Record<'left' | 'top', number>
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
   className,
-  styles = {},
+  styles,
   label,
   style,
   color = '#000000',
@@ -72,10 +72,10 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 
   return (
     <Container className={className} style={style}>
-      {label && <Label style={styles.label}>{getLabel(label)}</Label>}
+      {label && <Label style={styles?.label}>{getLabel(label)}</Label>}
       {!onRenderIndicator ? (
         <div ref={indicator} onClick={onClick}>
-          <ColorRectContainer style={styles.indicator} disabled={disabled}>
+          <ColorRectContainer style={styles?.indicator} disabled={disabled}>
             <ColorRect color={color} />
           </ColorRectContainer>
         </div>
@@ -86,7 +86,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
         ref={picker}
         style={{
           ...pickerPosition,
-          ...styles.picker,
+          ...styles?.picker,
         }}
         color={color}
         visible={pickerVisible}
