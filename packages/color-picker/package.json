@@ -25,7 +25,7 @@
     "@ant-design/colors": "^6.0.0",
     "antd": "^4.21.0",
     "colord": "^2.9.2",
-    "react-color": "^2.19.3"
+    "react-colorful": "^5.5.1"
   },
   "devDependencies": {
     "@emotion/react": "^11.9.3",

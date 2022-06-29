@@ -7,7 +7,7 @@ const grayscale = [
   ['#bfbfbf', '#8c8c8c', '#595959', '#262626', '#000000'],
 ]
 
-export const DefaultPalette = grayscale.concat(
+export const ThemeColors = grayscale.concat(
   [blue, red, yellow, green].map((item) => {
     return Array.from({ length: 5 }).map((_, index) => item[index * 2])
   })

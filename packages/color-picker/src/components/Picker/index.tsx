@@ -1,13 +1,11 @@
 import { Col, Row, Space } from 'antd'
 import { colord } from 'colord'
 import React, { useEffect, useState } from 'react'
-import { SketchPicker } from 'react-color'
 import ReactDOM from 'react-dom'
-import { DefaultPalette } from '../../config'
+import { ThemeColors } from '../../config'
 import getColorHistory from '../../helpers/getColorHistory'
 import updateColorHistory from '../../helpers/updateColorHistory'
 import type { ColorPickerProps } from '../../index.types'
-import getRgbString from '../../utils/getRgbString'
 import Button from '../Button'
 import ColorInput from '../ColorInput'
 import { ColorRect } from '../ColorPicker/styles'
@@ -20,7 +18,8 @@ import {
   ColorHistory,
   Container,
   Divider,
-  Palette,
+  Painter,
+  StyledColorPicker,
   SwatchesSet,
 } from './styles'
 
@@ -29,11 +28,10 @@ interface Props
     ColorPickerProps,
     | 'style'
     | 'color'
-    | 'palettes'
     | 'historySize'
     | 'localStorageKey'
     | 'onChange'
-    | 'onChangeComplete'
+    | 'onRenderSwatches'
   > {
   color: string
   visible: boolean
@@ -44,30 +42,21 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     style,
     color,
-    palettes = DefaultPalette,
     historySize,
     localStorageKey,
     onChange,
-    onChangeComplete,
     visible,
     onVisibleChange,
+    onRenderSwatches,
   } = props
 
   const [initColor, setInitColor] = useState(color)
-  const [currColor, setCurrColor] = useState(color)
+  const [currColor, setCurrColor] = useState(colord(color))
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
-  const maxPaletteLength = palettes.reduce((prev, curr) => {
-    const length = curr.length
+  const recentColorsLength = historySize ?? 2 * ThemeColors.length
 
-    return length > prev ? length : prev
-  }, 0)
-
-  const defaultHistorySize = (7 - maxPaletteLength) * palettes.length
-  const colorHistory = getColorHistory(
-    historySize ?? defaultHistorySize,
-    localStorageKey
-  )
+  const colorHistory = getColorHistory(recentColorsLength, localStorageKey)
 
   useEffect(() => {
     const element = document.createElement('div')
@@ -75,8 +64,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     document.body.appendChild(element)
 
     return () => {
-      if (element.parentElement === null) return
-      ReactDOM.unmountComponentAtNode(element.parentElement)
+      ReactDOM.unmountComponentAtNode(document.body)
       element.remove()
     }
   }, [])
@@ -84,23 +72,25 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useEffect(() => {
     if (visible) {
       setInitColor(color)
-      return
-    }
-
-    if (initColor !== color) {
-      updateColorHistory(
-        color,
-        historySize ?? defaultHistorySize,
-        localStorageKey
-      )
+    } else if (initColor !== color) {
+      updateColorHistory(color, recentColorsLength, localStorageKey)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible])
 
-  const onColorChange = (value: string) => {
-    setCurrColor(value)
-    onChange?.(value)
-    onChangeComplete?.(value)
+  const onColorChange = (
+    value: Parameters<typeof colord>[0],
+    forced?: boolean
+  ) => {
+    const newColor = colord(value)
+    const alpha = newColor.alpha()
+
+    if (alpha === currColor.alpha() && alpha === 0 && !forced) {
+      newColor.rgba.a = 1
+    }
+
+    setCurrColor(newColor)
+    onChange?.(newColor.toRgbString())
   }
 
   if (!container) return null
@@ -113,51 +103,32 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         display: visible ? 'flex' : 'none',
       }}
     >
-      <SwatchesSet direction="vertical" span={palettes.length}>
-        <Row gutter={8}>
-          {palettes.map((palette) => (
-            <Col key={palette.toString()} span={24 / palette.length}>
-              <Swatches
-                direction="vertical"
-                palette={palette}
-                onChange={onColorChange}
-              />
-            </Col>
-          ))}
-        </Row>
+      <SwatchesSet direction="vertical">
+        {onRenderSwatches?.({ onChange: onColorChange }) || (
+          <Row style={{ width: ThemeColors.length * 24 }} gutter={8}>
+            {ThemeColors.map((item, index) => (
+              <Col key={index}>
+                <Swatches
+                  direction="vertical"
+                  colors={item}
+                  onChange={onColorChange}
+                />
+              </Col>
+            ))}
+          </Row>
+        )}
         {!colorHistory.length || <Divider />}
         <Row>
           <Swatches
             wrap={true}
-            palette={colorHistory}
+            colors={colorHistory}
             onChange={onColorChange}
           />
         </Row>
-        <ColorInput color={currColor} onChange={onColorChange} />
+        <ColorInput color={currColor.toRgbString()} onChange={onColorChange} />
       </SwatchesSet>
-      <Palette direction="vertical">
-        <SketchPicker
-          styles={{
-            default: {
-              picker: { boxShadow: 'none', padding: 0 },
-              color: { display: 'none' },
-              hue: { cursor: 'pointer' },
-              alpha: { cursor: 'pointer' },
-            },
-          }}
-          color={currColor}
-          onChange={(value) => {
-            const color = getRgbString(value.rgb)
-            setCurrColor(color)
-            onChange?.(color)
-          }}
-          onChangeComplete={(value) => {
-            const color = getRgbString(value.rgb)
-            setCurrColor(color)
-            onChangeComplete?.(color)
-          }}
-          presetColors={[]}
-        />
+      <Painter direction="vertical">
+        <StyledColorPicker color={currColor.rgba} onChange={onColorChange} />
         <Space>
           {['r', 'g', 'b', 'a'].map((item) => {
             const isAlpha = item === 'a'
@@ -170,20 +141,19 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 max={isAlpha ? 1 : 255}
                 step={isAlpha ? 0.1 : 1}
                 controls={false}
-                value={colord(currColor).toRgb()[item]}
+                value={currColor.rgba[item]}
                 onChange={(value) => {
-                  const color = colord(currColor).toRgb()
                   const newColor = {
-                    ...color,
-                    [item]: value ?? color[item],
+                    ...currColor.rgba,
+                    [item]: value ?? value[item],
                   }
-                  onColorChange(getRgbString(newColor))
+                  onColorChange(newColor)
                 }}
               />
             )
           })}
         </Space>
-      </Palette>
+      </Painter>
       <Actions>
         <Buttons>
           <Button
@@ -191,15 +161,17 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             type="primary"
             onClick={() => onVisibleChange(false)}
           />
-          <Button label="复位" onClick={() => onColorChange(initColor)} />
+          <Button label="复位" onClick={() => onColorChange(initColor, true)} />
         </Buttons>
         <ColorHistory>
           <div>新的</div>
-          <ColorRect width={48} height={32} color={currColor} />
+          <ColorRect width={48} height={32} color={currColor.toRgbString()} />
           <ColorRect width={48} height={32} color={initColor} />
           <div>之前</div>
         </ColorHistory>
-        <ClearButton onClick={() => onColorChange('rgba(0, 0, 0, 0)')} />
+        <ClearButton
+          onClick={() => onColorChange({ r: 0, g: 0, b: 0, a: 0 }, true)}
+        />
       </Actions>
     </Container>,
     container

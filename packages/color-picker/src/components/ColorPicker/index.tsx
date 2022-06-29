@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
-import getLabel from '../../utils/getLabel'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { ColorPickerProps } from '../../index.types'
+import getLabel from '../../utils/getLabel'
 import { Label } from '../Input/styles'
 import Picker from '../Picker'
 import { ColorRect, ColorRectContainer, Container } from './styles'
@@ -10,19 +10,33 @@ type Position = Record<'left' | 'top', number>
 const ColorPicker: React.FC<ColorPickerProps> = ({
   className,
   styles,
+  visible,
   label,
   style,
-  color = '#000000',
+  color = 'rgba(0, 0, 0, 0)',
   disabled,
+  onVisibleChange,
   onRenderIndicator,
   ...props
 }) => {
-  const [pickerVisible, setPickerVisible] = useState(false)
+  const [pickerVisible, setPickerVisible] = useState(visible ?? false)
   const [pickerPosition, setPickerPosition] = useState<Position>()
   const [mousePosition, setMousePosition] = useState<Position>()
 
   const picker = useRef<HTMLDivElement>(null)
   const indicator = useRef<HTMLDivElement>(null)
+
+  const onPickerVisibleChange = useCallback(
+    (value: boolean) => {
+      setPickerVisible(visible ?? value)
+      onVisibleChange?.(value)
+    },
+    [onVisibleChange, visible]
+  )
+
+  useEffect(() => {
+    setPickerVisible(visible ?? false)
+  }, [visible])
 
   useEffect(() => {
     const hidingPicker = (e: MouseEvent) => {
@@ -30,14 +44,14 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       const visible =
         picker.current?.contains(target) || indicator.current?.contains(target)
 
-      if (visible || disabled) return
+      if (visible || disabled || visible === pickerVisible) return
 
-      setPickerVisible(visible ?? false)
+      onPickerVisibleChange(visible ?? false)
     }
     document.addEventListener('mousedown', hidingPicker)
 
     return () => document.removeEventListener('mousedown', hidingPicker)
-  }, [disabled])
+  }, [disabled, onPickerVisibleChange, pickerVisible])
 
   useEffect(() => {
     if (!mousePosition || !pickerVisible) return
@@ -67,20 +81,18 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     if (disabled) return
 
     setMousePosition({ left: e.clientX, top: e.clientY })
-    setPickerVisible(!pickerVisible)
+    onPickerVisibleChange(!pickerVisible)
   }
 
   return (
     <Container className={className} style={style}>
       {label && <Label style={styles?.label}>{getLabel(label)}</Label>}
-      {!onRenderIndicator ? (
+      {onRenderIndicator?.({ onClick, ref: indicator }) || (
         <div ref={indicator} onClick={onClick}>
           <ColorRectContainer style={styles?.indicator} disabled={disabled}>
             <ColorRect color={color} />
           </ColorRectContainer>
         </div>
-      ) : (
-        onRenderIndicator({ onClick, ref: indicator })
       )}
       <Picker
         ref={picker}
@@ -90,7 +102,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
         }}
         color={color}
         visible={pickerVisible}
-        onVisibleChange={setPickerVisible}
+        onVisibleChange={onPickerVisibleChange}
         {...props}
       />
     </Container>

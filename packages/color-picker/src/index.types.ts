@@ -5,6 +5,8 @@ export interface ColorPickerProps {
   label?: string
   disabled?: boolean
   style?: React.CSSProperties
+  visible?: boolean
+  onVisibleChange?: (visible: boolean) => void
   /**
    * 子组件样式
    */
@@ -13,10 +15,6 @@ export interface ColorPickerProps {
    * 颜色值
    */
   color?: string
-  /**
-   * 色板配置
-   */
-  palettes?: string[][]
   /**
    * 历史颜色数量
    */
@@ -30,9 +28,11 @@ export interface ColorPickerProps {
    */
   onChange?: (color: string) => void
   /**
-   * 颜色值修改完成时回调
+   * 自定义色板 render 函数
    */
-  onChangeComplete?: (color: string) => void
+  onRenderSwatches?: (props: {
+    onChange: (color: string) => void
+  }) => React.ReactNode
   /**
    * 自定义颜色指示器 render 函数
    */

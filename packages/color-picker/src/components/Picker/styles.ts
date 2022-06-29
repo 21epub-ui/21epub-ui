@@ -1,5 +1,6 @@
-import { Space } from 'antd'
 import styled from '@emotion/styled'
+import { Space } from 'antd'
+import { RgbaColorPicker } from 'react-colorful'
 import backslash from '../../assets/backslash.svg'
 import { ColorRect } from '../ColorPicker/styles'
 
@@ -18,30 +19,52 @@ export const Container = styled.div`
   }
 `
 
+export const StyledColorPicker = styled(RgbaColorPicker)`
+  > * + * {
+    margin-top: 4px;
+  }
+
+  .react-colorful__saturation {
+    border: none;
+    border-radius: 2px;
+  }
+
+  .react-colorful__hue,
+  .react-colorful__alpha {
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  .react-colorful__saturation-pointer {
+    width: 8px;
+    height: 8px;
+  }
+
+  .react-colorful__hue-pointer,
+  .react-colorful__alpha-pointer {
+    width: 4px;
+    height: 8px;
+    border-radius: 1px;
+  }
+`
+
 export const Divider = styled.div`
   height: 1px;
   background-color: rgba(0, 0, 0, 0.06);
 `
 
-interface SwatchesSetProps {
-  span: number
-}
-
-export const SwatchesSet = styled(Space)<SwatchesSetProps>`
-  width: ${({ span }) => span * 24 - 8}px;
+export const SwatchesSet = styled(Space)`
+  width: min-content;
 
   > *:last-child {
+    align-self: center;
     margin-top: auto;
   }
 `
 
-export const Palette = styled(Space)`
+export const Painter = styled(Space)`
   width: 220px;
   padding: 0 10px;
-
-  > *:last-child {
-    margin-top: auto;
-  }
 `
 
 export const Actions = styled.div`
