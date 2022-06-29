@@ -9,10 +9,11 @@ type Position = Record<'left' | 'top', number>
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
   className,
+  pickerClassName,
+  style,
   styles,
   visible,
   label,
-  style,
   color = 'rgba(0, 0, 0, 0)',
   disabled,
   onVisibleChange,
@@ -96,6 +97,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
       )}
       <Picker
         ref={picker}
+        className={pickerClassName}
         style={{
           ...pickerPosition,
           ...styles?.picker,

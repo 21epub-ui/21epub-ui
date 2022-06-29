@@ -26,6 +26,7 @@ import {
 interface Props
   extends Pick<
     ColorPickerProps,
+    | 'className'
     | 'style'
     | 'color'
     | 'historySize'
@@ -40,6 +41,7 @@ interface Props
 
 const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
+    className,
     style,
     color,
     historySize,
@@ -98,6 +100,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   return ReactDOM.createPortal(
     <Container
       ref={ref}
+      className={className}
       style={{
         ...style,
         display: visible ? 'flex' : 'none',

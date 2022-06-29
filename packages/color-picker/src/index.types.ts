@@ -2,6 +2,7 @@ type ComponentTypes = 'label' | 'indicator' | 'picker'
 
 export interface ColorPickerProps {
   className?: string
+  pickerClassName?: string
   label?: string
   disabled?: boolean
   style?: React.CSSProperties
