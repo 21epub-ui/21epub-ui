@@ -54,7 +54,7 @@ export const Divider = styled.div`
 `
 
 export const SwatchesSet = styled(Space)`
-  width: min-content;
+  width: 136px;
 
   > *:last-child {
     align-self: center;

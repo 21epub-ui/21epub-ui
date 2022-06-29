@@ -105,26 +105,19 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     >
       <SwatchesSet direction="vertical">
         {onRenderSwatches?.({ onChange: onColorChange }) || (
-          <Row style={{ width: ThemeColors.length * 24 }} gutter={8}>
+          <Space>
             {ThemeColors.map((item, index) => (
-              <Col key={index}>
-                <Swatches
-                  direction="vertical"
-                  colors={item}
-                  onChange={onColorChange}
-                />
-              </Col>
+              <Swatches
+                key={index}
+                direction="vertical"
+                colors={item}
+                onChange={onColorChange}
+              />
             ))}
-          </Row>
+          </Space>
         )}
         {!colorHistory.length || <Divider />}
-        <Row>
-          <Swatches
-            wrap={true}
-            colors={colorHistory}
-            onChange={onColorChange}
-          />
-        </Row>
+        <Swatches wrap={true} colors={colorHistory} onChange={onColorChange} />
         <ColorInput color={currColor.toRgbString()} onChange={onColorChange} />
       </SwatchesSet>
       <Painter direction="vertical">
