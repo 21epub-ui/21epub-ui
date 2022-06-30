@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
-    "antd": "^4.21.0",
+    "antd": "^4.21.4",
     "colord": "^2.9.2",
     "react-colorful": "^5.5.1"
   },
@@ -32,7 +32,6 @@
     "@emotion/styled": "^11.9.3",
     "@storybook/react": "^6.5.9",
     "@types/react": "^17",
-    "@types/react-color": "^2",
     "@types/react-dom": "^17"
   }
 }

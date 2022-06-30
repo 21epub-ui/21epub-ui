@@ -24,7 +24,7 @@
     "@21epub-ui/media": "workspace:^",
     "@ant-design/colors": "^6.0.0",
     "@ant-design/icons": "^4.7.0",
-    "antd": "^4.21.0"
+    "antd": "^4.21.4"
   },
   "devDependencies": {
     "@emotion/react": "^11.9.3",

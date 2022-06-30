@@ -23,8 +23,8 @@
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
     "@ant-design/icons": "^4.7.0",
-    "antd": "^4.21.0",
-    "react-query": "^3.34.0",
+    "antd": "^4.21.4",
+    "react-query": "^3.39.1",
     "umi-request": "^1.4.0"
   },
   "devDependencies": {
