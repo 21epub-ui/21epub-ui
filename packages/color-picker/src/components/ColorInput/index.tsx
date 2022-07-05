@@ -1,11 +1,12 @@
 import type { InputProps } from 'antd'
+import type { Colord } from 'colord'
 import { colord } from 'colord'
 import { useEffect, useState } from 'react'
 import getColorString from '../../utils/getColorString'
 import Input from '../Input'
 
-interface Props extends Omit<InputProps, 'onChange'> {
-  color: string
+interface Props extends Omit<InputProps, 'color' | 'value' | 'onChange'> {
+  color: Colord
   onChange?: (value: Props['color']) => void
 }
 
@@ -16,12 +17,14 @@ const ColorInput: React.FC<Props> = ({ color, onChange, ...props }) => {
     setInputValue(getColorString(color))
   }, [color])
 
-  const onColorChange = (value: Parameters<typeof colord>[0]) => {
-    if (!colord(value).isValid()) return
+  const onColorChange = (value: string) => {
+    const newValue =
+      value[0] === '#' || value.slice(0, 3) === 'rgb' ? value : `#${value}`
+    const newColor = colord(newValue)
 
-    const newColor = getColorString(value)
+    if (!newColor.isValid()) return
 
-    setInputValue(newColor)
+    setInputValue(newColor.toRgbString())
     onChange?.(newColor)
   }
 
@@ -33,10 +36,10 @@ const ColorInput: React.FC<Props> = ({ color, onChange, ...props }) => {
         setInputValue(e.currentTarget.value)
       }}
       onBlur={(e) => {
-        onColorChange(e.currentTarget.value)
+        onColorChange(e.currentTarget.value.trim())
       }}
       onPressEnter={(e) => {
-        onColorChange(e.currentTarget.value)
+        onColorChange(e.currentTarget.value.trim())
       }}
       {...props}
     />

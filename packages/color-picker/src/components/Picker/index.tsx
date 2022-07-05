@@ -1,4 +1,4 @@
-import { Col, Row, Space } from 'antd'
+import { Space } from 'antd'
 import { colord } from 'colord'
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
@@ -74,6 +74,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
   useEffect(() => {
     if (visible) {
       setInitColor(color)
+      setCurrColor(colord(color))
     } else if (initColor !== color) {
       updateColorHistory(color, recentColorsLength, localStorageKey)
     }
@@ -121,7 +122,7 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
         )}
         {!colorHistory.length || <Divider />}
         <Swatches wrap={true} colors={colorHistory} onChange={onColorChange} />
-        <ColorInput color={currColor.toRgbString()} onChange={onColorChange} />
+        <ColorInput color={currColor} onChange={onColorChange} />
       </SwatchesSet>
       <Painter direction="vertical">
         <StyledColorPicker color={currColor.rgba} onChange={onColorChange} />
