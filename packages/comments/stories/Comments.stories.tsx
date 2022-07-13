@@ -7,7 +7,7 @@ export default {
 } as ComponentMeta<typeof Comments>
 
 const Template: ComponentStory<typeof Comments> = (args) => (
-  <Comments {...args} />
+  <Comments isOpen={true} style={{ height: innerHeight - 32 }} {...args} />
 )
 
 export const Default = Template.bind({})
