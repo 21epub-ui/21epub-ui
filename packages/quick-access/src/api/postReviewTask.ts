@@ -1,7 +1,7 @@
-import request from 'umi-request'
+import request from './request'
 
 const postReviewTask = async (id: string) => {
-  const res = await request.post('/v3/api/review/tasks/', {
+  const res = await request.post('review/tasks/', {
     data: { uuid: id },
   })
 

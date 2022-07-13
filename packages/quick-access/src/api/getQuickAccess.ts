@@ -1,9 +1,9 @@
-import request from 'umi-request'
 import postReviewTask from './postReviewTask'
+import request from './request'
 
-const fetchQuickAccess = async (id: string, type: string) => {
+const getQuickAccess = async (id: string, type: string) => {
   const baseUri = `/v3/${type}`
-  const res = await request.get(`/v3/api/${type}/works/${id}/`)
+  const res = await request.get(`${type}/works/${id}/`)
   const { uuid, review_task } = res.data.results[0]
 
   const reviewTask = review_task ?? (await postReviewTask(uuid)).id
@@ -33,4 +33,4 @@ const fetchQuickAccess = async (id: string, type: string) => {
   ]
 }
 
-export default fetchQuickAccess
+export default getQuickAccess
