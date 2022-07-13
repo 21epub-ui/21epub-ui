@@ -1,28 +1,27 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import useSWRInfinite from 'swr/infinite'
 import type { GetCommentsParams } from '../api/getComments'
 import getComments from '../api/getComments'
-import type { Response } from '../api/request'
-import type { CommentData } from '../index.types'
+import type { ResponseData } from '../api/request'
+import type { CommentListData } from '../index.types'
+
+const fetcher = (key: string, params: GetCommentsParams) => getComments(params)
 
 const useComments = (params: GetCommentsParams) => {
   const getKey = (
     index: number,
-    previousData: Response<CommentData> | null
+    previousData: ResponseData<CommentListData> | null
   ) => {
-    if (previousData === null) return { ...params }
+    if (previousData === null) return ['comments', params]
     if (previousData.last) return null
 
     const lastList = previousData.content
     const lastId = lastList[lastList.length - 1].id
 
-    return { ...params, before: lastId }
+    return ['comments', { ...params, before: lastId }]
   }
 
-  const { data, mutate, size, setSize } = useSWRInfinite<Response<CommentData>>(
-    getKey,
-    getComments
-  )
+  const { data, mutate, size, setSize } = useSWRInfinite(getKey, fetcher)
 
   const refresh = () => {
     mutate(async (data) => {

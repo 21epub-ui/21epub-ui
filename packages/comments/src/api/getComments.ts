@@ -1,5 +1,5 @@
-import type { CommentData } from '../index.types'
-import type { Response } from './request'
+import type { CommentListData } from '../index.types'
+import type { ResponseData } from './request'
 import request from './request'
 
 export interface GetCommentsParams {
@@ -14,7 +14,7 @@ const getComments = (params: GetCommentsParams) => {
   const archived = Boolean(params.archived).toString()
   const searchParams = new URLSearchParams({ ...params, archived })
 
-  return request.get<Response<CommentData>>(
+  return request.get<ResponseData<CommentListData>>(
     `comments/?${searchParams.toString()}`
   )
 }

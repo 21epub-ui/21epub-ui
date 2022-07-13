@@ -1,7 +1,7 @@
 import { extend } from 'umi-request'
 
-export interface Response<T> {
-  content: T[]
+export interface ResponseData<T> {
+  content: T
   size: number
   first: boolean
   last: boolean
