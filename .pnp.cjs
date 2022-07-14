@@ -131,6 +131,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@chakra-ui/react", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:2.2.1"],\
             ["@chakra-ui/system", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:2.2.0"],\
             ["@dnd-kit/core", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:6.0.5"],\
+            ["@dnd-kit/modifiers", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:6.0.0"],\
             ["@dnd-kit/utilities", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:3.2.0"],\
             ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.3"],\
             ["@emotion/styled", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.3"],\
@@ -8921,6 +8922,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@dnd-kit/modifiers", [\
+        ["npm:6.0.0", {\
+          "packageLocation": "./.yarn/cache/@dnd-kit-modifiers-npm-6.0.0-d6d0e8b98c-82c2640627.zip/node_modules/@dnd-kit/modifiers/",\
+          "packageDependencies": [\
+            ["@dnd-kit/modifiers", "npm:6.0.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:6.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/@dnd-kit-modifiers-virtual-a6d9b452b4/0/cache/@dnd-kit-modifiers-npm-6.0.0-d6d0e8b98c-82c2640627.zip/node_modules/@dnd-kit/modifiers/",\
+          "packageDependencies": [\
+            ["@dnd-kit/modifiers", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:6.0.0"],\
+            ["@dnd-kit/core", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:6.0.5"],\
+            ["@dnd-kit/utilities", "virtual:a6d9b452b4c8a46bd02d793bc74e6da7e447b875cb9d31511705410b90f800a448d5b90763c02497288337494b20ad8f4803654ac9faf2883fd9dcd54ed6d4fb#npm:3.2.0"],\
+            ["@types/dnd-kit__core", null],\
+            ["tslib", "npm:2.3.1"]\
+          ],\
+          "packagePeers": [\
+            "@dnd-kit/core",\
+            "@types/dnd-kit__core"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@dnd-kit/utilities", [\
         ["npm:3.2.0", {\
           "packageLocation": "./.yarn/cache/@dnd-kit-utilities-npm-3.2.0-6cb85f1dd6-575e554992.zip/node_modules/@dnd-kit/utilities/",\
@@ -8934,6 +8959,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@dnd-kit/utilities", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:3.2.0"],\
             ["@types/react", "npm:17.0.38"],\
+            ["react", null],\
+            ["tslib", "npm:2.3.1"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:a6d9b452b4c8a46bd02d793bc74e6da7e447b875cb9d31511705410b90f800a448d5b90763c02497288337494b20ad8f4803654ac9faf2883fd9dcd54ed6d4fb#npm:3.2.0", {\
+          "packageLocation": "./.yarn/__virtual__/@dnd-kit-utilities-virtual-ee8484ae82/0/cache/@dnd-kit-utilities-npm-3.2.0-6cb85f1dd6-575e554992.zip/node_modules/@dnd-kit/utilities/",\
+          "packageDependencies": [\
+            ["@dnd-kit/utilities", "virtual:a6d9b452b4c8a46bd02d793bc74e6da7e447b875cb9d31511705410b90f800a448d5b90763c02497288337494b20ad8f4803654ac9faf2883fd9dcd54ed6d4fb#npm:3.2.0"],\
+            ["@types/react", null],\
             ["react", null],\
             ["tslib", "npm:2.3.1"]\
           ],\

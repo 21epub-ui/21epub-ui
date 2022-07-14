@@ -43,9 +43,8 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
     archived: currentTab === 1,
   })
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: 'commentRoom',
-  })
+  const { listeners, setNodeRef, setActivatorNodeRef, transform } =
+    useDraggable({ id: 'commentRoom' })
 
   useEffect(() => {
     setVisible(isOpen)
@@ -102,20 +101,11 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
     })
   }
 
-  const translateX =
-    transform === null ? coordinates.x : transform.x + coordinates.x
-  const translateY =
-    transform === null ? coordinates.y : transform.y + coordinates.y
+  const top = transform === null ? coordinates.y : transform.y + coordinates.y
+  const left = transform === null ? coordinates.x : transform.x + coordinates.x
 
   return (
-    <Container
-      style={{
-        ...style,
-        transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
-      }}
-      ref={setNodeRef}
-      {...props}
-    >
+    <Container style={{ top, left, ...style }} ref={setNodeRef} {...props}>
       <Tabs
         variant="unstyled"
         overflow="hidden"
@@ -123,12 +113,12 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
       >
         <StyledTabList>
           <IconButton
+            ref={setActivatorNodeRef}
             variant="ghost"
             size="xs"
             aria-label="拖拽"
             icon={<DragHandleIcon />}
             {...listeners}
-            {...attributes}
           />
           <Center margin="0 auto">
             <StyledTab>进行中</StyledTab>
