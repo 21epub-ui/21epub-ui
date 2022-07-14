@@ -5,7 +5,6 @@ import TextEditor from '../TextEditor'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  position: fixed;
   width: 360px;
   padding: 0 12px;
   border-radius: 12px;

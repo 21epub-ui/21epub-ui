@@ -43,8 +43,9 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
     archived: currentTab === 1,
   })
 
-  const { listeners, setNodeRef, setActivatorNodeRef, transform } =
-    useDraggable({ id: 'commentRoom' })
+  const draggable = useDraggable({ id: 'commentRoom' })
+  const { listeners, setNodeRef, setActivatorNodeRef } = draggable
+  const transform = draggable.transform ?? coordinates
 
   useEffect(() => {
     setVisible(isOpen)
@@ -101,11 +102,15 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
     })
   }
 
-  const top = transform === null ? coordinates.y : transform.y + coordinates.y
-  const left = transform === null ? coordinates.x : transform.x + coordinates.x
-
   return (
-    <Container style={{ top, left, ...style }} ref={setNodeRef} {...props}>
+    <Container
+      style={{
+        ...style,
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }}
+      ref={setNodeRef}
+      {...props}
+    >
       <Tabs
         variant="unstyled"
         overflow="hidden"
