@@ -141,6 +141,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@21epub-ui/text-editor@workspace:packages/text-editor":
+  version: 0.0.0-use.local
+  resolution: "@21epub-ui/text-editor@workspace:packages/text-editor"
+  dependencies:
+    "@emotion/react": ^11.9.3
+    "@emotion/styled": ^11.9.3
+    "@storybook/react": ^6.5.9
+    "@types/react": ^17
+  peerDependencies:
+    "@emotion/react": ">=11.0.0"
+    "@emotion/styled": ">=11.0.0"
+    react: ">=16.14.0"
+  languageName: unknown
+  linkType: soft
+
 "@21epub-ui/uploader@workspace:packages/uploader":
   version: 0.0.0-use.local
   resolution: "@21epub-ui/uploader@workspace:packages/uploader"

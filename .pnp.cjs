@@ -37,6 +37,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/quick-access"\
       },\
       {\
+        "name": "@21epub-ui/text-editor",\
+        "reference": "workspace:packages/text-editor"\
+      },\
+      {\
         "name": "@21epub-ui/uploader",\
         "reference": "workspace:packages/uploader"\
       }\
@@ -49,6 +53,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@21epub-ui/media", ["virtual:1e785396e53d2b27b8e16379fe67e7bc621f4c9743dad021a844830a335425e6aabb2d94c147d5cb32b05705ced28036bf88a0af90fe88341d0dd8db6822d3f8#workspace:packages/media", "workspace:packages/media"]],\
       ["@21epub-ui/quick-access", ["workspace:packages/quick-access"]],\
       ["@21epub-ui/root", ["workspace:."]],\
+      ["@21epub-ui/text-editor", ["workspace:packages/text-editor"]],\
       ["@21epub-ui/uploader", ["workspace:packages/uploader"]]\
     ],\
     "fallbackPool": [\
@@ -251,6 +256,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tslib", "npm:2.4.0"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"],\
             ["yaml-eslint-parser", "npm:1.0.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@21epub-ui/text-editor", [\
+        ["workspace:packages/text-editor", {\
+          "packageLocation": "./packages/text-editor/",\
+          "packageDependencies": [\
+            ["@21epub-ui/text-editor", "workspace:packages/text-editor"],\
+            ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.3"],\
+            ["@emotion/styled", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.3"],\
+            ["@storybook/react", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:6.5.9"],\
+            ["@types/react", "npm:17.0.38"]\
           ],\
           "linkType": "SOFT"\
         }]\
