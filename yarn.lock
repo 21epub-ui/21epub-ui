@@ -145,14 +145,28 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@21epub-ui/text-editor@workspace:packages/text-editor"
   dependencies:
+    "@chakra-ui/icons": ^2.0.2
+    "@chakra-ui/react": ^2.2.1
+    "@chakra-ui/system": ^2.1.3
     "@emotion/react": ^11.9.3
     "@emotion/styled": ^11.9.3
+    "@lexical/clipboard": ^0.3.7
+    "@lexical/headless": ^0.3.7
+    "@lexical/html": ^0.3.7
+    "@lexical/list": ^0.3.7
+    "@lexical/react": ^0.3.7
+    "@lexical/rich-text": ^0.3.7
+    "@lexical/selection": ^0.3.7
+    "@lexical/text": ^0.3.7
+    "@lexical/utils": ^0.3.7
     "@storybook/react": ^6.5.9
-    "@types/react": ^17
+    "@types/react": ^18
+    framer-motion: ^6.3.16
+    lexical: ^0.3.7
   peerDependencies:
-    "@emotion/react": ">=11.0.0"
-    "@emotion/styled": ">=11.0.0"
-    react: ">=16.14.0"
+    "@emotion/react": ">=11.*"
+    "@emotion/styled": ">=11.*"
+    react: ">=18.*"
   languageName: unknown
   linkType: soft
 
@@ -4642,7 +4656,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lexical/clipboard@npm:0.3.7":
+"@lexical/clipboard@npm:0.3.7, @lexical/clipboard@npm:^0.3.7":
   version: 0.3.7
   resolution: "@lexical/clipboard@npm:0.3.7"
   dependencies:
@@ -4730,7 +4744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lexical/list@npm:0.3.7":
+"@lexical/list@npm:0.3.7, @lexical/list@npm:^0.3.7":
   version: 0.3.7
   resolution: "@lexical/list@npm:0.3.7"
   dependencies:
@@ -4827,7 +4841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lexical/rich-text@npm:0.3.7":
+"@lexical/rich-text@npm:0.3.7, @lexical/rich-text@npm:^0.3.7":
   version: 0.3.7
   resolution: "@lexical/rich-text@npm:0.3.7"
   peerDependencies:
@@ -4839,7 +4853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lexical/selection@npm:0.3.7":
+"@lexical/selection@npm:0.3.7, @lexical/selection@npm:^0.3.7":
   version: 0.3.7
   resolution: "@lexical/selection@npm:0.3.7"
   peerDependencies:

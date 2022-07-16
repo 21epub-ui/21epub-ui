@@ -15,15 +15,31 @@
     "lint": "yarn node ../../scripts/lint.mjs",
     "version": "yarn node ../../scripts/version.mjs"
   },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.2",
+    "@chakra-ui/react": "^2.2.1",
+    "@chakra-ui/system": "^2.1.3",
+    "@lexical/clipboard": "^0.3.7",
+    "@lexical/headless": "^0.3.7",
+    "@lexical/html": "^0.3.7",
+    "@lexical/list": "^0.3.7",
+    "@lexical/react": "^0.3.7",
+    "@lexical/rich-text": "^0.3.7",
+    "@lexical/selection": "^0.3.7",
+    "@lexical/text": "^0.3.7",
+    "@lexical/utils": "^0.3.7",
+    "framer-motion": "^6.3.16",
+    "lexical": "^0.3.7"
+  },
   "peerDependencies": {
-    "@emotion/react": ">=11.0.0",
-    "@emotion/styled": ">=11.0.0",
-    "react": ">=16.14.0"
+    "@emotion/react": ">=11.*",
+    "@emotion/styled": ">=11.*",
+    "react": ">=18.*"
   },
   "devDependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@storybook/react": "^6.5.9",
-    "@types/react": "^17"
+    "@types/react": "^18"
   }
 }
