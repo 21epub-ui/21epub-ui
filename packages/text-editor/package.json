@@ -36,6 +36,8 @@
     "react": ">=17.*"
   },
   "devDependencies": {
+    "@chakra-ui/react": "^2.2.4",
+    "@chakra-ui/system": "^2.2.2",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@storybook/react": "^6.5.9",
