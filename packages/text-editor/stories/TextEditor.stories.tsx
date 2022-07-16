@@ -7,7 +7,7 @@ export default {
 } as ComponentMeta<typeof TextEditor>
 
 const Template: ComponentStory<typeof TextEditor> = (args) => (
-  <TextEditor {...args} />
+  <TextEditor style={{ height: innerHeight - 32 }} {...args} />
 )
 
 export const Default = Template.bind({})
