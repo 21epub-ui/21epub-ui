@@ -31,6 +31,8 @@ __metadata:
   resolution: "@21epub-ui/comments@workspace:packages/comments"
   dependencies:
     "@chakra-ui/icons": ^2.0.2
+    "@chakra-ui/react": ^2.2.4
+    "@chakra-ui/system": ^2.2.2
     "@dnd-kit/core": ^6.0.5
     "@dnd-kit/utilities": ^3.2.0
     "@emotion/react": ^11.9.3
