@@ -15,6 +15,14 @@
     "lint": "yarn node ../../scripts/lint.mjs",
     "version": "yarn node ../../scripts/version.mjs"
   },
+  "peerDependencies": {
+    "@chakra-ui/react": ">=1.8",
+    "@chakra-ui/system": ">=1.8",
+    "@emotion/react": ">=11.*",
+    "@emotion/styled": ">=11.*",
+    "framer-motion": ">=6.x",
+    "react": ">=17.*"
+  },
   "dependencies": {
     "@lexical/clipboard": "^0.3.7",
     "@lexical/headless": "^0.3.7",
@@ -25,15 +33,7 @@
     "@lexical/selection": "^0.3.7",
     "@lexical/text": "^0.3.7",
     "@lexical/utils": "^0.3.7",
-    "framer-motion": "^6.3.16",
     "lexical": "^0.3.7"
-  },
-  "peerDependencies": {
-    "@chakra-ui/react": ">=1.8",
-    "@chakra-ui/system": ">=1.8",
-    "@emotion/react": ">=11.*",
-    "@emotion/styled": ">=11.*",
-    "react": ">=17.*"
   },
   "devDependencies": {
     "@chakra-ui/react": "^2.2.4",
@@ -41,6 +41,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@storybook/react": "^6.5.9",
-    "@types/react": "^18"
+    "@types/react": "^18",
+    "framer-motion": "^6.3.16"
   }
 }

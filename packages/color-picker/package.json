@@ -16,14 +16,14 @@
     "version": "yarn node ../../scripts/version.mjs"
   },
   "peerDependencies": {
-    "@emotion/react": ">=11.0.0",
-    "@emotion/styled": ">=11.0.0",
-    "react": ">=16.14.0",
-    "react-dom": ">=16.14.0"
+    "@emotion/react": ">=11.x",
+    "@emotion/styled": ">=11.x",
+    "antd": ">=4.x",
+    "react": ">=17.x",
+    "react-dom": ">=17.x"
   },
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
-    "antd": "^4.21.4",
     "colord": "^2.9.2",
     "react-colorful": "^5.5.1"
   },
@@ -32,6 +32,7 @@
     "@emotion/styled": "^11.9.3",
     "@storybook/react": "^6.5.9",
     "@types/react": "^17",
-    "@types/react-dom": "^17"
+    "@types/react-dom": "^17",
+    "antd": "^4.21.4"
   }
 }
