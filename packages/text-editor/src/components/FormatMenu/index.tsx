@@ -66,7 +66,7 @@ const FormatMenu: React.FC<FormatMenuProps> = ({
       >
         {activeMenuItem.text}
       </MenuButton>
-      <MenuList>
+      <MenuList borderColor="gray.200" minWidth="fit-content">
         {Object.entries(menuItems).map(([key, { icon, text, onClick }]) => (
           <MenuItem key={key} icon={icon} onClick={onClick}>
             {text}
