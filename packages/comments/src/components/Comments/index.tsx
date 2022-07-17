@@ -8,16 +8,34 @@ import CommentRoom from '../CommentRoom'
 const Comments: React.FC<CommentsProps> = ({ style, ...props }) => {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 })
 
-  const restrict: Modifier = ({ transform }) => {
+  const restrict: Modifier = ({ transform, draggingNodeRect }) => {
     const x = transform.x + coordinates.x
     const y = transform.y + coordinates.y
-    const safeWeight = innerWidth - 42
-    const safeHeight = innerHeight - 42
+
+    if (draggingNodeRect === null) return { ...transform, x, y }
+
+    const safeArea = {
+      top: innerHeight - 42,
+      left: innerWidth - 42,
+    }
+
+    const getCoordinate = (axis: 'x' | 'y', offset: number) => {
+      const edge = axis === 'x' ? 'left' : 'top'
+      const distance = draggingNodeRect[edge] + offset
+
+      if (distance < 0) return -draggingNodeRect[edge]
+
+      if (distance > safeArea[edge]) {
+        return safeArea[edge] - draggingNodeRect[edge]
+      }
+
+      return offset
+    }
 
     return {
       ...transform,
-      x: x < 0 ? 0 : x > safeWeight ? safeWeight : x,
-      y: y < 0 ? 0 : y > safeHeight ? safeHeight : y,
+      x: getCoordinate('x', x),
+      y: getCoordinate('y', y),
     }
   }
 
