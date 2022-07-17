@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import type { Modifier } from '@dnd-kit/core'
 import { DndContext } from '@dnd-kit/core'
 import { useState } from 'react'
+import { chakraTheme } from '../../config'
 import type { CommentsProps } from '../../index.types'
 import CommentRoom from '../CommentRoom'
 
@@ -40,7 +41,7 @@ const Comments: React.FC<CommentsProps> = ({ style, ...props }) => {
   }
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={chakraTheme}>
       <DndContext
         modifiers={[restrict]}
         onDragEnd={({ delta }) => setCoordinates(delta)}

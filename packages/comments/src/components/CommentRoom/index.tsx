@@ -119,8 +119,6 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
         <StyledTabList>
           <IconButton
             ref={setActivatorNodeRef}
-            variant="ghost"
-            size="xs"
             aria-label="拖拽"
             icon={<DragHandleIcon />}
             {...listeners}
@@ -129,12 +127,7 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
             <StyledTab>进行中</StyledTab>
             <StyledTab>已结束</StyledTab>
           </Center>
-          <Button
-            variant="ghost"
-            size="xs"
-            fontWeight="normal"
-            onClick={closeCommentRoom}
-          >
+          <Button fontWeight="normal" onClick={closeCommentRoom}>
             关闭
           </Button>
         </StyledTabList>
@@ -149,8 +142,6 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
           <Flex paddingBottom="8px" margin="0 8px">
             <Text>回复 {replyTarget.nickname} :</Text>
             <IconButton
-              variant="ghost"
-              size="xs"
               borderRadius="50"
               marginLeft="auto"
               aria-label="取消回复"

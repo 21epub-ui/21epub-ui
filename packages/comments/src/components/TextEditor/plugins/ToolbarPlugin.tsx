@@ -48,8 +48,6 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled, onSave }) => {
     >
       <IconButton
         disabled={disabled}
-        variant="ghost"
-        size="xs"
         aria-label="添加图片"
         icon={<ImageIcon />}
         onClick={() => {
@@ -58,8 +56,8 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled, onSave }) => {
       />
       <Button
         disabled={disabled}
+        variant="solid"
         colorScheme="twitter"
-        size="xs"
         fontWeight="normal"
         marginLeft="auto"
         onClick={() => {
