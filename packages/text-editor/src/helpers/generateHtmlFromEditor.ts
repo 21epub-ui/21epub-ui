@@ -7,6 +7,7 @@ import type {
   SerializedLexicalNode,
 } from 'lexical'
 import { onError } from '../components/TextEditor'
+import { editorNodes } from '../config'
 import getRandomId from '../utils/getRandomId'
 import isParagraphNode from './isParagraphNode'
 
@@ -26,6 +27,7 @@ const processNodes = async (
 
 const headlessEditor = createHeadlessEditor({
   onError,
+  nodes: editorNodes,
   namespace: getRandomId(8),
 })
 
@@ -46,7 +48,7 @@ const generateHtmlFromEditor = async (
     headlessEditor.setEditorState(editorState)
   })
 
-  return new Promise((resolve) => {
+  return new Promise<string>((resolve) => {
     headlessEditor.update(() => {
       resolve($generateHtmlFromNodes(headlessEditor, null))
     })

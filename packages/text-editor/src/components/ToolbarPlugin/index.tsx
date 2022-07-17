@@ -128,7 +128,7 @@ const ToolbarPlugin: React.FC = () => {
       <Divider orientation="vertical" />
       <Box>
         <FormatMenu
-          disabled={editor === activeEditor}
+          disabled={editor !== activeEditor}
           editor={editor}
           selectionType={selectionType}
         />
