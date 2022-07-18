@@ -1,11 +1,19 @@
 import styled from '@emotion/styled'
-import { editorStyles } from '../../config'
+import { editorStyles, editorTypefaces } from '../../config'
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 0.375rem;
   background-color: white;
+
+  .editor-ltr,
+  .editor-rtl {
+    color: ${editorStyles.color};
+    font-family: ${editorStyles.fontFamily};
+    font-size: ${editorStyles.fontSize};
+    line-height: ${editorStyles.lineHeight};
+  }
 
   .editor-ltr {
     text-align: left;
@@ -17,10 +25,6 @@ export const Container = styled.div`
 
   .editor-paragraph {
     margin: 0;
-    color: ${editorStyles.color};
-    font-family: ${editorStyles.fontFamily};
-    font-size: ${editorStyles.fontSize};
-    line-height: ${editorStyles.lineHeight};
   }
 
   .editor-quote {
@@ -37,16 +41,16 @@ export const Container = styled.div`
     padding: 0;
   }
 
-  .editor-h1 {
-    font-size: 16pt;
+  .editor-h1 span {
+    font-size: 16pt !important;
   }
 
-  .editor-h2 {
-    font-size: 14pt;
+  .editor-h2 span {
+    font-size: 14pt !important;
   }
 
-  .editor-h3 {
-    font-size: 13pt;
+  .editor-h3 span {
+    font-size: 13pt !important;
   }
 
   .editor-ol,
@@ -72,11 +76,14 @@ export const Container = styled.div`
   }
 
   .editor-ul > .editor-li::before {
-    content: '•';
-    margin-right: 0.5em;
-    font-family: monospace;
+    content: '';
+    display: inline-block;
     vertical-align: middle;
     border-radius: 50px;
+    width: 0.25em;
+    height: 0.25em;
+    margin: 0 0.375em;
+    background-color: currentColor;
   }
 
   .editor-li-nested {
@@ -111,7 +118,7 @@ export const Container = styled.div`
 
   .editor-text-code {
     padding: 2px 4px;
-    font-family: monospace;
+    font-family: ${editorTypefaces.monospace};
     font-size: 85%;
     background-color: #f0f0f0;
   }

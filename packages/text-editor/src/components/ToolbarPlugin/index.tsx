@@ -1,35 +1,45 @@
-import { Box, Divider, HStack, IconButton } from '@chakra-ui/react'
+import { Box, Divider, HStack } from '@chakra-ui/react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { $getSelectionStyleValueForProperty } from '@lexical/selection'
+import {
+  $getSelectionStyleValueForProperty,
+  $isParentElementRTL,
+} from '@lexical/selection'
 import { mergeRegister } from '@lexical/utils'
-import type { RangeSelection } from 'lexical'
+import type { LexicalNode, RangeSelection } from 'lexical'
 import {
   $getSelection,
   $isRangeSelection,
-  CAN_REDO_COMMAND,
-  CAN_UNDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
-  FORMAT_TEXT_COMMAND,
-  REDO_COMMAND,
-  SELECTION_CHANGE_COMMAND,
-  UNDO_COMMAND,
 } from 'lexical'
 import { useCallback, useEffect, useState } from 'react'
+import { editorCommands } from '../../config'
+import getButtonVariant from '../../helpers/getButtonVariant'
+import getSelectionNode from '../../helpers/getSelectionType'
+import FontFamilyMenu from '../FontFamilyMenu'
+import FontSizeMenu from '../FontSizeMenu'
+import TagMenu from '../TagMenu'
 import {
-  BoldIcon,
-  ItalicIcon,
-  RedoIcon,
-  StrikethroughIcon,
-  UnderlineIcon,
-  UndoIcon,
+  boldIcon,
+  indentIcon,
+  italicIcon,
+  orderedListIcon,
+  outdentIcon,
+  redoIcon,
+  strikethroughIcon,
+  underlineIcon,
+  undoIcon,
+  unorderedListIcon,
 } from '../Icons'
-import getSelectionType from '../../helpers/getSelectionType'
-import FormatMenu from '../FormatMenu'
+import TipButton from '../TipButton'
 
-const ToolbarPlugin: React.FC = () => {
+interface ToolbarPluginProps {
+  disabled?: boolean
+}
+
+const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
   const [editor] = useLexicalComposerContext()
   const [activeEditor, setActiveEditor] = useState(editor)
-  const [selectionType, setSelectionType] = useState('paragraph')
+  const [selectionNode, setSelectionNode] = useState<LexicalNode | null>(null)
   const [canUndo, setCanUndo] = useState(false)
   const [canRedo, setCanRedo] = useState(false)
   const [fontFamily, setFontFamily] = useState('')
@@ -40,12 +50,22 @@ const ToolbarPlugin: React.FC = () => {
   const [isItalic, setIsItalic] = useState(false)
   const [isUnderline, setIsUnderline] = useState(false)
   const [isStrikethrough, setIsStrikethrough] = useState(false)
+  const [isRlt, setIsRlt] = useState(false)
+
+  const editorActive = !disabled && editor === activeEditor
+  const selectionNodeType = selectionNode?.getType?.()
+  const selectionNodeListType = selectionNode?.getListType?.()
+
+  useEffect(() => {
+    editor.setReadOnly(disabled ?? false)
+  }, [disabled, editor])
 
   const getSelectionStyles = useCallback((selection: RangeSelection) => {
     setIsBold(selection.hasFormat('bold'))
     setIsItalic(selection.hasFormat('italic'))
     setIsUnderline(selection.hasFormat('underline'))
     setIsStrikethrough(selection.hasFormat('strikethrough'))
+    setIsRlt($isParentElementRTL(selection))
 
     setFontFamily($getSelectionStyleValueForProperty(selection, 'font-family'))
     setFontSize($getSelectionStyleValueForProperty(selection, 'font-size'))
@@ -61,12 +81,13 @@ const ToolbarPlugin: React.FC = () => {
     if (!$isRangeSelection(selection)) return
 
     getSelectionStyles(selection)
-    setSelectionType(getSelectionType(editor, selection))
+
+    setSelectionNode(getSelectionNode(editor, selection))
   }, [editor, getSelectionStyles])
 
   useEffect(() => {
     return editor.registerCommand(
-      SELECTION_CHANGE_COMMAND,
+      editorCommands.selectionChange,
       (_payload, newEditor) => {
         onSelectionChange()
         setActiveEditor(newEditor)
@@ -84,7 +105,7 @@ const ToolbarPlugin: React.FC = () => {
         })
       }),
       activeEditor.registerCommand<boolean>(
-        CAN_UNDO_COMMAND,
+        editorCommands.canUndo,
         (payload) => {
           setCanUndo(payload)
           return false
@@ -92,7 +113,7 @@ const ToolbarPlugin: React.FC = () => {
         COMMAND_PRIORITY_CRITICAL
       ),
       activeEditor.registerCommand<boolean>(
-        CAN_REDO_COMMAND,
+        editorCommands.canRedo,
         (payload) => {
           setCanRedo(payload)
           return false
@@ -102,6 +123,28 @@ const ToolbarPlugin: React.FC = () => {
     )
   }, [activeEditor, onSelectionChange])
 
+  const dispatchCommand: <P>(
+    type: keyof typeof editorCommands,
+    payload?: P
+  ) => boolean = (type, payload) => {
+    const command = editorCommands[type]
+
+    if (command === undefined) return false
+
+    return activeEditor.dispatchCommand(editorCommands[type], payload)
+  }
+
+  const dispatchInsertListCommand = (type: 'number' | 'bullet') => {
+    const command =
+      type === 'number' ? 'insertOrderedList' : 'insertUnorderedList'
+
+    if (selectionNodeListType !== type) {
+      return dispatchCommand(command)
+    } else {
+      return dispatchCommand('removeList')
+    }
+  }
+
   return (
     <HStack
       spacing="2px"
@@ -109,61 +152,99 @@ const ToolbarPlugin: React.FC = () => {
       borderBottom="1px solid"
       borderBottomColor="gray.200"
     >
-      <IconButton
-        aria-label="Undo"
-        icon={UndoIcon}
-        disabled={!canUndo}
-        onClick={() => {
-          activeEditor.dispatchCommand(UNDO_COMMAND, undefined)
-        }}
+      <TipButton
+        label="撤销"
+        icon={undoIcon}
+        disabled={disabled || !canUndo}
+        onClick={() => dispatchCommand('undo')}
       />
-      <IconButton
-        aria-label="Redo"
-        icon={RedoIcon}
-        disabled={!canRedo}
-        onClick={() => {
-          activeEditor.dispatchCommand(REDO_COMMAND, undefined)
-        }}
+      <TipButton
+        label="重做"
+        icon={redoIcon}
+        disabled={disabled || !canRedo}
+        onClick={() => dispatchCommand('redo')}
       />
       <Divider orientation="vertical" />
       <Box>
-        <FormatMenu
-          disabled={editor !== activeEditor}
+        <TagMenu
+          disabled={!editorActive}
           editor={editor}
-          selectionType={selectionType}
+          selectionTag={selectionNode?.getTag?.()}
+        />
+      </Box>
+      <Box>
+        <FontFamilyMenu
+          disabled={disabled}
+          editor={editor}
+          selectionFontFamily={fontFamily}
+        />
+      </Box>
+      <Box>
+        <FontSizeMenu
+          disabled={disabled || selectionNodeType === 'heading'}
+          editor={editor}
+          selectionFontSize={fontSize}
         />
       </Box>
       <Divider orientation="vertical" />
-      <IconButton
-        aria-label="Bold"
-        variant={isBold ? 'solid' : 'ghost'}
-        icon={BoldIcon}
+      <TipButton
+        label="粗体"
+        disabled={disabled || selectionNodeType === 'heading'}
+        variant={getButtonVariant(isBold)}
+        icon={boldIcon}
+        onClick={() => dispatchCommand('formatText', 'bold')}
+      />
+      <TipButton
+        label="斜体"
+        disabled={disabled}
+        variant={getButtonVariant(isItalic)}
+        icon={italicIcon}
+        onClick={() => dispatchCommand('formatText', 'italic')}
+      />
+      <TipButton
+        label="下划线"
+        disabled={disabled}
+        variant={getButtonVariant(isUnderline)}
+        icon={underlineIcon}
+        onClick={() => dispatchCommand('formatText', 'underline')}
+      />
+      <TipButton
+        label="删除线"
+        disabled={disabled}
+        variant={getButtonVariant(isStrikethrough)}
+        icon={strikethroughIcon}
+        onClick={() => dispatchCommand('formatText', 'strikethrough')}
+      />
+      <Divider orientation="vertical" />
+      <TipButton
+        label="有序列表"
+        disabled={!editorActive}
+        variant={getButtonVariant(selectionNodeListType === 'number')}
+        icon={orderedListIcon}
+        onClick={() => dispatchInsertListCommand('number')}
+      />
+      <TipButton
+        label="无序列表"
+        disabled={!editorActive}
+        variant={getButtonVariant(selectionNodeListType === 'bullet')}
+        icon={unorderedListIcon}
+        onClick={() => dispatchInsertListCommand('bullet')}
+      />
+      <Divider orientation="vertical" />
+      <TipButton
+        label="增加缩进"
+        disabled={disabled}
+        icon={indentIcon}
         onClick={() => {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')
+          dispatchCommand(isRlt ? 'outdentContent' : 'indentContent')
         }}
       />
-      <IconButton
-        aria-label="Italic"
-        variant={isItalic ? 'solid' : 'ghost'}
-        icon={ItalicIcon}
+      <TipButton
+        label="减少缩进"
+        disabled={disabled}
+        icon={outdentIcon}
         onClick={() => {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')
-        }}
-      />
-      <IconButton
-        aria-label="Underline"
-        variant={isUnderline ? 'solid' : 'ghost'}
-        icon={UnderlineIcon}
-        onClick={() => {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')
-        }}
-      />
-      <IconButton
-        aria-label="Strikethrough"
-        variant={isStrikethrough ? 'solid' : 'ghost'}
-        icon={StrikethroughIcon}
-        onClick={() => {
-          activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')
+          dispatchCommand(isRlt ? 'indentContent' : 'outdentContent')
         }}
       />
     </HStack>

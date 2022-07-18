@@ -1,12 +1,42 @@
-import { ListItemNode, ListNode } from '@lexical/list'
+import {
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  ListItemNode,
+  ListNode,
+  REMOVE_LIST_COMMAND,
+} from '@lexical/list'
 import { HeadingNode } from '@lexical/rich-text'
 import type { EditorThemeClasses } from 'lexical'
+import { INDENT_CONTENT_COMMAND, OUTDENT_CONTENT_COMMAND } from 'lexical'
+import { SELECTION_CHANGE_COMMAND } from 'lexical'
+import {
+  CAN_REDO_COMMAND,
+  CAN_UNDO_COMMAND,
+  FORMAT_TEXT_COMMAND,
+  REDO_COMMAND,
+  UNDO_COMMAND,
+} from 'lexical'
+import combineFontFamily from '../utils/combineFontFamily'
 
 export const editorNodes = [HeadingNode, ListNode, ListItemNode]
 
+export const editorCommands = {
+  selectionChange: SELECTION_CHANGE_COMMAND,
+  undo: UNDO_COMMAND,
+  redo: REDO_COMMAND,
+  canUndo: CAN_UNDO_COMMAND,
+  canRedo: CAN_REDO_COMMAND,
+  formatText: FORMAT_TEXT_COMMAND,
+  insertOrderedList: INSERT_ORDERED_LIST_COMMAND,
+  insertUnorderedList: INSERT_UNORDERED_LIST_COMMAND,
+  removeList: REMOVE_LIST_COMMAND,
+  indentContent: INDENT_CONTENT_COMMAND,
+  outdentContent: OUTDENT_CONTENT_COMMAND,
+}
+
 export const editorTheme: EditorThemeClasses = {
-  ltr: 'ltr',
-  rtl: 'rtl',
+  ltr: 'editor-ltr',
+  rtl: 'editor-rtl',
   paragraph: 'editor-paragraph',
   quote: 'editor-quote',
   heading: {
@@ -38,8 +68,19 @@ export const editorTheme: EditorThemeClasses = {
   },
 }
 
+export const editorTypefaces = {
+  sansSerif: combineFontFamily(['system-ui', 'sans-serif']),
+  serif: combineFontFamily(['Times New Roman', 'Songti SC', 'SimSun', 'serif']),
+  monospace: combineFontFamily([
+    'SF Mono',
+    'Source Code Pro',
+    'Consolas',
+    'monospace',
+  ]),
+}
+
 export const editorStyles = {
-  fontFamily: ['system-ui', 'Helvetica Neue', 'Helvetica', 'sans-serif'].join(),
+  fontFamily: editorTypefaces.sansSerif,
   fontSize: '11pt',
   lineHeight: '1.7',
   color: '#333',
