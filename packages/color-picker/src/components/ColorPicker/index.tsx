@@ -48,6 +48,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
             width="min-content"
             borderColor="gray.200"
             borderRadius="sm"
+            backgroundColor="white"
           >
             <Picker
               className={pickerClassName}

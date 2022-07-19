@@ -80,12 +80,7 @@ const Picker: React.FC<Props> = ({
   }
 
   return (
-    <Flex
-      padding="10px"
-      backgroundColor="white"
-      className={className}
-      style={style}
-    >
+    <Flex padding="10px" className={className} style={style}>
       <SwatchesSet align="center">
         {onRenderSwatches?.({ onChange: onColorChange }) || (
           <HStack>

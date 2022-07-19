@@ -1,11 +1,6 @@
 import styled from '@emotion/styled'
 import background from '../../assets/transparent.png'
 
-export const Container = styled.div`
-  display: flex;
-  align-items: center;
-`
-
 interface ColorRectContainerProps {
   disabled?: boolean
 }
