@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from '@chakra-ui/react'
+import { Box, HStack } from '@chakra-ui/react'
 import DOMPurify from 'dompurify'
 import type { HTMLAttributes } from 'react'
 import updateComment from '../../api/updateComment'
@@ -35,10 +35,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
   >
     <div>
       <HStack>
-        <Text noOfLines={1} fontWeight="bold">
+        <Box noOfLines={1} fontWeight="bold">
           {comment.nickname}
-        </Text>
-        {target && <Text fontSize="small">回复 {target.nickname}</Text>}
+        </Box>
+        {target && <Box fontSize="small">回复 {target.nickname}</Box>}
         <Box as={Time} color="#8c8c8c" fontSize="xs" value={comment.created} />
         <Actions>
           {layer === 0 && (

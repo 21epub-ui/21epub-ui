@@ -1,13 +1,5 @@
 import { DragHandleIcon, SmallCloseIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  IconButton,
-  Tabs,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Button, Center, Flex, IconButton, Tabs } from '@chakra-ui/react'
 import { useDraggable } from '@dnd-kit/core'
 import type { Coordinates } from '@dnd-kit/utilities'
 import { $isRootTextContentEmpty } from '@lexical/text'
@@ -140,7 +132,7 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
       <Box padding="12px 0" marginTop="auto" borderTop="1px solid #f0f0f0">
         {replyTarget && (
           <Flex paddingBottom="8px" margin="0 8px">
-            <Text>回复 {replyTarget.nickname} :</Text>
+            <Box>回复 {replyTarget.nickname} :</Box>
             <IconButton
               borderRadius="50"
               marginLeft="auto"
