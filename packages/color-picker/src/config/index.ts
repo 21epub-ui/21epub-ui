@@ -1,4 +1,5 @@
 import { blue, green, red, yellow } from '@ant-design/colors'
+import { extendTheme } from '@chakra-ui/react'
 
 export const defaultLocalStorageKey = 'color-picker-history'
 
@@ -12,3 +13,31 @@ export const ThemeColors = grayscale.concat(
     return Array.from({ length: 5 }).map((_, index) => item[index * 2])
   })
 )
+
+export const chakraTheme = extendTheme({
+  styles: {
+    global: null,
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        size: 'xs',
+      },
+    },
+    Divider: {
+      baseStyle: {
+        color: 'gray.200',
+      },
+    },
+    Input: {
+      defaultProps: {
+        size: 'xs',
+      },
+    },
+    NumberInput: {
+      defaultProps: {
+        size: 'xs',
+      },
+    },
+  },
+})

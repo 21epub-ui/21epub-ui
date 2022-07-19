@@ -1,5 +1,4 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
-import 'antd/dist/antd.css'
 import { useState } from 'react'
 import { ColorPicker } from '../src'
 

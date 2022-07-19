@@ -17,8 +17,8 @@ const getColorHistory = (
     return colorHistory
       .filter((item) => colord(item).isValid())
       .slice(0, length < 0 ? 0 : length)
-  } catch (err) {
-    console.error(err)
+  } catch (error) {
+    console.error(error)
   }
   return []
 }

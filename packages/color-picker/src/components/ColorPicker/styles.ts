@@ -11,11 +11,18 @@ interface ColorRectContainerProps {
 }
 
 export const ColorRectContainer = styled.div<ColorRectContainerProps>`
-  padding: 4px;
-  border: 1px solid #d4d4d4;
-  width: calc(16px + (4px + 1px) * 2);
-  height: calc(16px + (4px + 1px) * 2);
+  padding: 2px;
+  border: 1px solid var(--chakra-colors-gray-200);
+  border-radius: 2px;
+  width: 24px;
+  height: 24px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  transition-property: var(--chakra-transition-property-common);
+  transition-duration: var(--chakra-transition-duration-normal);
+
+  :hover {
+    border-color: var(--chakra-colors-gray-300);
+  }
 `
 
 interface ColorRectProps {
@@ -25,9 +32,11 @@ interface ColorRectProps {
 }
 
 export const ColorRect = styled.div<ColorRectProps>`
-  width: ${({ width }) => width ?? 16}px;
-  height: ${({ height }) => height ?? 16}px;
+  width: ${({ width }) => width ?? 18}px;
+  height: ${({ height }) => height ?? 18}px;
+  border-radius: 2px;
   background-blend-mode: difference;
   background-color: ${({ color }) => color};
   background-image: url(${background});
+  background-repeat: round;
 `

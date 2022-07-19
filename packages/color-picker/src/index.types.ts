@@ -6,8 +6,9 @@ export interface ColorPickerProps {
   label?: string
   disabled?: boolean
   style?: React.CSSProperties
-  visible?: boolean
-  onVisibleChange?: (visible: boolean) => void
+  isOpen?: boolean
+  onOpen?: () => void
+  onClose?: () => void
   /**
    * 子组件样式
    */
@@ -37,8 +38,5 @@ export interface ColorPickerProps {
   /**
    * 自定义颜色指示器 render 函数
    */
-  onRenderIndicator?: (props: {
-    ref: React.RefObject<any>
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void
-  }) => React.ReactNode
+  onRenderIndicator?: () => React.ReactNode
 }

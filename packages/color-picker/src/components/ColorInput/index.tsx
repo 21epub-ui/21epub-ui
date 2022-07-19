@@ -1,16 +1,22 @@
-import type { InputProps } from 'antd'
+import type { InputProps } from '@chakra-ui/react'
+import { Box, Input, Stack } from '@chakra-ui/react'
 import type { Colord } from 'colord'
 import { colord } from 'colord'
 import { useEffect, useState } from 'react'
 import getColorString from '../../utils/getColorString'
-import Input from '../Input'
 
 interface Props extends Omit<InputProps, 'color' | 'value' | 'onChange'> {
   color: Colord
   onChange?: (value: Props['color']) => void
 }
 
-const ColorInput: React.FC<Props> = ({ color, onChange, ...props }) => {
+const ColorInput: React.FC<Props> = ({
+  color,
+  onChange,
+  onBlur,
+  onKeyPress,
+  ...props
+}) => {
   const [inputValue, setInputValue] = useState(getColorString(color))
 
   useEffect(() => {
@@ -29,20 +35,27 @@ const ColorInput: React.FC<Props> = ({ color, onChange, ...props }) => {
   }
 
   return (
-    <Input
-      label="色值"
-      value={inputValue}
-      onChange={(e) => {
-        setInputValue(e.currentTarget.value)
-      }}
-      onBlur={(e) => {
-        onColorChange(e.currentTarget.value.trim())
-      }}
-      onPressEnter={(e) => {
-        onColorChange(e.currentTarget.value.trim())
-      }}
-      {...props}
-    />
+    <Stack align="center" spacing="4px" lineHeight="1">
+      <Input
+        borderColor="gray.200"
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.currentTarget.value)
+        }}
+        onBlur={(e) => {
+          onColorChange(e.currentTarget.value.trim())
+          onBlur?.(e)
+        }}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            onColorChange(e.currentTarget.value.trim())
+          }
+          onKeyPress?.(e)
+        }}
+        {...props}
+      />
+      <Box fontSize="xs">色值</Box>
+    </Stack>
   )
 }
 

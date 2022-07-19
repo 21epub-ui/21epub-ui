@@ -1,85 +1,68 @@
-import { Space } from 'antd'
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  HStack,
+  NumberInput,
+  NumberInputField,
+  Stack,
+} from '@chakra-ui/react'
 import { colord } from 'colord'
-import React, { useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
+import type React from 'react'
+import { useEffect, useState } from 'react'
 import { ThemeColors } from '../../config'
 import getColorHistory from '../../helpers/getColorHistory'
 import updateColorHistory from '../../helpers/updateColorHistory'
 import type { ColorPickerProps } from '../../index.types'
-import Button from '../Button'
 import ColorInput from '../ColorInput'
 import { ColorRect } from '../ColorPicker/styles'
-import NumberInput from '../NumberInput'
 import Swatches from '../Swatches'
-import {
-  Actions,
-  Buttons,
-  ClearButton,
-  ColorHistory,
-  Container,
-  Divider,
-  Painter,
-  StyledColorPicker,
-  SwatchesSet,
-} from './styles'
+import { ClearButton, StyledColorPicker, SwatchesSet } from './styles'
 
 interface Props
   extends Pick<
     ColorPickerProps,
     | 'className'
     | 'style'
+    | 'isOpen'
     | 'color'
     | 'historySize'
     | 'localStorageKey'
+    | 'onClose'
     | 'onChange'
     | 'onRenderSwatches'
   > {
   color: string
-  visible: boolean
-  onVisibleChange: (visible: boolean) => void
 }
 
-const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-  const {
-    className,
-    style,
-    color,
-    historySize,
-    localStorageKey,
-    onChange,
-    visible,
-    onVisibleChange,
-    onRenderSwatches,
-  } = props
-
+const Picker: React.FC<Props> = ({
+  className,
+  style,
+  isOpen,
+  color,
+  historySize,
+  localStorageKey,
+  onClose,
+  onChange,
+  onRenderSwatches,
+}) => {
   const [initColor, setInitColor] = useState(color)
   const [currColor, setCurrColor] = useState(colord(color))
-  const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
   const recentColorsLength = historySize ?? 2 * ThemeColors.length
 
   const colorHistory = getColorHistory(recentColorsLength, localStorageKey)
 
   useEffect(() => {
-    const element = document.createElement('div')
-    setContainer(element)
-    document.body.appendChild(element)
-
-    return () => {
-      ReactDOM.unmountComponentAtNode(document.body)
-      element.remove()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (visible) {
+    if (isOpen) {
       setInitColor(color)
       setCurrColor(colord(color))
     } else if (initColor !== color) {
       updateColorHistory(color, recentColorsLength, localStorageKey)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible])
+  }, [isOpen])
 
   const onColorChange = (
     value: Parameters<typeof colord>[0],
@@ -96,85 +79,84 @@ const Picker = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     onChange?.(newColor.toRgbString())
   }
 
-  if (!container) return null
-
-  return ReactDOM.createPortal(
-    <Container
-      ref={ref}
+  return (
+    <Flex
+      padding="10px"
+      backgroundColor="white"
       className={className}
-      style={{
-        ...style,
-        display: visible ? 'flex' : 'none',
-      }}
+      style={style}
     >
-      <SwatchesSet direction="vertical">
+      <SwatchesSet align="center">
         {onRenderSwatches?.({ onChange: onColorChange }) || (
-          <Space>
+          <HStack>
             {ThemeColors.map((item, index) => (
-              <Swatches
-                key={index}
-                direction="vertical"
-                colors={item}
-                onChange={onColorChange}
-              />
+              <Swatches key={index} colors={item} onChange={onColorChange} />
             ))}
-          </Space>
+          </HStack>
         )}
         {!colorHistory.length || <Divider />}
-        <Swatches wrap={true} colors={colorHistory} onChange={onColorChange} />
+        <Swatches colors={colorHistory} onChange={onColorChange} />
         <ColorInput color={currColor} onChange={onColorChange} />
       </SwatchesSet>
-      <Painter direction="vertical">
+      <Stack width="220px" padding="0 10px">
         <StyledColorPicker color={currColor.rgba} onChange={onColorChange} />
-        <Space>
+        <HStack>
           {['r', 'g', 'b', 'a'].map((item) => {
             const isAlpha = item === 'a'
 
             return (
-              <NumberInput
-                key={item}
-                label={item.toUpperCase()}
-                min={0}
-                max={isAlpha ? 1 : 255}
-                step={isAlpha ? 0.1 : 1}
-                controls={false}
-                value={currColor.rgba[item]}
-                onChange={(value) => {
-                  const newColor = {
-                    ...currColor.rgba,
-                    [item]: value ?? value[item],
-                  }
-                  onColorChange(newColor)
-                }}
-              />
+              <Stack key={item} align="center" spacing="4px" lineHeight="1">
+                <NumberInput
+                  min={0}
+                  max={isAlpha ? 1 : 255}
+                  step={isAlpha ? 0.1 : 1}
+                  value={currColor.rgba[item]}
+                  onChange={(value) => {
+                    const newColor = {
+                      ...currColor.rgba,
+                      [item]: value ?? value[item],
+                    }
+                    onColorChange(newColor)
+                  }}
+                >
+                  <NumberInputField padding="0 8px" borderColor="gray.200" />
+                </NumberInput>
+                <Box fontSize="xs">{item.toUpperCase()}</Box>
+              </Stack>
             )
           })}
-        </Space>
-      </Painter>
-      <Actions>
-        <Buttons>
+        </HStack>
+      </Stack>
+      <Flex align="center" direction="column">
+        <Stack width="100%">
           <Button
-            label="确定"
-            type="primary"
-            onClick={() => onVisibleChange(false)}
-          />
-          <Button label="复位" onClick={() => onColorChange(initColor, true)} />
-        </Buttons>
-        <ColorHistory>
+            colorScheme="twitter"
+            fontWeight="normal"
+            borderRadius="sm"
+            onClick={onClose}
+          >
+            确定
+          </Button>
+          <Button
+            fontWeight="normal"
+            borderRadius="sm"
+            onClick={() => onColorChange(initColor, true)}
+          >
+            复位
+          </Button>
+        </Stack>
+        <Stack align="center" margin="auto 0" fontSize="xs" spacing="4px">
           <div>新的</div>
           <ColorRect width={48} height={32} color={currColor.toRgbString()} />
           <ColorRect width={48} height={32} color={initColor} />
           <div>之前</div>
-        </ColorHistory>
+        </Stack>
         <ClearButton
           onClick={() => onColorChange({ r: 0, g: 0, b: 0, a: 0 }, true)}
         />
-      </Actions>
-    </Container>,
-    container
+      </Flex>
+    </Flex>
   )
-})
-
-Picker.displayName = 'Picker'
+}
 
 export default Picker
