@@ -1,8 +1,10 @@
+import { ColorPicker } from '@21epub-ui/color-picker'
 import { Box, Divider, HStack } from '@chakra-ui/react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
+  $patchStyleText,
 } from '@lexical/selection'
 import { mergeRegister } from '@lexical/utils'
 import type { LexicalNode, RangeSelection } from 'lexical'
@@ -12,25 +14,27 @@ import {
   COMMAND_PRIORITY_CRITICAL,
 } from 'lexical'
 import { useCallback, useEffect, useState } from 'react'
-import { editorCommands } from '../../config'
-import getButtonVariant from '../../helpers/getButtonVariant'
-import getSelectionNode from '../../helpers/getSelectionType'
-import FontFamilyMenu from '../FontFamilyMenu'
-import FontSizeMenu from '../FontSizeMenu'
-import TagMenu from '../TagMenu'
 import {
-  boldIcon,
-  indentIcon,
-  italicIcon,
-  orderedListIcon,
-  outdentIcon,
-  redoIcon,
-  strikethroughIcon,
-  underlineIcon,
-  undoIcon,
-  unorderedListIcon,
-} from '../Icons'
-import TipButton from '../TipButton'
+  BsArrowClockwise,
+  BsArrowCounterclockwise,
+  BsListOl,
+  BsListUl,
+  BsTextIndentLeft,
+  BsTextIndentRight,
+  BsTypeBold,
+  BsTypeItalic,
+  BsTypeStrikethrough,
+  BsTypeUnderline,
+} from 'react-icons/bs'
+import { editorCommands } from '../../config'
+import getSelection from '../../helpers/getSelection'
+import getSelectionNode from '../../helpers/getSelectionType'
+import FontColorIcon from '../../icons/FontColorIcon'
+import HighlightIcon from '../../icons/HighlightIcon'
+import FontSizeMenu from '../FontSizeMenu'
+import LabelButton from '../LabelButton'
+import TagMenu from '../TagMenu'
+import TypefaceMenu from '../TypefaceMenu'
 
 interface ToolbarPluginProps {
   disabled?: boolean
@@ -44,15 +48,15 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
   const [canRedo, setCanRedo] = useState(false)
   const [fontFamily, setFontFamily] = useState('')
   const [fontSize, setFontSize] = useState('')
-  const [color, setColor] = useState('')
-  const [backgroundColor, setBackgroundColor] = useState('')
+  const [textColor, setTextColor] = useState('')
+  const [bgColor, setBgColor] = useState('')
   const [isBold, setIsBold] = useState(false)
   const [isItalic, setIsItalic] = useState(false)
   const [isUnderline, setIsUnderline] = useState(false)
   const [isStrikethrough, setIsStrikethrough] = useState(false)
   const [isRlt, setIsRlt] = useState(false)
 
-  const editorActive = !disabled && editor === activeEditor
+  const isActiveEditor = !disabled && editor === activeEditor
   const selectionNodeType = selectionNode?.getType?.()
   const selectionNodeListType = selectionNode?.getListType?.()
 
@@ -69,8 +73,8 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
 
     setFontFamily($getSelectionStyleValueForProperty(selection, 'font-family'))
     setFontSize($getSelectionStyleValueForProperty(selection, 'font-size'))
-    setColor($getSelectionStyleValueForProperty(selection, 'color'))
-    setBackgroundColor(
+    setTextColor($getSelectionStyleValueForProperty(selection, 'color'))
+    setBgColor(
       $getSelectionStyleValueForProperty(selection, 'background-color')
     )
   }, [])
@@ -127,10 +131,6 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
     type: keyof typeof editorCommands,
     payload?: P
   ) => boolean = (type, payload) => {
-    const command = editorCommands[type]
-
-    if (command === undefined) return false
-
     return activeEditor.dispatchCommand(editorCommands[type], payload)
   }
 
@@ -152,101 +152,132 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
       borderBottom="1px solid"
       borderBottomColor="gray.200"
     >
-      <TipButton
+      <LabelButton
         label="撤销"
-        icon={undoIcon}
         disabled={disabled || !canUndo}
         onClick={() => dispatchCommand('undo')}
-      />
-      <TipButton
+      >
+        <BsArrowCounterclockwise />
+      </LabelButton>
+      <LabelButton
         label="重做"
-        icon={redoIcon}
         disabled={disabled || !canRedo}
         onClick={() => dispatchCommand('redo')}
-      />
+      >
+        <BsArrowClockwise />
+      </LabelButton>
       <Divider orientation="vertical" />
       <Box>
         <TagMenu
-          disabled={!editorActive}
+          disabled={!isActiveEditor}
           editor={editor}
-          selectionTag={selectionNode?.getTag?.()}
+          value={selectionNode?.getTag?.()}
         />
       </Box>
       <Box>
-        <FontFamilyMenu
-          disabled={disabled}
-          editor={editor}
-          selectionFontFamily={fontFamily}
-        />
+        <TypefaceMenu disabled={disabled} editor={editor} value={fontFamily} />
       </Box>
       <Box>
         <FontSizeMenu
           disabled={disabled || selectionNodeType === 'heading'}
           editor={editor}
-          selectionFontSize={fontSize}
+          value={fontSize}
         />
       </Box>
       <Divider orientation="vertical" />
-      <TipButton
+      <LabelButton
         label="粗体"
         disabled={disabled || selectionNodeType === 'heading'}
-        variant={getButtonVariant(isBold)}
-        icon={boldIcon}
+        isFocused={isBold}
         onClick={() => dispatchCommand('formatText', 'bold')}
-      />
-      <TipButton
+      >
+        <BsTypeBold />
+      </LabelButton>
+      <LabelButton
         label="斜体"
         disabled={disabled}
-        variant={getButtonVariant(isItalic)}
-        icon={italicIcon}
+        isFocused={isItalic}
         onClick={() => dispatchCommand('formatText', 'italic')}
-      />
-      <TipButton
+      >
+        <BsTypeItalic />
+      </LabelButton>
+      <LabelButton
         label="下划线"
         disabled={disabled}
-        variant={getButtonVariant(isUnderline)}
-        icon={underlineIcon}
+        isFocused={isUnderline}
         onClick={() => dispatchCommand('formatText', 'underline')}
-      />
-      <TipButton
+      >
+        <BsTypeUnderline />
+      </LabelButton>
+      <LabelButton
         label="删除线"
         disabled={disabled}
-        variant={getButtonVariant(isStrikethrough)}
-        icon={strikethroughIcon}
+        isFocused={isStrikethrough}
         onClick={() => dispatchCommand('formatText', 'strikethrough')}
-      />
+      >
+        <BsTypeStrikethrough />
+      </LabelButton>
+      <ColorPicker
+        defaultColor={textColor}
+        onChange={(color) => {
+          getSelection(editor, (selection) => {
+            $patchStyleText(selection, { color: color.toRgbString() })
+          })
+        }}
+      >
+        <LabelButton label="文本颜色" disabled={disabled}>
+          <FontColorIcon color={textColor} />
+        </LabelButton>
+      </ColorPicker>
+      <ColorPicker
+        defaultColor={bgColor}
+        onChange={(color) => {
+          getSelection(editor, (selection) => {
+            $patchStyleText(selection, {
+              'background-color': color.toRgbString(),
+            })
+          })
+        }}
+      >
+        <LabelButton label="文本高亮" disabled={disabled}>
+          <HighlightIcon color={bgColor} />
+        </LabelButton>
+      </ColorPicker>
       <Divider orientation="vertical" />
-      <TipButton
+      <LabelButton
         label="有序列表"
-        disabled={!editorActive}
-        variant={getButtonVariant(selectionNodeListType === 'number')}
-        icon={orderedListIcon}
+        disabled={!isActiveEditor}
+        isFocused={selectionNodeListType === 'number'}
         onClick={() => dispatchInsertListCommand('number')}
-      />
-      <TipButton
+      >
+        <BsListOl />
+      </LabelButton>
+      <LabelButton
         label="无序列表"
-        disabled={!editorActive}
-        variant={getButtonVariant(selectionNodeListType === 'bullet')}
-        icon={unorderedListIcon}
+        disabled={!isActiveEditor}
+        isFocused={selectionNodeListType === 'bullet'}
         onClick={() => dispatchInsertListCommand('bullet')}
-      />
-      <Divider orientation="vertical" />
-      <TipButton
+      >
+        <BsListUl />
+      </LabelButton>
+      <LabelButton
         label="增加缩进"
         disabled={disabled}
-        icon={indentIcon}
         onClick={() => {
           dispatchCommand(isRlt ? 'outdentContent' : 'indentContent')
         }}
-      />
-      <TipButton
+      >
+        <BsTextIndentLeft />
+      </LabelButton>
+      <LabelButton
         label="减少缩进"
         disabled={disabled}
-        icon={outdentIcon}
         onClick={() => {
           dispatchCommand(isRlt ? 'indentContent' : 'outdentContent')
         }}
-      />
+      >
+        <BsTextIndentRight />
+      </LabelButton>
     </HStack>
   )
 }

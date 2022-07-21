@@ -5,7 +5,7 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@21epub-ui/color-picker@workspace:packages/color-picker":
+"@21epub-ui/color-picker@workspace:^, @21epub-ui/color-picker@workspace:packages/color-picker":
   version: 0.0.0-use.local
   resolution: "@21epub-ui/color-picker@workspace:packages/color-picker"
   dependencies:
@@ -154,10 +154,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@21epub-ui/text-editor@workspace:packages/text-editor"
   dependencies:
+    "@21epub-ui/color-picker": "workspace:^"
+    "@chakra-ui/icons": ^2.0.4
     "@chakra-ui/react": ^2.2.4
     "@chakra-ui/system": ^2.2.2
     "@emotion/react": ^11.9.3
     "@emotion/styled": ^11.9.3
+    "@floating-ui/react-dom-interactions": ^0.8.0
     "@lexical/clipboard": ^0.3.7
     "@lexical/headless": ^0.3.7
     "@lexical/html": ^0.3.7
@@ -171,6 +174,7 @@ __metadata:
     "@types/react": ^18
     framer-motion: ^6.3.16
     lexical: ^0.3.7
+    react-icons: ^4.4.0
   peerDependencies:
     "@chakra-ui/react": ">=1.8"
     "@chakra-ui/system": ">=1.8"
@@ -3371,6 +3375,19 @@ __metadata:
     "@chakra-ui/system": ">=2.0.0-next.0"
     react: ">=18"
   checksum: a78c3e7894288864490552a0b90be10238de133241d9a28d23cba3096bbc8a1971b690928055735efd22e6c37dd7726b54feaad136410703f3f92eba61710ae2
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/icons@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@chakra-ui/icons@npm:2.0.4"
+  dependencies:
+    "@chakra-ui/icon": 3.0.4
+    "@types/react": ^18.0.1
+  peerDependencies:
+    "@chakra-ui/system": ">=2.0.0-next.0"
+    react: ">=18"
+  checksum: 522467b23576acddac3fb2afbd9043d3586024a4128954eb1e149c8e89e99d1843ff5279b8d5835b88db95a5b8ac56be5a93db2a46ae5049d98565d935730e84
   languageName: node
   linkType: hard
 
@@ -16699,6 +16716,15 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 4dbc2166ac397d9e9340bd0722c6165c23f21629515f13e9cb96eaff82aa1543a2f7f3cccf15689821f19166e3a3ce59f380c43643099eb119b5f9c529b23181
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "react-icons@npm:4.4.0"
+  peerDependencies:
+    react: "*"
+  checksum: dd93a1dcc8ac8a3cf46a2b33e80b586fa967331fa5fcb90d061abf276155a8363a331643e203d67cb9bab4261d00a757da854bcce1fce2c6e4258bf3e33f711b
   languageName: node
   linkType: hard
 

@@ -1,81 +1,60 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
 import { $createHeadingNode } from '@lexical/rich-text'
 import { $wrapLeafNodesInElements } from '@lexical/selection'
 import type { ElementNode, LexicalEditor } from 'lexical'
 import { $createParagraphNode } from 'lexical'
-import getMenuItemBackground from '../../helpers/getMenuItemBackground'
-import updateSelectionStyle from '../../helpers/updateSelectionStyle'
-import {
-  heading1Icon,
-  heading2Icon,
-  heading3Icon,
-  paragraphIcon,
-} from '../Icons'
+import getSelection from '../../helpers/getSelection'
+import LabelButton from '../LabelButton'
+import Menu from '../Menu'
 
 interface TagMenuProps {
   disabled?: boolean
+  value?: string
   editor: LexicalEditor
-  selectionTag: string
 }
 
-const TagMenu: React.FC<TagMenuProps> = ({
-  disabled,
-  editor,
-  selectionTag,
-}) => {
-  const updateSelectionTag = (callback: () => ElementNode) => {
-    updateSelectionStyle(editor, (selection) => {
+const TagMenu: React.FC<TagMenuProps> = ({ disabled, value, editor }) => {
+  const tag = value ?? 'p'
+
+  const formatTag = (callback: () => ElementNode) => {
+    getSelection(editor, (selection) => {
       $wrapLeafNodesInElements(selection, callback)
     })
   }
 
-  const menuItems = {
-    paragraph: {
-      icon: paragraphIcon,
-      text: '正文',
-      onClick: () => updateSelectionTag($createParagraphNode),
+  const menuItems = [
+    {
+      key: 'p',
+      children: '正文',
+      onClick: () => formatTag($createParagraphNode),
     },
-    h1: {
-      icon: heading1Icon,
-      text: '标题1',
-      onClick: () => updateSelectionTag(() => $createHeadingNode('h1')),
+    {
+      key: 'h1',
+      children: '标题1',
+      style: { fontSize: '16pt', fontWeight: 'bold' },
+      onClick: () => formatTag(() => $createHeadingNode('h1')),
     },
-    h2: {
-      icon: heading2Icon,
-      text: '标题2',
-      onClick: () => updateSelectionTag(() => $createHeadingNode('h2')),
+    {
+      key: 'h2',
+      children: '标题2',
+      style: { fontSize: '14pt', fontWeight: 'bold' },
+      onClick: () => formatTag(() => $createHeadingNode('h2')),
     },
-    h3: {
-      icon: heading3Icon,
-      text: '标题3',
-      onClick: () => updateSelectionTag(() => $createHeadingNode('h3')),
+    {
+      key: 'h3',
+      children: '标题3',
+      style: { fontSize: '13pt', fontWeight: 'bold' },
+      onClick: () => formatTag(() => $createHeadingNode('h3')),
     },
-  }
+  ]
 
-  const activeMenuItem = menuItems[selectionTag] ?? menuItems['paragraph']
+  const activeMenuItem =
+    menuItems.find((item) => item.key === tag) ?? menuItems[0]
 
   return (
-    <Menu autoSelect={false}>
-      <MenuButton
-        as={Button}
-        disabled={disabled}
-        fontWeight="normal"
-        leftIcon={activeMenuItem.icon}
-      >
-        {activeMenuItem.text}
-      </MenuButton>
-      <MenuList borderColor="gray.200" minWidth="50px">
-        {Object.entries(menuItems).map(([key, { icon, text, onClick }]) => (
-          <MenuItem
-            key={key}
-            backgroundColor={getMenuItemBackground(selectionTag === key)}
-            icon={icon}
-            onClick={onClick}
-          >
-            {text}
-          </MenuItem>
-        ))}
-      </MenuList>
+    <Menu selectedKey={tag} menuItems={menuItems}>
+      <LabelButton label="标题" disabled={disabled}>
+        {activeMenuItem.children}
+      </LabelButton>
     </Menu>
   )
 }

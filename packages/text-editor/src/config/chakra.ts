@@ -16,10 +16,5 @@ export const chakraTheme = extendTheme({
         color: 'gray.200',
       },
     },
-    Tooltip: {
-      baseStyle: {
-        fontWeight: 'normal',
-      },
-    },
   },
 })

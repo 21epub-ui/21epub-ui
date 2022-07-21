@@ -24,6 +24,9 @@
     "react": ">=17.*"
   },
   "dependencies": {
+    "@21epub-ui/color-picker": "workspace:^",
+    "@chakra-ui/icons": "^2.0.4",
+    "@floating-ui/react-dom-interactions": "^0.8.0",
     "@lexical/clipboard": "^0.3.7",
     "@lexical/headless": "^0.3.7",
     "@lexical/html": "^0.3.7",
@@ -33,7 +36,8 @@
     "@lexical/selection": "^0.3.7",
     "@lexical/text": "^0.3.7",
     "@lexical/utils": "^0.3.7",
-    "lexical": "^0.3.7"
+    "lexical": "^0.3.7",
+    "react-icons": "^4.4.0"
   },
   "devDependencies": {
     "@chakra-ui/react": "^2.2.4",

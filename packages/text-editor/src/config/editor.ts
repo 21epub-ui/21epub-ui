@@ -7,13 +7,15 @@ import {
 } from '@lexical/list'
 import { HeadingNode } from '@lexical/rich-text'
 import type { EditorThemeClasses } from 'lexical'
-import { INDENT_CONTENT_COMMAND, OUTDENT_CONTENT_COMMAND } from 'lexical'
-import { SELECTION_CHANGE_COMMAND } from 'lexical'
 import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
+  FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
+  INDENT_CONTENT_COMMAND,
+  OUTDENT_CONTENT_COMMAND,
   REDO_COMMAND,
+  SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical'
 import combineFontFamily from '../utils/combineFontFamily'
@@ -32,6 +34,7 @@ export const editorCommands = {
   removeList: REMOVE_LIST_COMMAND,
   indentContent: INDENT_CONTENT_COMMAND,
   outdentContent: OUTDENT_CONTENT_COMMAND,
+  formatElement: FORMAT_ELEMENT_COMMAND,
 }
 
 export const editorTheme: EditorThemeClasses = {

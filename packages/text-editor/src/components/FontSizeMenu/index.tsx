@@ -1,9 +1,9 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
 import { $patchStyleText } from '@lexical/selection'
 import type { LexicalEditor } from 'lexical'
 import { editorStyles } from '../../config'
-import getMenuItemBackground from '../../helpers/getMenuItemBackground'
-import updateSelectionStyle from '../../helpers/updateSelectionStyle'
+import getSelection from '../../helpers/getSelection'
+import LabelButton from '../LabelButton'
+import Menu from '../Menu'
 
 const fontSizes = [
   '9pt',
@@ -23,39 +23,37 @@ const fontSizes = [
 
 interface FontSizeMenuProps {
   disabled?: boolean
+  value?: string
   editor: LexicalEditor
-  selectionFontSize: string
 }
 
 const FontSizeMenu: React.FC<FontSizeMenuProps> = ({
   disabled,
+  value,
   editor,
-  selectionFontSize,
 }) => {
-  const updateSelectionFontSize = (fontSize: string) => {
-    updateSelectionStyle(editor, (selection) => {
-      $patchStyleText(selection, { 'font-size': fontSize })
+  const fontSize = value || editorStyles.fontSize
+
+  const formatFontSize = (newFontSize: string) => {
+    getSelection(editor, (selection) => {
+      $patchStyleText(selection, { 'font-size': newFontSize })
     })
   }
 
-  const activeMenuItem = selectionFontSize || editorStyles.fontSize
+  const menuItems = fontSizes.map((fontSize) => {
+    return {
+      key: fontSize,
+      isSelected: fontSize === fontSize,
+      children: parseInt(fontSize),
+      onClick: () => formatFontSize(fontSize),
+    }
+  })
 
   return (
-    <Menu autoSelect={false}>
-      <MenuButton as={Button} disabled={disabled} fontWeight="normal">
-        {parseInt(activeMenuItem)}
-      </MenuButton>
-      <MenuList borderColor="gray.200" minWidth="50px">
-        {fontSizes.map((fontSize) => (
-          <MenuItem
-            key={fontSize}
-            backgroundColor={getMenuItemBackground(activeMenuItem === fontSize)}
-            onClick={() => updateSelectionFontSize(fontSize)}
-          >
-            {parseInt(fontSize)}
-          </MenuItem>
-        ))}
-      </MenuList>
+    <Menu selectedKey={fontSize} menuItems={menuItems}>
+      <LabelButton disabled={disabled} label="字号">
+        {parseInt(fontSize)}
+      </LabelButton>
     </Menu>
   )
 }

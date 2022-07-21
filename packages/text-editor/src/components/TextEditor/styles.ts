@@ -6,6 +6,19 @@ export const Container = styled.div`
   flex-direction: column;
   border-radius: 0.375rem;
   background-color: white;
+  color: #333;
+  font-size: 12px;
+  line-height: 1;
+`
+
+export const Editor = styled.div`
+  height: 100%;
+  outline: none;
+
+  hr {
+    color: #999;
+    margin: 12px 0;
+  }
 
   .editor-ltr,
   .editor-rtl {

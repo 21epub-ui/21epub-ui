@@ -1,4 +1,5 @@
 import { Box, ChakraProvider } from '@chakra-ui/react'
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { AutoScrollPlugin } from '@lexical/react/LexicalAutoScrollPlugin'
 import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
@@ -17,7 +18,7 @@ import {
 import type { TextEditorProps } from '../../index.types'
 import getRandomId from '../../utils/getRandomId'
 import ToolbarPlugin from '../ToolbarPlugin'
-import { Container } from './styles'
+import { Container, Editor } from './styles'
 
 export const onError = (error: Error) => {
   throw error
@@ -54,7 +55,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           <RichTextPlugin
             contentEditable={
               <Box ref={scrollRef} height="100%" padding="10px" overflow="auto">
-                <Box as={ContentEditable} height="100%" outline="none" />
+                <Editor as={ContentEditable} />
               </Box>
             }
             placeholder={
@@ -77,6 +78,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
               onChange?.(editorState, editor)
             }}
           />
+          <AutoFocusPlugin />
           <AutoScrollPlugin scrollRef={scrollRef} />
           <ClearEditorPlugin />
           <HistoryPlugin />
