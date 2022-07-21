@@ -46,7 +46,15 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           nodes: editorNodes,
           theme: editorTheme,
           namespace: namespace.current,
-          editorState: initialState,
+          editorState: (editor) => {
+            if (!initialState) return
+
+            if (typeof initialState === 'function') {
+              initialState(editor)
+            } else {
+              editor.setEditorState(editor.parseEditorState(initialState))
+            }
+          },
           ...initialConfig,
         }}
       >

@@ -1,4 +1,4 @@
-import type { ButtonProps } from '@chakra-ui/react'
+import type { ButtonProps, Placement } from '@chakra-ui/react'
 import { Button, Center } from '@chakra-ui/react'
 import {
   autoUpdate,
@@ -13,6 +13,7 @@ import {
 } from '@floating-ui/react-dom-interactions'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
+import type { ReactNode } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
 import forwardElement from '../../helpers/forwardElement'
 
@@ -38,12 +39,14 @@ export const motionVariants: Variants = {
 const Transition = motion(Center)
 
 interface labelButtonProps extends ButtonProps {
-  label: string
+  label?: string
+  icon?: ReactNode
   isFocused?: boolean
+  placement?: Placement
 }
 
 const LabelButton = forwardRef<Element, labelButtonProps>(
-  ({ label, isFocused, ...props }, ref) => {
+  ({ children, label, icon, isFocused, placement, ...props }, ref) => {
     const [isOpen, setIsOpen] = useState(false)
 
     /**
@@ -54,6 +57,7 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
       useFloating({
         open: isOpen,
         onOpenChange: setIsOpen,
+        placement: placement,
         middleware: [offset(8), flip(), shift()],
         whileElementsMounted: autoUpdate,
       })
@@ -84,14 +88,16 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
             },
           })}
           {...props}
-        />
-        {isOpen && (
+        >
+          {icon ?? children}
+        </Button>
+        {label !== undefined && isOpen && (
           <Transition
             initial="exit"
             animate="enter"
             exit="exit"
             variants={motionVariants}
-            padding="4px 8px"
+            padding="8px"
             fontSize="12px"
             color="white"
             backgroundColor="gray.700"

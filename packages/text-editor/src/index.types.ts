@@ -1,8 +1,5 @@
-import type {
-  InitialEditorStateType,
-  LexicalComposer,
-} from '@lexical/react/LexicalComposer'
-import type { EditorState, LexicalEditor } from 'lexical'
+import type { LexicalComposer } from '@lexical/react/LexicalComposer'
+import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
 import type { CSSProperties, ReactNode } from 'react'
 
 type LexicalComposerProps = Parameters<typeof LexicalComposer>[0]
@@ -20,7 +17,7 @@ export interface TextEditorProps
   children?: ReactNode
   disabled?: boolean
   initialConfig?: InitialConfig
-  initialState?: InitialEditorStateType
+  initialState?: SerializedEditorState | ((editor: LexicalEditor) => void)
   placeholder?: ReactNode
   onChange?: (editorState: EditorState, editor: LexicalEditor) => void
 }

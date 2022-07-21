@@ -7,7 +7,7 @@ import {
   $patchStyleText,
 } from '@lexical/selection'
 import { mergeRegister } from '@lexical/utils'
-import type { LexicalNode, RangeSelection } from 'lexical'
+import type { RangeSelection } from 'lexical'
 import {
   $getSelection,
   $isRangeSelection,
@@ -15,25 +15,27 @@ import {
 } from 'lexical'
 import { useCallback, useEffect, useState } from 'react'
 import {
-  BsArrowClockwise,
-  BsArrowCounterclockwise,
-  BsListOl,
-  BsListUl,
-  BsTextIndentLeft,
-  BsTextIndentRight,
-  BsTypeBold,
-  BsTypeItalic,
-  BsTypeStrikethrough,
-  BsTypeUnderline,
-} from 'react-icons/bs'
+  TbArrowBackUp,
+  TbArrowForwardUp,
+  TbBold,
+  TbIndentDecrease,
+  TbIndentIncrease,
+  TbItalic,
+  TbList,
+  TbListNumbers,
+  TbStrikethrough,
+  TbUnderline,
+} from 'react-icons/tb'
 import { editorCommands } from '../../config'
+import getNodeType from '../../helpers/getNodeType'
+import getRootNode from '../../helpers/getRootNode'
 import getSelection from '../../helpers/getSelection'
-import getSelectionNode from '../../helpers/getSelectionType'
 import FontColorIcon from '../../icons/FontColorIcon'
 import HighlightIcon from '../../icons/HighlightIcon'
 import FontSizeMenu from '../FontSizeMenu'
 import LabelButton from '../LabelButton'
 import TagMenu from '../TagMenu'
+import TextAlignMenu from '../TextAlignMenu'
 import TypefaceMenu from '../TypefaceMenu'
 
 interface ToolbarPluginProps {
@@ -43,22 +45,22 @@ interface ToolbarPluginProps {
 const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
   const [editor] = useLexicalComposerContext()
   const [activeEditor, setActiveEditor] = useState(editor)
-  const [selectionNode, setSelectionNode] = useState<LexicalNode | null>(null)
+  const [nodeTag, setNodeTag] = useState('')
+  const [nodeType, setNodeType] = useState('')
   const [canUndo, setCanUndo] = useState(false)
   const [canRedo, setCanRedo] = useState(false)
-  const [fontFamily, setFontFamily] = useState('')
-  const [fontSize, setFontSize] = useState('')
-  const [textColor, setTextColor] = useState('')
-  const [bgColor, setBgColor] = useState('')
   const [isBold, setIsBold] = useState(false)
   const [isItalic, setIsItalic] = useState(false)
   const [isUnderline, setIsUnderline] = useState(false)
   const [isStrikethrough, setIsStrikethrough] = useState(false)
   const [isRlt, setIsRlt] = useState(false)
+  const [fontFamily, setFontFamily] = useState('')
+  const [fontSize, setFontSize] = useState('')
+  const [textColor, setTextColor] = useState('')
+  const [bgColor, setBgColor] = useState('')
+  const [textAlign, setTextAlign] = useState('')
 
   const isActiveEditor = !disabled && editor === activeEditor
-  const selectionNodeType = selectionNode?.getType?.()
-  const selectionNodeListType = selectionNode?.getListType?.()
 
   useEffect(() => {
     editor.setReadOnly(disabled ?? false)
@@ -86,7 +88,13 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
 
     getSelectionStyles(selection)
 
-    setSelectionNode(getSelectionNode(editor, selection))
+    const node = getRootNode(editor, selection)
+
+    if (node !== null) {
+      setNodeType(getNodeType(node))
+      setNodeTag(node.getTag?.())
+      setTextAlign(node.getFormatType())
+    }
   }, [editor, getSelectionStyles])
 
   useEffect(() => {
@@ -138,7 +146,7 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
     const command =
       type === 'number' ? 'insertOrderedList' : 'insertUnorderedList'
 
-    if (selectionNodeListType !== type) {
+    if (nodeType !== type) {
       return dispatchCommand(command)
     } else {
       return dispatchCommand('removeList')
@@ -154,32 +162,26 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
     >
       <LabelButton
         label="撤销"
+        icon={<TbArrowBackUp />}
         disabled={disabled || !canUndo}
         onClick={() => dispatchCommand('undo')}
-      >
-        <BsArrowCounterclockwise />
-      </LabelButton>
+      />
       <LabelButton
         label="重做"
+        icon={<TbArrowForwardUp />}
         disabled={disabled || !canRedo}
         onClick={() => dispatchCommand('redo')}
-      >
-        <BsArrowClockwise />
-      </LabelButton>
+      />
       <Divider orientation="vertical" />
       <Box>
-        <TagMenu
-          disabled={!isActiveEditor}
-          editor={editor}
-          value={selectionNode?.getTag?.()}
-        />
+        <TagMenu disabled={!isActiveEditor} editor={editor} value={nodeTag} />
       </Box>
       <Box>
         <TypefaceMenu disabled={disabled} editor={editor} value={fontFamily} />
       </Box>
       <Box>
         <FontSizeMenu
-          disabled={disabled || selectionNodeType === 'heading'}
+          disabled={disabled || nodeType === 'heading'}
           editor={editor}
           value={fontSize}
         />
@@ -187,36 +189,32 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
       <Divider orientation="vertical" />
       <LabelButton
         label="粗体"
-        disabled={disabled || selectionNodeType === 'heading'}
+        icon={<TbBold />}
+        disabled={disabled || nodeType === 'heading'}
         isFocused={isBold}
         onClick={() => dispatchCommand('formatText', 'bold')}
-      >
-        <BsTypeBold />
-      </LabelButton>
+      />
       <LabelButton
         label="斜体"
+        icon={<TbItalic />}
         disabled={disabled}
         isFocused={isItalic}
         onClick={() => dispatchCommand('formatText', 'italic')}
-      >
-        <BsTypeItalic />
-      </LabelButton>
+      />
       <LabelButton
         label="下划线"
+        icon={<TbUnderline />}
         disabled={disabled}
         isFocused={isUnderline}
         onClick={() => dispatchCommand('formatText', 'underline')}
-      >
-        <BsTypeUnderline />
-      </LabelButton>
+      />
       <LabelButton
         label="删除线"
+        icon={<TbStrikethrough />}
         disabled={disabled}
         isFocused={isStrikethrough}
         onClick={() => dispatchCommand('formatText', 'strikethrough')}
-      >
-        <BsTypeStrikethrough />
-      </LabelButton>
+      />
       <ColorPicker
         defaultColor={textColor}
         onChange={(color) => {
@@ -225,9 +223,11 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
           })
         }}
       >
-        <LabelButton label="文本颜色" disabled={disabled}>
-          <FontColorIcon color={textColor} />
-        </LabelButton>
+        <LabelButton
+          label="文本颜色"
+          icon={<FontColorIcon color={textColor} />}
+          disabled={disabled}
+        />
       </ColorPicker>
       <ColorPicker
         defaultColor={bgColor}
@@ -239,45 +239,49 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
           })
         }}
       >
-        <LabelButton label="文本高亮" disabled={disabled}>
-          <HighlightIcon color={bgColor} />
-        </LabelButton>
+        <LabelButton
+          label="文本高亮"
+          icon={<HighlightIcon color={bgColor} />}
+          disabled={disabled}
+        />
       </ColorPicker>
       <Divider orientation="vertical" />
       <LabelButton
         label="有序列表"
+        icon={<TbListNumbers />}
         disabled={!isActiveEditor}
-        isFocused={selectionNodeListType === 'number'}
+        isFocused={nodeType === 'number'}
         onClick={() => dispatchInsertListCommand('number')}
-      >
-        <BsListOl />
-      </LabelButton>
+      />
       <LabelButton
         label="无序列表"
+        icon={<TbList />}
         disabled={!isActiveEditor}
-        isFocused={selectionNodeListType === 'bullet'}
+        isFocused={nodeType === 'bullet'}
         onClick={() => dispatchInsertListCommand('bullet')}
-      >
-        <BsListUl />
-      </LabelButton>
+      />
       <LabelButton
         label="增加缩进"
+        icon={<TbIndentIncrease />}
         disabled={disabled}
         onClick={() => {
           dispatchCommand(isRlt ? 'outdentContent' : 'indentContent')
         }}
-      >
-        <BsTextIndentLeft />
-      </LabelButton>
+      />
       <LabelButton
         label="减少缩进"
+        icon={<TbIndentDecrease />}
         disabled={disabled}
         onClick={() => {
           dispatchCommand(isRlt ? 'indentContent' : 'outdentContent')
         }}
-      >
-        <BsTextIndentRight />
-      </LabelButton>
+      />
+      <Divider orientation="vertical" />
+      <TextAlignMenu
+        disabled={disabled}
+        value={textAlign}
+        editor={activeEditor}
+      />
     </HStack>
   )
 }

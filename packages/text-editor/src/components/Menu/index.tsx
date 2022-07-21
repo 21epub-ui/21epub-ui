@@ -85,7 +85,7 @@ const Menu = forwardRef<Element, MenuProps>(
               forwardElement(ref, element)
               forwardElement(reference, element)
             },
-            fontSize: '12px',
+            fontSize: children.props.icon === undefined ? '12px' : '16px',
             rightIcon: <ChevronDownIcon />,
             ...children.props,
           })
