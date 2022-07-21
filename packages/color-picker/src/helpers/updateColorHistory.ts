@@ -1,19 +1,20 @@
-import { colord } from 'colord'
+import type { Colord } from 'colord'
 import { defaultLocalStorageKey } from '../config'
 import getColorHistory from './getColorHistory'
 
 const updateColorHistory = (
-  color: string,
+  color: Colord,
   length = Infinity,
   key = defaultLocalStorageKey
 ) => {
-  if (colord(color).alpha() === 0) return
+  if (color.alpha() === 0) return
 
+  const newColor = color.toRgbString()
   const colorHistory = new Set(getColorHistory())
 
-  colorHistory.delete(color)
+  colorHistory.delete(newColor)
 
-  const newColorHistory = [color, ...Array.from(colorHistory)]
+  const newColorHistory = [newColor, ...Array.from(colorHistory)]
 
   localStorage.setItem(
     key,

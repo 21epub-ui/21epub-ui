@@ -8,66 +8,57 @@ import {
   NumberInputField,
   Stack,
 } from '@chakra-ui/react'
+import type { Colord } from 'colord'
 import { colord } from 'colord'
 import type React from 'react'
 import { useEffect, useState } from 'react'
+import backslash from '../../assets/backslash.svg'
 import { ThemeColors } from '../../config'
 import getColorHistory from '../../helpers/getColorHistory'
 import updateColorHistory from '../../helpers/updateColorHistory'
-import type { ColorPickerProps } from '../../index.types'
+import type { Color, ColorPickerProps } from '../../index.types'
 import ColorInput from '../ColorInput'
-import { ColorRect } from '../ColorPicker/styles'
+import ColorRect from '../ColorRect'
 import Swatches from '../Swatches'
-import { ClearButton, StyledColorPicker, SwatchesSet } from './styles'
+import { StyledColorPicker, SwatchesSet } from './styles'
 
-interface Props
-  extends Pick<
-    ColorPickerProps,
-    | 'className'
-    | 'style'
-    | 'isOpen'
-    | 'color'
-    | 'historySize'
-    | 'localStorageKey'
-    | 'onClose'
-    | 'onChange'
-    | 'onRenderSwatches'
-  > {
-  color: string
+interface PickerProps
+  extends Omit<ColorPickerProps, 'defaultColor' | 'children'> {
+  defaultColor: Colord
+  isOpen: boolean
+  onClose: () => void
 }
 
-const Picker: React.FC<Props> = ({
+const Picker: React.FC<PickerProps> = ({
   className,
   style,
   isOpen,
-  color,
+  defaultColor,
   historySize,
   localStorageKey,
   onClose,
   onChange,
   onRenderSwatches,
 }) => {
-  const [initColor, setInitColor] = useState(color)
-  const [currColor, setCurrColor] = useState(colord(color))
+  const [initColor, setInitColor] = useState(defaultColor)
+  const [currColor, setCurrColor] = useState(defaultColor)
 
   const recentColorsLength = historySize ?? 2 * ThemeColors.length
 
   const colorHistory = getColorHistory(recentColorsLength, localStorageKey)
 
   useEffect(() => {
+    const newColor = colord(defaultColor)
     if (isOpen) {
-      setInitColor(color)
-      setCurrColor(colord(color))
-    } else if (initColor !== color) {
-      updateColorHistory(color, recentColorsLength, localStorageKey)
+      setInitColor(newColor)
+      setCurrColor(newColor)
+    } else if (!newColor.isEqual(initColor)) {
+      updateColorHistory(newColor, recentColorsLength, localStorageKey)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
-  const onColorChange = (
-    value: Parameters<typeof colord>[0],
-    forced?: boolean
-  ) => {
+  const onColorChange = (value: Color, forced?: boolean) => {
     const newColor = colord(value)
     const alpha = newColor.alpha()
 
@@ -76,11 +67,20 @@ const Picker: React.FC<Props> = ({
     }
 
     setCurrColor(newColor)
-    onChange?.(newColor.toRgbString())
+    onChange?.(newColor)
   }
 
   return (
-    <Flex padding="10px" className={className} style={style}>
+    <Flex
+      className={className}
+      style={style}
+      width="min-content"
+      padding="10px"
+      border="1px solid"
+      borderColor="gray.200"
+      borderRadius="sm"
+      backgroundColor="white"
+    >
       <SwatchesSet align="center">
         {onRenderSwatches?.({ onChange: onColorChange }) || (
           <HStack>
@@ -135,18 +135,36 @@ const Picker: React.FC<Props> = ({
           <Button
             fontWeight="normal"
             borderRadius="sm"
-            onClick={() => onColorChange(initColor, true)}
+            onClick={() => {
+              setCurrColor(initColor)
+              onChange?.(initColor)
+            }}
           >
             复位
           </Button>
         </Stack>
         <Stack align="center" margin="auto 0" fontSize="xs" spacing="4px">
           <div>新的</div>
-          <ColorRect width={48} height={32} color={currColor.toRgbString()} />
-          <ColorRect width={48} height={32} color={initColor} />
+          <ColorRect
+            width="48px"
+            height="32px"
+            color={currColor.toRgbString()}
+          />
+          <ColorRect
+            width="48px"
+            height="32px"
+            color={initColor.toRgbString()}
+          />
           <div>之前</div>
         </Stack>
-        <ClearButton
+        <ColorRect
+          cursor="pointer"
+          marginBottom="16px"
+          border="1px solid"
+          borderColor="gray.200"
+          width="24px"
+          height="24px"
+          backgroundImage={`url(${backslash})`}
           onClick={() => onColorChange({ r: 0, g: 0, b: 0, a: 0 }, true)}
         />
       </Flex>

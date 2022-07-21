@@ -5,12 +5,13 @@ import { colord } from 'colord'
 import { useEffect, useState } from 'react'
 import getColorString from '../../utils/getColorString'
 
-interface Props extends Omit<InputProps, 'color' | 'value' | 'onChange'> {
+interface ColorInputProps
+  extends Omit<InputProps, 'color' | 'value' | 'onChange'> {
   color: Colord
-  onChange?: (value: Props['color']) => void
+  onChange?: (value: ColorInputProps['color']) => void
 }
 
-const ColorInput: React.FC<Props> = ({
+const ColorInput: React.FC<ColorInputProps> = ({
   color,
   onChange,
   onBlur,

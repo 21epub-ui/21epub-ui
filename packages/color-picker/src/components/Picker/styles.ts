@@ -1,8 +1,6 @@
 import { Stack } from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import { RgbaColorPicker } from 'react-colorful'
-import backslash from '../../assets/backslash.svg'
-import { ColorRect } from '../ColorPicker/styles'
 
 export const StyledColorPicker = styled(RgbaColorPicker)`
   > * + * {
@@ -37,14 +35,4 @@ export const SwatchesSet = styled(Stack)`
   > *:last-child {
     margin-top: auto;
   }
-`
-
-export const ClearButton = styled(ColorRect)`
-  margin-bottom: 16px;
-  border: 1px solid var(--chakra-colors-gray-200);
-  border-radius: 2px;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  background-image: url(${backslash});
 `

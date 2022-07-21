@@ -1,22 +1,16 @@
-type ComponentTypes = 'label' | 'indicator' | 'picker'
+import type { AnyColor, Colord } from 'colord'
+import type { CSSProperties, ReactNode } from 'react'
+
+export type Color = AnyColor | Colord
 
 export interface ColorPickerProps {
   className?: string
-  pickerClassName?: string
-  label?: string
-  disabled?: boolean
-  style?: React.CSSProperties
-  isOpen?: boolean
-  onOpen?: () => void
-  onClose?: () => void
-  /**
-   * 子组件样式
-   */
-  styles?: Record<ComponentTypes, React.CSSProperties>
+  style?: CSSProperties
+  children: JSX.Element
   /**
    * 颜色值
    */
-  color?: string
+  defaultColor?: Color
   /**
    * 历史颜色数量
    */
@@ -28,15 +22,9 @@ export interface ColorPickerProps {
   /**
    * 颜色值修改时回调
    */
-  onChange?: (color: string) => void
+  onChange?: (color: Colord) => void
   /**
    * 自定义色板 render 函数
    */
-  onRenderSwatches?: (props: {
-    onChange: (color: string) => void
-  }) => React.ReactNode
-  /**
-   * 自定义颜色指示器 render 函数
-   */
-  onRenderIndicator?: () => React.ReactNode
+  onRenderSwatches?: (props: { onChange: (color: string) => void }) => ReactNode
 }

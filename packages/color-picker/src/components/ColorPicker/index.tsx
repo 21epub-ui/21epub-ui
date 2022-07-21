@@ -1,66 +1,78 @@
+import { ChakraProvider, ScaleFade } from '@chakra-ui/react'
 import {
-  Box,
-  ChakraProvider,
-  Flex,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Portal,
-  useDisclosure,
-} from '@chakra-ui/react'
+  autoUpdate,
+  flip,
+  offset,
+  shift,
+  useClick,
+  useDismiss,
+  useFloating,
+  useInteractions,
+  useRole,
+} from '@floating-ui/react-dom-interactions'
+import { colord } from 'colord'
+import { cloneElement, useState } from 'react'
 import { chakraTheme } from '../../config'
 import type { ColorPickerProps } from '../../index.types'
-import getLabel from '../../utils/getLabel'
 import Picker from '../Picker'
-import { ColorRect, ColorRectContainer } from './styles'
+
+const transparent = { r: 0, b: 0, g: 0, a: 0 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
   children,
-  className,
-  pickerClassName,
-  style,
-  styles,
-  label,
-  isOpen,
-  color = 'rgba(0, 0, 0, 0)',
-  disabled,
-  onOpen,
-  onClose,
+  defaultColor = transparent,
   ...props
 }) => {
-  const disclosure = useDisclosure({ isOpen, onOpen, onClose })
+  const [isOpen, setIsOpen] = useState(false)
+
+  /**
+   * 无法使用 Chakra UI 的 Popover 组件。
+   * Chakra UI 的 Popover 组件使用 focus 事件触发组件显隐，
+   * 所以在文本编辑等场景中会因为 focus 被抢占导致组件意外消失，
+   * 改为使用 Floating UI 实现 Popover。
+   */
+  const { x, y, reference, floating, strategy, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    middleware: [offset(8), flip(), shift()],
+    whileElementsMounted: autoUpdate,
+  })
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useClick(context),
+    useRole(context),
+    useDismiss(context),
+  ])
 
   return (
-    <ChakraProvider theme={chakraTheme}>
-      <Popover autoFocus={false} {...disclosure}>
-        <Flex align="center" className={className} style={style}>
-          {label && <Box style={styles?.label}>{getLabel(label)}</Box>}
-          <PopoverTrigger>
-            {children ?? (
-              <ColorRectContainer style={styles?.indicator} disabled={disabled}>
-                <ColorRect color={color} />
-              </ColorRectContainer>
-            )}
-          </PopoverTrigger>
-        </Flex>
-        <Portal>
-          <PopoverContent
-            width="min-content"
-            borderColor="gray.200"
-            borderRadius="sm"
-            backgroundColor="white"
-          >
-            <Picker
-              className={pickerClassName}
-              style={styles?.picker}
-              color={color}
-              {...props}
-              {...disclosure}
-            />
-          </PopoverContent>
-        </Portal>
-      </Popover>
-    </ChakraProvider>
+    <>
+      {cloneElement(
+        children,
+        getReferenceProps({ ref: reference, ...children.props })
+      )}
+      <ChakraProvider theme={chakraTheme}>
+        <ScaleFade
+          in={isOpen}
+          {...getFloatingProps({
+            ref: floating,
+            style: {
+              position: strategy,
+              top: y ?? 0,
+              left: x ?? 0,
+              zIndex: 1,
+              pointerEvents: isOpen ? 'auto' : 'none',
+            },
+          })}
+        >
+          <Picker
+            isOpen={isOpen}
+            defaultColor={colord(defaultColor)}
+            onClose={() => setIsOpen(false)}
+            {...props}
+          />
+        </ScaleFade>
+      </ChakraProvider>
+    </>
   )
 }
 
