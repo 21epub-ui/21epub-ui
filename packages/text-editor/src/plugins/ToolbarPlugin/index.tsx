@@ -5,9 +5,11 @@ import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
   $patchStyleText,
+  $wrapLeafNodesInElements,
 } from '@lexical/selection'
 import { mergeRegister } from '@lexical/utils'
 import type { RangeSelection } from 'lexical'
+import { $createParagraphNode } from 'lexical'
 import {
   $getSelection,
   $isRangeSelection,
@@ -26,23 +28,30 @@ import {
   TbStrikethrough,
   TbUnderline,
 } from 'react-icons/tb'
-import { editorCommands } from '../../config'
+import { editorCommands, editorTypefaces } from '../../config'
 import getNodeType from '../../helpers/getNodeType'
 import getRootNode from '../../helpers/getRootNode'
 import getSelection from '../../helpers/getSelection'
 import FontColorIcon from '../../icons/FontColorIcon'
 import HighlightIcon from '../../icons/HighlightIcon'
-import FontSizeMenu from '../FontSizeMenu'
-import LabelButton from '../LabelButton'
-import TagMenu from '../TagMenu'
-import TextAlignMenu from '../TextAlignMenu'
-import TypefaceMenu from '../TypefaceMenu'
+import FontSizeMenu from '../../components/FontSizeMenu'
+import LabelButton from '../../components/LabelButton'
+import TagMenu from '../../components/TagMenu'
+import TextAlignMenu from '../../components/TextAlignMenu'
+import TypefaceMenu from '../../components/TypefaceMenu'
+import InsertionMenu from '../../components/InsertionMenu'
+import { $createHeadingNode } from '@lexical/rich-text'
+import type { TagType, TextEditorProps } from '../../index.types'
 
 interface ToolbarPluginProps {
   disabled?: boolean
+  onDispatchCommand?: TextEditorProps['onDispatchCommand']
 }
 
-const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
+const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
+  disabled,
+  onDispatchCommand,
+}) => {
   const [editor] = useLexicalComposerContext()
   const [activeEditor, setActiveEditor] = useState(editor)
   const [nodeTag, setNodeTag] = useState('')
@@ -153,6 +162,19 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
     }
   }
 
+  const updateSelectionTag = (value: TagType) => {
+    getSelection(editor, (selection) => {
+      const creator =
+        value === 'p' ? $createParagraphNode : () => $createHeadingNode(value)
+
+      $wrapLeafNodesInElements(selection, creator)
+    })
+  }
+
+  const updateSelectionStyles = (styles: Record<string, string>) => {
+    getSelection(editor, (selection) => $patchStyleText(selection, styles))
+  }
+
   return (
     <HStack
       spacing="2px"
@@ -174,16 +196,26 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
       />
       <Divider orientation="vertical" />
       <Box>
-        <TagMenu disabled={!isActiveEditor} editor={editor} value={nodeTag} />
+        <TagMenu
+          disabled={!isActiveEditor}
+          value={nodeTag}
+          onSelect={updateSelectionTag}
+        />
       </Box>
       <Box>
-        <TypefaceMenu disabled={disabled} editor={editor} value={fontFamily} />
+        <TypefaceMenu
+          disabled={disabled}
+          value={fontFamily}
+          onSelect={(value) => {
+            updateSelectionStyles({ 'font-family': editorTypefaces[value] })
+          }}
+        />
       </Box>
       <Box>
         <FontSizeMenu
           disabled={disabled || nodeType === 'heading'}
-          editor={editor}
           value={fontSize}
+          onSelect={(value) => updateSelectionStyles({ 'font-size': value })}
         />
       </Box>
       <Divider orientation="vertical" />
@@ -218,9 +250,7 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
       <ColorPicker
         defaultColor={textColor}
         onChange={(color) => {
-          getSelection(editor, (selection) => {
-            $patchStyleText(selection, { color: color.toRgbString() })
-          })
+          updateSelectionStyles({ color: color.toRgbString() })
         }}
       >
         <LabelButton
@@ -232,11 +262,7 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
       <ColorPicker
         defaultColor={bgColor}
         onChange={(color) => {
-          getSelection(editor, (selection) => {
-            $patchStyleText(selection, {
-              'background-color': color.toRgbString(),
-            })
-          })
+          updateSelectionStyles({ 'background-color': color.toRgbString() })
         }}
       >
         <LabelButton
@@ -280,7 +306,12 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled }) => {
       <TextAlignMenu
         disabled={disabled}
         value={textAlign}
-        editor={activeEditor}
+        onSelect={(value) => dispatchCommand('formatElement', value)}
+      />
+      <Divider orientation="vertical" />
+      <InsertionMenu
+        disabled={disabled}
+        onSelect={(value) => onDispatchCommand?.(value, activeEditor)}
       />
     </HStack>
   )

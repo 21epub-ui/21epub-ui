@@ -1,7 +1,4 @@
-import { $patchStyleText } from '@lexical/selection'
-import type { LexicalEditor } from 'lexical'
 import { editorStyles } from '../../config'
-import getSelection from '../../helpers/getSelection'
 import LabelButton from '../LabelButton'
 import Menu from '../Menu'
 
@@ -23,29 +20,23 @@ const fontSizes = [
 
 interface FontSizeMenuProps {
   disabled?: boolean
-  value?: string
-  editor: LexicalEditor
+  value: string
+  onSelect: (value: string) => void
 }
 
 const FontSizeMenu: React.FC<FontSizeMenuProps> = ({
   disabled,
   value,
-  editor,
+  onSelect,
 }) => {
   const fontSize = value || editorStyles.fontSize
-
-  const formatFontSize = (newFontSize: string) => {
-    getSelection(editor, (selection) => {
-      $patchStyleText(selection, { 'font-size': newFontSize })
-    })
-  }
 
   const menuItems = fontSizes.map((fontSize) => {
     return {
       key: fontSize,
       isSelected: fontSize === fontSize,
       children: parseInt(fontSize),
-      onClick: () => formatFontSize(fontSize),
+      onClick: () => onSelect(fontSize),
     }
   })
 

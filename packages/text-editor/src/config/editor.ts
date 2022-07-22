@@ -5,6 +5,10 @@ import {
   ListNode,
   REMOVE_LIST_COMMAND,
 } from '@lexical/list'
+import {
+  HorizontalRuleNode,
+  INSERT_HORIZONTAL_RULE_COMMAND,
+} from '@lexical/react/LexicalHorizontalRuleNode'
 import { HeadingNode } from '@lexical/rich-text'
 import type { EditorThemeClasses } from 'lexical'
 import {
@@ -18,9 +22,17 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical'
+import { ImageNode } from '../nodes/ImageNode'
+import { INSERT_IMAGE_COMMAND } from '../plugins/ImagePlugin'
 import combineFontFamily from '../utils/combineFontFamily'
 
-export const editorNodes = [HeadingNode, ListNode, ListItemNode]
+export const editorNodes = [
+  HeadingNode,
+  ListNode,
+  ListItemNode,
+  HorizontalRuleNode,
+  ImageNode,
+]
 
 export const editorCommands = {
   selectionChange: SELECTION_CHANGE_COMMAND,
@@ -35,6 +47,8 @@ export const editorCommands = {
   indentContent: INDENT_CONTENT_COMMAND,
   outdentContent: OUTDENT_CONTENT_COMMAND,
   formatElement: FORMAT_ELEMENT_COMMAND,
+  insertHorizontalRule: INSERT_HORIZONTAL_RULE_COMMAND,
+  insertImage: INSERT_IMAGE_COMMAND,
 }
 
 export const editorTheme: EditorThemeClasses = {

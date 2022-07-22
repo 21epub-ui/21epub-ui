@@ -1,6 +1,12 @@
 import type { LexicalComposer } from '@lexical/react/LexicalComposer'
+import type { HeadingTagType } from '@lexical/rich-text'
 import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
 import type { CSSProperties, ReactNode } from 'react'
+import type { editorCommands } from './config'
+
+export type TagType = 'p' | HeadingTagType
+
+export type MediaType = 'image'
 
 type LexicalComposerProps = Parameters<typeof LexicalComposer>[0]
 
@@ -20,4 +26,8 @@ export interface TextEditorProps
   initialState?: SerializedEditorState | ((editor: LexicalEditor) => void)
   placeholder?: ReactNode
   onChange?: (editorState: EditorState, editor: LexicalEditor) => void
+  onDispatchCommand?: (
+    command: keyof typeof editorCommands,
+    editor: LexicalEditor
+  ) => void
 }
