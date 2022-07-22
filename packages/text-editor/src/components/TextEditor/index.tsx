@@ -1,4 +1,4 @@
-import { Box, ChakraProvider } from '@chakra-ui/react'
+import { Box, ChakraProvider, Flex } from '@chakra-ui/react'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { AutoScrollPlugin } from '@lexical/react/LexicalAutoScrollPlugin'
 import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin'
@@ -20,7 +20,7 @@ import HorizontalRulePlugin from '../../plugins/HorizontalRulePlugin'
 import ImagePlugin from '../../plugins/ImagePlugin'
 import ToolbarPlugin from '../../plugins/ToolbarPlugin'
 import getRandomId from '../../utils/getRandomId'
-import { Container, Editor } from './styles'
+import { Editor } from './styles'
 
 export const onError = (error: Error) => {
   throw error
@@ -61,7 +61,16 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           ...initialConfig,
         }}
       >
-        <Container style={style} {...props}>
+        <Flex
+          flexDirection="column"
+          borderRadius="md"
+          color="gray.700"
+          fontSize="xs"
+          lineHeight="1"
+          backgroundColor="white"
+          style={style}
+          {...props}
+        >
           <ToolbarPlugin
             disabled={disabled}
             onDispatchCommand={onDispatchCommand}
@@ -100,7 +109,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           <HorizontalRulePlugin />
           <ImagePlugin />
           {children}
-        </Container>
+        </Flex>
       </LexicalComposer>
     </ChakraProvider>
   )

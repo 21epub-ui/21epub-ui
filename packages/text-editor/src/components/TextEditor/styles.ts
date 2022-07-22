@@ -1,16 +1,6 @@
 import styled from '@emotion/styled'
 import { editorStyles, editorTypefaces } from '../../config'
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 0.375rem;
-  background-color: white;
-  color: var(--chakra-colors-gray-700);
-  font-size: 12px;
-  line-height: 1;
-`
-
 export const Editor = styled.div`
   height: 100%;
   outline: none;

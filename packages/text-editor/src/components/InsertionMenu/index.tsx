@@ -1,4 +1,4 @@
-import { BsHr, BsImages } from 'react-icons/bs'
+import { TbPhoto, TbSeparatorHorizontal } from 'react-icons/tb'
 import type { editorCommands } from '../../config'
 import LabelButton from '../LabelButton'
 import Menu from '../Menu'
@@ -16,13 +16,13 @@ const InsertionMenu: React.FC<InsertionMenuProps> = ({
     {
       key: 'insertImage',
       children: '图片',
-      leftIcon: <BsImages />,
+      leftIcon: <TbPhoto />,
       onClick: () => onSelect('insertImage'),
     },
     {
       key: 'insertHorizontalRule',
       children: '分隔线',
-      leftIcon: <BsHr />,
+      leftIcon: <TbSeparatorHorizontal />,
       onClick: () => onSelect('insertHorizontalRule'),
     },
   ]
