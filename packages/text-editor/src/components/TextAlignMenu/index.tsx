@@ -1,4 +1,4 @@
-import type { LexicalEditor } from 'lexical'
+import type { ElementFormatType } from 'lexical'
 import {
   TbAlignCenter,
   TbAlignJustified,
@@ -12,45 +12,41 @@ import Menu from '../Menu'
 interface TextAlignMenuProps {
   disabled?: boolean
   value: string
-  editor: LexicalEditor
+  onSelect: (value: ElementFormatType) => void
 }
 
 const TextAlignMenu: React.FC<TextAlignMenuProps> = ({
   disabled,
   value,
-  editor,
+  onSelect,
 }) => {
   const textAlign = value || 'left'
-
-  const formatTextAlign: <P>(payload?: P) => boolean = (payload) => {
-    return editor.dispatchCommand(editorCommands.formatElement, payload)
-  }
 
   const menuItems = [
     {
       key: 'left',
       label: '左对齐',
       icon: <TbAlignLeft />,
-      onClick: () => formatTextAlign('left'),
+      onClick: () => onSelect('left'),
     },
 
     {
       key: 'center',
       label: '居中对齐',
       icon: <TbAlignCenter />,
-      onClick: () => formatTextAlign('center'),
+      onClick: () => onSelect('center'),
     },
     {
       key: 'right',
       label: '右对齐',
       icon: <TbAlignRight />,
-      onClick: () => formatTextAlign('right'),
+      onClick: () => onSelect('right'),
     },
     {
       key: 'justify',
       label: '两端对齐',
       icon: <TbAlignJustified />,
-      onClick: () => formatTextAlign('justify'),
+      onClick: () => onSelect('justify'),
     },
   ]
 

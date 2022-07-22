@@ -1,45 +1,36 @@
-import { $patchStyleText } from '@lexical/selection'
-import type { LexicalEditor } from 'lexical'
 import type { editorTypefaces } from '../../config'
 import getTypeface from '../../helpers/getTypeface'
-import getSelection from '../../helpers/getSelection'
 import LabelButton from '../LabelButton'
 import Menu from '../Menu'
 
 interface TypefaceMenuProps {
   disabled?: boolean
   value?: string
-  editor: LexicalEditor
+  onSelect: (value: keyof typeof editorTypefaces) => void
 }
 
 const TypefaceMenu: React.FC<TypefaceMenuProps> = ({
   disabled,
   value,
-  editor,
+  onSelect,
 }) => {
   const typeface = getTypeface(value)
-
-  const formatTypeface = (newTypeface: keyof typeof editorTypefaces) => {
-    getSelection(editor, (selection) => {
-      $patchStyleText(selection, { 'font-family': newTypeface })
-    })
-  }
 
   const menuItems = [
     {
       key: 'sansSerif',
       children: '黑体',
-      onClick: () => formatTypeface('sansSerif'),
+      onClick: () => onSelect('sansSerif'),
     },
     {
       key: 'serif',
       children: '宋体',
-      onClick: () => formatTypeface('serif'),
+      onClick: () => onSelect('serif'),
     },
     {
       key: 'monospace',
       children: '等宽',
-      onClick: () => formatTypeface('monospace'),
+      onClick: () => onSelect('monospace'),
     },
   ]
 

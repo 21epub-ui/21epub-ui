@@ -16,8 +16,10 @@ import {
   editorTheme,
 } from '../../config'
 import type { TextEditorProps } from '../../index.types'
+import HorizontalRulePlugin from '../../plugins/HorizontalRulePlugin'
+import ImagePlugin from '../../plugins/ImagePlugin'
+import ToolbarPlugin from '../../plugins/ToolbarPlugin'
 import getRandomId from '../../utils/getRandomId'
-import ToolbarPlugin from '../ToolbarPlugin'
 import { Container, Editor } from './styles'
 
 export const onError = (error: Error) => {
@@ -32,6 +34,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
   initialState,
   placeholder,
   onChange,
+  onDispatchCommand,
   ...props
 }) => {
   const namespace = useRef(getRandomId(8))
@@ -59,7 +62,10 @@ export const TextEditor: React.FC<TextEditorProps> = ({
         }}
       >
         <Container style={style} {...props}>
-          <ToolbarPlugin disabled={disabled} />
+          <ToolbarPlugin
+            disabled={disabled}
+            onDispatchCommand={onDispatchCommand}
+          />
           <RichTextPlugin
             contentEditable={
               <Box ref={scrollRef} height="100%" padding="10px" overflow="auto">
@@ -91,6 +97,8 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           <ClearEditorPlugin />
           <HistoryPlugin />
           <ListPlugin />
+          <HorizontalRulePlugin />
+          <ImagePlugin />
           {children}
         </Container>
       </LexicalComposer>
