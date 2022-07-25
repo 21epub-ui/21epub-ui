@@ -34,7 +34,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
   initialState,
   placeholder,
   onChange,
-  onDispatchCommand,
+  onUpload,
   ...props
 }) => {
   const namespace = useRef(getRandomId(8))
@@ -71,10 +71,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           style={style}
           {...props}
         >
-          <ToolbarPlugin
-            disabled={disabled}
-            onDispatchCommand={onDispatchCommand}
-          />
+          <ToolbarPlugin disabled={disabled} onUpload={onUpload} />
           <RichTextPlugin
             contentEditable={
               <Box ref={scrollRef} height="100%" padding="10px" overflow="auto">

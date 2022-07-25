@@ -1,8 +1,7 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useRef } from 'react'
-import type { LexicalEditor } from '../src'
-import { editorCommands, TextEditor } from '../src'
-import type { InsertImagePayload } from '../src/plugins/ImagePlugin'
+import type { MediaPayload } from '../src'
+import { TextEditor } from '../src'
 
 export default {
   title: 'TextEditor/Default',
@@ -13,19 +12,17 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const handleInsertRef = useRef<(file: File) => void>()
 
-  const insertImage = (file: File, editor: LexicalEditor) => {
+  const insertImage = (
+    file: File,
+    callback: (payload: MediaPayload) => void
+  ) => {
     const fileReader = new FileReader()
     fileReader.onload = (e) => {
       const src = e.target?.result
 
       if (typeof src !== 'string') return
 
-      editor.update(() => {
-        editor.dispatchCommand<InsertImagePayload>(editorCommands.insertImage, {
-          src,
-          title: file.name,
-        })
-      })
+      callback({ src, title: file.name })
     }
     fileReader.readAsDataURL(file)
   }
@@ -35,10 +32,10 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
       <TextEditor
         style={{ height: innerHeight - 32 }}
         {...args}
-        onDispatchCommand={(commend, editor) => {
-          if (commend === 'insertImage') {
+        onUpload={(type, callback) => {
+          if (type === 'image') {
             inputRef.current?.click()
-            handleInsertRef.current = (file) => insertImage(file, editor)
+            handleInsertRef.current = (file) => insertImage(file, callback)
           }
         }}
       />

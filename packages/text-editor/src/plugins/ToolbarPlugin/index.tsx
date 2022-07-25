@@ -45,12 +45,12 @@ import type { TagType, TextEditorProps } from '../../index.types'
 
 interface ToolbarPluginProps {
   disabled?: boolean
-  onDispatchCommand?: TextEditorProps['onDispatchCommand']
+  onUpload?: TextEditorProps['onUpload']
 }
 
 const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
   disabled,
-  onDispatchCommand,
+  onUpload,
 }) => {
   const [editor] = useLexicalComposerContext()
   const [activeEditor, setActiveEditor] = useState(editor)
@@ -311,7 +311,15 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
       <Divider orientation="vertical" />
       <InsertionMenu
         disabled={disabled}
-        onSelect={(value) => onDispatchCommand?.(value, activeEditor)}
+        onSelect={(value) => {
+          if (value === 'insertImage') {
+            onUpload?.('image', (payload) => {
+              dispatchCommand('insertImage', payload)
+            })
+          } else {
+            dispatchCommand(value)
+          }
+        }}
       />
     </HStack>
   )
