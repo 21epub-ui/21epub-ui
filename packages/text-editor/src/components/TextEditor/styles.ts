@@ -58,8 +58,12 @@ export const Editor = styled.div`
     margin: 0;
   }
 
-  .editor-ol1 {
+  .editor-ol {
     list-style-position: inside;
+  }
+
+  .editor-ol1 {
+    list-style-type: decimal;
   }
 
   .editor-ol2 {
@@ -92,7 +96,7 @@ export const Editor = styled.div`
 
   .editor-li-nested:after,
   .editor-li-nested:before {
-    display: none;
+    display: none !important;
   }
 
   .editor-text-bold {
