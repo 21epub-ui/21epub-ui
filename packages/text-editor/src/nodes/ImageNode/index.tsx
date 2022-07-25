@@ -21,14 +21,19 @@ import {
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
 } from 'lexical'
-import type { HTMLAttributes } from 'react'
-import { Suspense, useCallback, useEffect, useRef } from 'react'
+import type { CSSProperties } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import ImageResizer from '../../components/ImageResizer'
 
 export interface ImagePayload {
   key?: NodeKey
   src: string
   title: string
+  width: number
+  height: number
 }
+
+type SelectionType = ReturnType<typeof $getSelection>
 
 const imageCache = new Set()
 
@@ -48,48 +53,68 @@ const cacheImage = (src: string) => {
 const convertImageElement = (domNode: Node): DOMConversionOutput | null => {
   if (domNode instanceof HTMLImageElement) {
     const { alt: title, src } = domNode
-    const node = $createImageNode({ src, title })
+    const { width, height } = domNode.getBoundingClientRect()
+    const node = $createImageNode({
+      src,
+      title,
+      width,
+      height,
+    })
+
     return { node }
   }
+
   return null
 }
 
-interface LazyImageProps extends HTMLAttributes<HTMLImageElement> {
-  src: string
-  title: string
+interface LazyImageProps extends Omit<ImagePayload, 'key'> {
+  style: CSSProperties
   imageRef: { current: null | HTMLImageElement }
 }
 
 const LazyImage: React.FC<LazyImageProps> = ({
+  style,
   src,
   title,
+  width,
+  height,
   imageRef,
   ...props
 }) => {
   cacheImage(src)
 
   return (
-    <img src={src} alt={title} ref={imageRef} draggable="false" {...props} />
+    <img
+      ref={imageRef}
+      src={src}
+      alt={title}
+      style={{ width, height, ...style }}
+      draggable="false"
+      {...props}
+    />
   )
 }
 
-interface ImageComponentProps {
-  src: string
-  title: string
+interface ImageComponentProps extends Omit<ImagePayload, 'key'> {
   nodeKey: NodeKey
 }
 
 const ImageComponent: React.FC<ImageComponentProps> = ({
   src,
   title,
+  width,
+  height,
   nodeKey,
 }) => {
   const ref = useRef(null)
 
-  const [isSelected, setIsSelected, clearSelection] =
-    useLexicalNodeSelection(nodeKey)
+  const [selection, setSelection] = useState<SelectionType>(null)
+  const [isResizing, setIsResizing] = useState(false)
 
   const [editor] = useLexicalComposerContext()
+
+  const [isSelected, setIsSelected, clearSelection] =
+    useLexicalNodeSelection(nodeKey)
 
   const onDelete = useCallback(
     (event: KeyboardEvent) => {
@@ -102,6 +127,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
 
         setIsSelected(false)
       }
+
       return false
     },
     [isSelected, nodeKey, setIsSelected]
@@ -109,15 +135,21 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
 
   useEffect(() => {
     return mergeRegister(
+      editor.registerUpdateListener(({ editorState }) => {
+        setSelection(editorState.read(() => $getSelection()))
+      }),
       editor.registerCommand<MouseEvent>(
         CLICK_COMMAND,
         (event) => {
-          if (event.target !== ref.current) return false
+          if (isResizing) return true
 
-          if (!event.shiftKey) clearSelection()
-          setIsSelected(!isSelected)
+          if (event.target === ref.current) {
+            if (!event.shiftKey) clearSelection()
+            setIsSelected(!isSelected)
+            return true
+          }
 
-          return true
+          return false
         },
         COMMAND_PRIORITY_LOW
       ),
@@ -132,23 +164,56 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
         COMMAND_PRIORITY_LOW
       )
     )
-  }, [clearSelection, editor, isSelected, nodeKey, onDelete, setIsSelected])
+  }, [clearSelection, editor, isResizing, isSelected, onDelete, setIsSelected])
+
+  const onDragStart = () => {
+    setIsResizing(true)
+    editor.getRootElement()?.style.setProperty('user-select', 'none')
+  }
+
+  const onResizeEnd = (newWidth: number, newHeight: number) => {
+    setTimeout(() => setIsResizing(false))
+
+    editor.getRootElement()?.style.setProperty('user-select', 'text')
+
+    editor.update(() => {
+      const node = $getNodeByKey(nodeKey)
+
+      if ($isImageNode(node)) node.setWidthAndHeight(newWidth, newHeight)
+    })
+  }
+
+  const isFocused = $isNodeSelection(selection) && (isSelected || isResizing)
 
   const style = {
-    boxShadow: isSelected ? 'var(--chakra-shadows-outline)' : undefined,
+    outline: isFocused ? '2px solid var(--chakra-colors-gray-600)' : undefined,
   }
 
   return (
     <Suspense fallback={null}>
-      <LazyImage style={style} src={src} title={title} imageRef={ref} />
+      <LazyImage
+        style={style}
+        src={src}
+        title={title}
+        width={width}
+        height={height}
+        imageRef={ref}
+      />
+      {isFocused && (
+        <ImageResizer
+          maxWidth={innerWidth}
+          maxHeight={innerHeight}
+          imageRef={ref}
+          onResizeStart={onDragStart}
+          onResizeEnd={onResizeEnd}
+        />
+      )}
     </Suspense>
   )
 }
 
 export type SerializedImageNode = Spread<
-  {
-    title: string
-    src: string
+  Omit<ImagePayload, 'key'> & {
     type: 'image'
     version: 1
   },
@@ -161,12 +226,18 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   static clone(node: ImageNode): ImageNode {
-    return new ImageNode(node.__src, node.__title, node.__key)
+    return new ImageNode(
+      node.__src,
+      node.__title,
+      node.__width,
+      node.__height,
+      node.__key
+    )
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const { title, src } = serializedNode
-    const node = $createImageNode({ src, title })
+    const { src, title, width, height } = serializedNode
+    const node = $createImageNode({ src, title, width, height })
 
     return node
   }
@@ -175,6 +246,8 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     const element = document.createElement('img')
     element.setAttribute('src', this.__src)
     element.setAttribute('alt', this.__title)
+    element.style.setProperty('width', `${this.__width}px`)
+    element.style.setProperty('height', `${this.__height}px`)
 
     return { element }
   }
@@ -188,28 +261,46 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     }
   }
 
-  constructor(src: string, title: string, key?: NodeKey) {
+  constructor(
+    src: string,
+    title: string,
+    width?: number,
+    height?: number,
+    key?: NodeKey
+  ) {
     super(key)
     this.__src = src
     this.__title = title
+    this.__width = width
+    this.__height = height
   }
 
   exportJSON(): SerializedImageNode {
     return {
       title: this.getTitle(),
       src: this.getSrc(),
+      width: this.__width,
+      height: this.__height,
       type: 'image',
       version: 1,
     }
+  }
+
+  setWidthAndHeight(width: number, height: number): void {
+    const writable = this.getWritable()
+    writable.__width = width
+    writable.__height = height
   }
 
   createDOM(config: EditorConfig): HTMLElement {
     const span = document.createElement('span')
     const theme = config.theme
     const className = theme.image
+
     if (className !== undefined) {
       span.className = className
     }
+
     return span
   }
 
@@ -230,14 +321,22 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       <ImageComponent
         src={this.__src}
         title={this.__title}
+        width={this.__width}
+        height={this.__height}
         nodeKey={this.getKey()}
       />
     )
   }
 }
 
-export const $createImageNode = ({ src, title, key }: ImagePayload) => {
-  return new ImageNode(src, title, key)
+export const $createImageNode = ({
+  src,
+  title,
+  width,
+  height,
+  key,
+}: ImagePayload) => {
+  return new ImageNode(src, title, width, height, key)
 }
 
 export const $isImageNode = (

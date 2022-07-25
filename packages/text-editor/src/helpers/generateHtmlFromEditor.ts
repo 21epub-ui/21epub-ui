@@ -9,6 +9,7 @@ import type {
 import { onError } from '../components/TextEditor'
 import { editorNodes, editorTheme } from '../config'
 import getRandomId from '../utils/getRandomId'
+import hasImageNode from './hasImageNode'
 import isParagraphNode from './isParagraphNode'
 
 const processNodes = async (
@@ -38,7 +39,9 @@ const generateHtmlFromEditor = async (
 ) => {
   const serializedState = editor.getEditorState().toJSON()
 
-  const isEditorEmpty = $isRootTextContentEmpty(editor.isComposing(), true)
+  const isEditorEmpty =
+    !hasImageNode(serializedState.root) &&
+    $isRootTextContentEmpty(editor.isComposing(), true)
 
   if (isEditorEmpty) return ''
 
