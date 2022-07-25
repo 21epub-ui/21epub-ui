@@ -1,17 +1,19 @@
 import type { ResponseData } from '../../api/request'
-import type { CommentListData, ReplyData } from '../../index.types'
+import type { CommentData, CommentListData, ReplyData } from '../../index.types'
 import CommentItem from '../CommentItem'
 import { Container } from './styles'
 
 interface CommentListProps {
   value?: ResponseData<CommentListData>[]
   onReply: (target: ReplyData) => void
+  onArchive: (target: CommentData) => void
   loadMore: () => void
 }
 
 const CommentList: React.FC<CommentListProps> = ({
   value,
   onReply,
+  onArchive,
   loadMore,
 }) => (
   <Container
@@ -36,6 +38,7 @@ const CommentList: React.FC<CommentListProps> = ({
             }
             onReply(replyTarget)
           }}
+          onArchive={onArchive}
         />
       ))
     })}

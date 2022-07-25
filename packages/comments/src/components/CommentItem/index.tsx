@@ -1,8 +1,7 @@
 import { Box, HStack } from '@chakra-ui/react'
 import DOMPurify from 'dompurify'
 import type { HTMLAttributes } from 'react'
-import updateComment from '../../api/updateComment'
-import type { ReplyData } from '../../index.types'
+import type { CommentData, ReplyData } from '../../index.types'
 import Time from '../Time'
 import { Actions, TextButton } from './styles'
 
@@ -16,7 +15,8 @@ export interface CommentItemProps extends HTMLAttributes<HTMLDivElement> {
   comment: ReplyData & { children?: ReplyData[] }
   target?: ReplyData
   layer?: number
-  onReply: (target: CommentItemProps['comment']) => void
+  onReply: (target: this['comment']) => void
+  onArchive: (target: CommentData) => void
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -24,6 +24,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   target,
   layer = 0,
   onReply,
+  onArchive,
   ...props
 }) => (
   <div
@@ -41,20 +42,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
         {target && <Box fontSize="small">回复 {target.nickname}</Box>}
         <Box as={Time} color="#8c8c8c" fontSize="xs" value={comment.created} />
         <Actions>
-          {layer === 0 && (
-            <TextButton
-              onClick={() => {
-                updateComment(comment.id, { archived: true })
-              }}
-            >
-              结束
-            </TextButton>
+          {layer === 0 && !comment.archived && (
+            <TextButton onClick={() => onArchive(comment)}>结束</TextButton>
           )}
-          <TextButton
-            onClick={() => {
-              onReply(comment)
-            }}
-          >
+          <TextButton onClick={() => onReply(comment)}>
             回复
             {layer === 0 && `(${comment.children?.length})`}
           </TextButton>
@@ -74,6 +65,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
         target={findTarget(replies, comment.ref)}
         layer={layer + 1}
         onReply={onReply}
+        onArchive={onArchive}
       />
     ))}
   </div>

@@ -29,7 +29,7 @@ const useComments = (params: GetCommentsParams) => {
       const firstId = firstList?.content.at(0)?.id
       const res = await getComments({
         ...params,
-        after: firstId,
+        after: firstId ?? '',
       })
       return [res, ...rest]
     })

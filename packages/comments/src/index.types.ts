@@ -21,14 +21,7 @@ export interface CommentData {
 
 export type CommentListData = CommentData[]
 
-export interface ReplyData {
-  id: string
-  slug: string
-  target: string
-  created: number
-  userId: string
-  nickname: string
-  content: string
+export interface ReplyData extends Omit<CommentData, 'children'> {
   ref?: string
 }
 

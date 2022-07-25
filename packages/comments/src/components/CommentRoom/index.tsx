@@ -8,6 +8,7 @@ import { CLEAR_EDITOR_COMMAND } from 'lexical'
 import { useEffect, useState } from 'react'
 import createComment from '../../api/createComment'
 import createReply from '../../api/createReply'
+import updateComment from '../../api/updateComment'
 import generateHtmlFromState from '../../helpers/generateHtmlFromState'
 import hasImageNode from '../../helpers/hasImageNode'
 import useComments from '../../hooks/useComments'
@@ -125,7 +126,11 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
         </StyledTabList>
         <CommentList
           value={data}
-          onReply={(value) => setReplyTarget(value)}
+          onReply={(target) => setReplyTarget(target)}
+          onArchive={async (target) => {
+            await updateComment(target.id, { archived: true })
+            refresh()
+          }}
           loadMore={loadMore}
         />
       </Tabs>
