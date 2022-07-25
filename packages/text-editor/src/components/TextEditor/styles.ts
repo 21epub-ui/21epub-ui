@@ -32,6 +32,11 @@ export const Editor = styled.div`
     border-left: 5px solid #f0f0f0;
   }
 
+  .editor-image {
+    display: inline-block;
+    position: relative;
+  }
+
   .editor-h1,
   .editor-h2,
   .editor-h3 {

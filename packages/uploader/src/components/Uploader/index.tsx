@@ -137,6 +137,7 @@ const Uploader: React.FC<UploaderProps> = ({
 
               return Upload.LIST_IGNORE
             }
+
             if (!checkFileSize(file.size)) {
               message.error(`无法上传大于200M的文件（${file.name}）`, 5)
 

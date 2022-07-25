@@ -36,6 +36,7 @@ export const isImageNode = (
 const getFileType = (data: string) => {
   const start = data.indexOf(':') + 1
   const end = data.indexOf(';')
+
   return data.slice(start, end)
 }
 

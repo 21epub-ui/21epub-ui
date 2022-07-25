@@ -49,8 +49,10 @@ const convertImageElement = (domNode: Node): DOMConversionOutput | null => {
   if (domNode instanceof HTMLImageElement) {
     const { alt: title, src } = domNode
     const node = $createImageNode({ src, title })
+
     return { node }
   }
+
   return null
 }
 
@@ -102,6 +104,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
 
         setSelected(false)
       }
+
       return false
     },
     [selected, nodeKey, setSelected]
@@ -207,9 +210,11 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     const span = document.createElement('span')
     const theme = config.theme
     const className = theme.image
+
     if (className !== undefined) {
       span.className = className
     }
+
     return span
   }
 

@@ -31,6 +31,7 @@ const useComments = (params: GetCommentsParams) => {
         ...params,
         after: firstId ?? '',
       })
+
       return [res, ...rest]
     })
   }

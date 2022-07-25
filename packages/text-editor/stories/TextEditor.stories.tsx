@@ -10,7 +10,7 @@ export default {
 
 const Template: ComponentStory<typeof TextEditor> = (args) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const handleInsertRef = useRef<(file: File) => void>()
+  const onInsertRef = useRef<(file: File) => void>()
 
   const insertImage = (
     file: File,
@@ -35,7 +35,7 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
         onUpload={(type, callback) => {
           if (type === 'image') {
             inputRef.current?.click()
-            handleInsertRef.current = (file) => insertImage(file, callback)
+            onInsertRef.current = (file) => insertImage(file, callback)
           }
         }}
       />
@@ -48,7 +48,7 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
           const file = e.currentTarget.files?.[0]
           if (file === undefined) return
 
-          handleInsertRef.current?.(file)
+          onInsertRef.current?.(file)
           e.currentTarget.value = ''
         }}
       />

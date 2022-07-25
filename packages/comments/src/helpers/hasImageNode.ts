@@ -7,6 +7,7 @@ const hasImageNode = (elementNode: SerializedElementNode): boolean => {
     if (isImageNode(node)) return true
     if (isParagraphNode(node)) return hasImageNode(node)
   }
+
   return false
 }
 

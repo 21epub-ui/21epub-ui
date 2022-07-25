@@ -23,7 +23,7 @@ import getRandomId from '../../utils/getRandomId'
 import { Editor } from './styles'
 
 export const onError = (error: Error) => {
-  throw error
+  console.error(error)
 }
 
 export const TextEditor: React.FC<TextEditorProps> = ({
@@ -38,7 +38,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
   ...props
 }) => {
   const namespace = useRef(getRandomId(8))
-  const scrollRef = useRef(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   return (
     <ChakraProvider theme={chakraTheme}>
