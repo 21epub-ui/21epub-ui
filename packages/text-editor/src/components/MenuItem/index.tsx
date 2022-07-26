@@ -21,6 +21,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
     justifyContent: 'start',
     padding: '8px 16px',
     borderRadius: '0',
+    boxShadow: 'none',
     backgroundColor: isSelected ? 'gray.100' : 'white',
   }
 
