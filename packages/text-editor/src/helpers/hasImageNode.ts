@@ -1,5 +1,5 @@
 import type { SerializedElementNode } from 'lexical'
-import { isImageNode } from './isImageNode'
+import isImageNode from './isImageNode'
 import isParagraphNode from './isParagraphNode'
 
 const hasImageNode = (elementNode: SerializedElementNode): boolean => {
