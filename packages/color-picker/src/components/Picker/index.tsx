@@ -80,6 +80,7 @@ const Picker: React.FC<PickerProps> = ({
       borderColor="gray.200"
       borderRadius="sm"
       backgroundColor="white"
+      userSelect="none"
     >
       <SwatchesSet align="center">
         {onRenderSwatches?.({ onChange: onColorChange }) || (
