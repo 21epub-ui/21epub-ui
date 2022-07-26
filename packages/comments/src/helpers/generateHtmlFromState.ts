@@ -43,13 +43,11 @@ const getFileType = (data: string) => {
 const processNodes = async (elementNode: SerializedElementNode) => {
   for await (const node of elementNode.children) {
     if (isParagraphNode(node)) {
-      await processNodes(node)
-      return
+      processNodes(node)
     }
 
     if (isTextNode(node)) {
       node.text = node.text.trimEnd()
-      return
     }
 
     if (isImageNode(node)) {
@@ -59,7 +57,6 @@ const processNodes = async (elementNode: SerializedElementNode) => {
         type: getFileType(node.src),
       })
       node.src = await uploadFile(file)
-      return
     }
   }
 }

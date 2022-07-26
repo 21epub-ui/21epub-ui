@@ -19,7 +19,6 @@ const processNodes = async (
   for await (const node of elementNode.children) {
     if (isParagraphNode(node)) {
       await processNodes(node, processor)
-      return
     }
 
     await processor?.(node)
