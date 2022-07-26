@@ -45,15 +45,15 @@ export const Editor = styled.div`
     padding: 0;
   }
 
-  .editor-h1 span {
+  .editor-h1 * {
     font-size: 16pt !important;
   }
 
-  .editor-h2 span {
+  .editor-h2 * {
     font-size: 14pt !important;
   }
 
-  .editor-h3 span {
+  .editor-h3 * {
     font-size: 13pt !important;
   }
 

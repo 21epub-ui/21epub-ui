@@ -1,18 +1,24 @@
 import { ColorPicker } from '@21epub-ui/color-picker'
 import { Box, Divider, HStack } from '@chakra-ui/react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { $createHeadingNode } from '@lexical/rich-text'
 import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
   $patchStyleText,
+  $selectAll,
   $wrapLeafNodesInElements,
 } from '@lexical/selection'
-import { mergeRegister } from '@lexical/utils'
-import type { RangeSelection } from 'lexical'
-import { $createParagraphNode } from 'lexical'
 import {
+  $getNearestBlockElementAncestorOrThrow,
+  mergeRegister,
+} from '@lexical/utils'
+import type { RangeSelection } from 'lexical'
+import {
+  $createParagraphNode,
   $getSelection,
   $isRangeSelection,
+  $isTextNode,
   COMMAND_PRIORITY_CRITICAL,
 } from 'lexical'
 import { useCallback, useEffect, useState } from 'react'
@@ -20,6 +26,7 @@ import {
   TbArrowBackUp,
   TbArrowForwardUp,
   TbBold,
+  TbEraser,
   TbIndentDecrease,
   TbIndentIncrease,
   TbItalic,
@@ -28,19 +35,18 @@ import {
   TbStrikethrough,
   TbUnderline,
 } from 'react-icons/tb'
+import FontSizeMenu from '../../components/FontSizeMenu'
+import InsertionMenu from '../../components/InsertionMenu'
+import LabelButton from '../../components/LabelButton'
+import TagMenu from '../../components/TagMenu'
+import TextAlignMenu from '../../components/TextAlignMenu'
+import TypefaceMenu from '../../components/TypefaceMenu'
 import { editorCommands, editorTypefaces } from '../../config'
 import getNodeType from '../../helpers/getNodeType'
 import getRootNode from '../../helpers/getRootNode'
 import getSelection from '../../helpers/getSelection'
 import FontColorIcon from '../../icons/FontColorIcon'
 import HighlightIcon from '../../icons/HighlightIcon'
-import FontSizeMenu from '../../components/FontSizeMenu'
-import LabelButton from '../../components/LabelButton'
-import TagMenu from '../../components/TagMenu'
-import TextAlignMenu from '../../components/TextAlignMenu'
-import TypefaceMenu from '../../components/TypefaceMenu'
-import InsertionMenu from '../../components/InsertionMenu'
-import { $createHeadingNode } from '@lexical/rich-text'
 import type { TagType, TextEditorProps } from '../../index.types'
 
 interface ToolbarPluginProps {
@@ -172,7 +178,23 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
   }
 
   const updateSelectionStyles = (styles: Record<string, string>) => {
-    getSelection(editor, (selection) => $patchStyleText(selection, styles))
+    getSelection(activeEditor, (selection) => {
+      $patchStyleText(selection, styles)
+    })
+  }
+
+  const clearFormatting = () => {
+    getSelection(activeEditor, (selection) => {
+      $selectAll(selection)
+      $wrapLeafNodesInElements(selection, $createParagraphNode)
+      selection.getNodes().forEach((node) => {
+        if ($isTextNode(node)) {
+          node.setFormat(0)
+          node.setStyle('')
+          $getNearestBlockElementAncestorOrThrow(node).setFormat('')
+        }
+      })
+    })
   }
 
   return (
@@ -193,6 +215,12 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
         icon={<TbArrowForwardUp />}
         disabled={disabled || !canRedo}
         onClick={() => dispatchCommand('redo')}
+      />
+      <LabelButton
+        label="清除格式"
+        icon={<TbEraser />}
+        disabled={disabled}
+        onClick={clearFormatting}
       />
       <Divider orientation="vertical" />
       <Box>

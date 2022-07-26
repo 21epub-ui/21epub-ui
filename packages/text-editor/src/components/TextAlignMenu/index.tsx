@@ -5,7 +5,6 @@ import {
   TbAlignLeft,
   TbAlignRight,
 } from 'react-icons/tb'
-import { editorCommands } from '../../config'
 import LabelButton from '../LabelButton'
 import Menu from '../Menu'
 
