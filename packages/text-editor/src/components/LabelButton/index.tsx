@@ -55,9 +55,9 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
      */
     const { x, y, reference, floating, update, strategy, context } =
       useFloating({
+        placement,
         open: isOpen,
         onOpenChange: setIsOpen,
-        placement: placement,
         middleware: [offset(8), flip(), shift()],
         whileElementsMounted: autoUpdate,
       })
@@ -91,7 +91,7 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
         >
           {icon ?? children}
         </Button>
-        {label !== undefined && isOpen && (
+        {label !== undefined && !props.disabled && isOpen && (
           <Transition
             initial="exit"
             animate="enter"
