@@ -43,7 +43,7 @@ const getFileType = (data: string) => {
 const processNodes = async (elementNode: SerializedElementNode) => {
   for await (const node of elementNode.children) {
     if (isParagraphNode(node)) {
-      processNodes(node)
+      await processNodes(node)
     }
 
     if (isTextNode(node)) {
