@@ -30,7 +30,7 @@ export interface TextEditorProps
   initialState?: SerializedEditorState | ((editor: LexicalEditor) => void)
   placeholder?: ReactNode
   onChange?: (editorState: EditorState, editor: LexicalEditor) => void
-  onUpload?: (
+  onInsert?: (
     type: MediaType,
     callback: (payload: MediaPayload) => void
   ) => void

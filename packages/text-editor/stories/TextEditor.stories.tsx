@@ -32,7 +32,7 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
       <TextEditor
         style={{ height: innerHeight - 32 }}
         {...args}
-        onUpload={(type, callback) => {
+        onInsert={(type, callback) => {
           if (type === 'image') {
             inputRef.current?.click()
             onInsertRef.current = (file) => insertImage(file, callback)
