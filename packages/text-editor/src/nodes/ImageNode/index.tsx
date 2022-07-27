@@ -29,8 +29,8 @@ export interface ImagePayload {
   key?: NodeKey
   src: string
   title: string
-  width: number
-  height: number
+  width?: number
+  height?: number
 }
 
 type SelectionType = ReturnType<typeof $getSelection>
@@ -221,6 +221,11 @@ export type SerializedImageNode = Spread<
 >
 
 export class ImageNode extends DecoratorNode<JSX.Element> {
+  declare __src: string
+  declare __title: string
+  declare __width?: number
+  declare __height?: number
+
   static getType(): string {
     return 'image'
   }
