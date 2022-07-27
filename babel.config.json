@@ -9,6 +9,13 @@
       }
     ],
     [
+      "@babel/preset-typescript",
+      {
+        "allowDeclareFields": true,
+        "allowNamespaces": false
+      }
+    ],
+    [
       "@babel/preset-react",
       {
         "runtime": "automatic",

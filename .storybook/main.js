@@ -2,22 +2,7 @@ module.exports = {
   stories: ['../packages/**/stories/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: '@storybook/react',
-  babel: (options) => ({
-    ...options,
-    presets: options.presets.map((option) => {
-      if (option[0].includes('@babel/preset-react')) {
-        return [
-          '@babel/preset-react',
-          {
-            runtime: 'automatic',
-            importSource: '@emotion/react',
-          },
-        ]
-      }
-
-      return option
-    }),
-  }),
+  babel: () => require('../babel.config.json'),
   webpackFinal: (config) => {
     return {
       ...config,
