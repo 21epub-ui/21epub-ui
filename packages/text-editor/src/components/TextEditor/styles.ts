@@ -83,7 +83,7 @@ export const Editor = styled.div`
     list-style-type: none;
   }
 
-  .editor-ul > .editor-li::before {
+  .editor-ul .editor-li::before {
     content: '';
     display: inline-block;
     vertical-align: middle;
@@ -94,14 +94,14 @@ export const Editor = styled.div`
     background-color: currentColor;
   }
 
-  .editor-li-nested {
+  .editor-li.editor-li-nested {
     margin-left: 20px;
     list-style-type: none;
   }
 
-  .editor-li-nested:after,
-  .editor-li-nested:before {
-    display: none !important;
+  .editor-li.editor-li-nested:after,
+  .editor-li.editor-li-nested:before {
+    display: none;
   }
 
   .editor-text-bold {
