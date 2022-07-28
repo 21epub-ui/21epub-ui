@@ -6,6 +6,7 @@ import type {
   DOMConversionOutput,
   DOMExportOutput,
   EditorConfig,
+  LexicalEditor,
   LexicalNode,
   NodeKey,
   SerializedLexicalNode,
@@ -247,12 +248,16 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return node
   }
 
-  exportDOM(): DOMExportOutput {
-    const element = document.createElement('img')
-    element.setAttribute('src', this.__src)
-    element.setAttribute('alt', this.__title)
-    element.style.setProperty('width', `${this.__width}px`)
-    element.style.setProperty('height', `${this.__height}px`)
+  exportDOM(editor: LexicalEditor): DOMExportOutput {
+    const element = this.createDOM(editor._config)
+
+    const image = document.createElement('img')
+    image.setAttribute('src', this.__src)
+    image.setAttribute('alt', this.__title)
+    image.style.setProperty('width', `${this.__width}px`)
+    image.style.setProperty('height', `${this.__height}px`)
+
+    element.appendChild(image)
 
     return { element }
   }
@@ -299,8 +304,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
 
   createDOM(config: EditorConfig): HTMLElement {
     const span = document.createElement('span')
-    const theme = config.theme
-    const className = theme.image
+    const className = config.theme.image
 
     if (className !== undefined) {
       span.className = className
