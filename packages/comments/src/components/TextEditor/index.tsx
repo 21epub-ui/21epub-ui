@@ -16,7 +16,7 @@ const onError = (error: Error) => {
   throw error
 }
 
-interface TextEditorProps {
+export interface TextEditorProps {
   className?: string
   style?: CSSProperties
   disabled?: boolean
