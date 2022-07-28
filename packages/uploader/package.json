@@ -18,18 +18,19 @@
   "peerDependencies": {
     "@emotion/react": ">=11.0.0",
     "@emotion/styled": ">=11.0.0",
+    "antd": ">=4.x",
     "react": ">=16.14.0"
   },
   "dependencies": {
     "@21epub-ui/media": "workspace:^",
     "@ant-design/colors": "^6.0.0",
-    "@ant-design/icons": "^4.7.0",
-    "antd": "^4.21.4"
+    "@ant-design/icons": "^4.7.0"
   },
   "devDependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@storybook/react": "^6.5.9",
-    "@types/react": "^17"
+    "@types/react": "^17",
+    "antd": "^4.21.4"
   }
 }

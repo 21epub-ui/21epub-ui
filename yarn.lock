@@ -202,6 +202,7 @@ __metadata:
   peerDependencies:
     "@emotion/react": ">=11.0.0"
     "@emotion/styled": ">=11.0.0"
+    antd: ">=4.x"
     react: ">=16.14.0"
   languageName: unknown
   linkType: soft
