@@ -45,7 +45,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
           {layer === 0 && !comment.archived && (
             <TextButton onClick={() => onArchive(comment)}>结束</TextButton>
           )}
-          <TextButton onClick={() => onReply(comment)}>
+          <TextButton
+            disabled={comment.archived}
+            onClick={() => onReply(comment)}
+          >
             回复
             {layer === 0 && `(${comment.children?.length})`}
           </TextButton>
