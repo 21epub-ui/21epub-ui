@@ -134,7 +134,12 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
           loadMore={loadMore}
         />
       </Tabs>
-      <Box padding="12px 0" marginTop="auto" borderTop="1px solid #f0f0f0">
+      <Box
+        maxHeight="50%"
+        padding="12px 0"
+        marginTop="auto"
+        borderTop="1px solid #f0f0f0"
+      >
         {replyTarget && (
           <Flex paddingBottom="8px" margin="0 8px">
             <Box>回复 {replyTarget.nickname} :</Box>

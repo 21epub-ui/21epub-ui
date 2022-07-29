@@ -38,10 +38,15 @@ const TextEditor: React.FC<TextEditorProps> = ({
 
   return (
     <LexicalComposer initialConfig={{ namespace, onError, nodes: [ImageNode] }}>
-      <Flex flexDirection="column" className={className} style={style}>
+      <Flex
+        maxHeight="100%"
+        flexDirection="column"
+        className={className}
+        style={style}
+      >
         <PlainTextPlugin
           contentEditable={
-            <Box ref={ref} fontSize="small" maxHeight="105px" overflow="auto">
+            <Box ref={ref} fontSize="small" overflow="auto">
               <ContentEditable style={{ outline: 'none' }} />
             </Box>
           }
