@@ -30,7 +30,7 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
   const [replyTarget, setReplyTarget] = useState<ReplyData>()
   const [editorDisabled, setEditorDisabled] = useState(false)
 
-  const { data, refresh, loadMore } = useComments({
+  const { comments, mutate, loadPrev, loadNext } = useComments({
     slug,
     target,
     archived: currentTab === 1,
@@ -86,7 +86,7 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
           })
         }
 
-        refresh()
+        loadPrev()
         editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined)
         setEditorDisabled(false)
       } catch {
@@ -125,13 +125,21 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
           </Button>
         </StyledTabList>
         <CommentList
-          value={data}
+          value={comments}
           onReply={(target) => setReplyTarget(target)}
           onArchive={async (target) => {
             await updateComment(target.id, { archived: true })
-            refresh()
+
+            const newComments = comments?.map(({ content, ...rest }) => {
+              return {
+                ...rest,
+                content: content.filter((item) => item.id !== target.id),
+              }
+            })
+
+            mutate(newComments, false)
           }}
-          loadMore={loadMore}
+          onTouchBottom={loadNext}
         />
       </Tabs>
       <Box

@@ -16,14 +16,14 @@ const useComments = (params: GetCommentsParams) => {
     if (previousData.last) return null
 
     const lastList = previousData.content
-    const lastId = lastList[lastList.length - 1].id
+    const lastId = lastList.at(-1)?.id
 
     return ['comments', { ...params, before: lastId }]
   }
 
   const { data, mutate, size, setSize } = useSWRInfinite(getKey, fetcher)
 
-  const refresh = () => {
+  const loadPrev = () => {
     mutate(async (data) => {
       const [firstList, ...rest] = data ?? []
       const firstId = firstList?.content.at(0)?.id
@@ -32,21 +32,28 @@ const useComments = (params: GetCommentsParams) => {
         after: firstId ?? '',
       })
 
-      return [res, ...rest]
+      if (firstId === undefined) return [res]
+
+      return [{ ...res, last: false }, firstList, ...rest]
     })
   }
 
-  const loadMore = () => {
+  const loadNext = () => {
     if (data?.at(size - 1) !== undefined) setSize(size + 1)
   }
 
-  const refreshRef = useRef(refresh)
-  refreshRef.current = refresh
+  const loadPrevRef = useRef(loadPrev)
+  loadPrevRef.current = loadPrev
 
-  const loadMoreRef = useRef(loadMore)
-  loadMoreRef.current = loadMore
+  const loadNextRef = useRef(loadNext)
+  loadNextRef.current = loadNext
 
-  return { data, refresh: refreshRef.current, loadMore: loadMoreRef.current }
+  return {
+    comments: data,
+    mutate,
+    loadPrev: loadPrevRef.current,
+    loadNext: loadNextRef.current,
+  }
 }
 
 export default useComments

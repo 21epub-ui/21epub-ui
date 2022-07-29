@@ -7,14 +7,14 @@ interface CommentListProps {
   value?: ResponseData<CommentListData>[]
   onReply: (target: ReplyData) => void
   onArchive: (target: CommentData) => void
-  loadMore: () => void
+  onTouchBottom: () => void
 }
 
 const CommentList: React.FC<CommentListProps> = ({
   value,
   onReply,
   onArchive,
-  loadMore,
+  onTouchBottom,
 }) => (
   <Container
     onScroll={(event) => {
@@ -22,7 +22,7 @@ const CommentList: React.FC<CommentListProps> = ({
       const { scrollHeight, scrollTop, clientHeight } = target
       const space = scrollHeight - scrollTop - clientHeight
 
-      if (space < 50) loadMore()
+      if (space < 50) onTouchBottom()
     }}
   >
     {value?.map(({ content: comments }) => {
