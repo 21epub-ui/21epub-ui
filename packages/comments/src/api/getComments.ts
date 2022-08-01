@@ -11,12 +11,9 @@ export interface GetCommentsParams {
 }
 
 const getComments = (params: GetCommentsParams) => {
-  const archived = Boolean(params.archived).toString()
-  const searchParams = new URLSearchParams({ ...params, archived })
-
-  return request.get<ResponseData<CommentListData>>(
-    `comments/?${searchParams.toString()}`
-  )
+  return request
+    .get('comments/', { searchParams: { ...params } })
+    .json<ResponseData<CommentListData>>()
 }
 
 export default getComments

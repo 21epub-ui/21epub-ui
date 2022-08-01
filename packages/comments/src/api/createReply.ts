@@ -5,9 +5,9 @@ import request from './request'
 type RequestData = Pick<ReplyData, 'slug' | 'target' | 'content' | 'ref'>
 
 const createReply = (id: string, data: RequestData) => {
-  return request.post<ResponseData<ReplyListData>>(`comments/${id}/`, {
-    data,
-  })
+  return request
+    .post(`comments/${id}/`, { json: data })
+    .json<ResponseData<ReplyListData>>()
 }
 
 export default createReply

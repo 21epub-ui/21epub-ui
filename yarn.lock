@@ -51,9 +51,9 @@ __metadata:
     "@types/react": ^17
     dompurify: ^2.3.8
     framer-motion: ^6.3.16
+    ky: ^0.31.1
     lexical: ^0.3.7
     swr: ^1.3.0
-    umi-request: ^1.4.0
   peerDependencies:
     "@chakra-ui/icons": ">=1.x"
     "@chakra-ui/react": ">=1.x"
@@ -91,8 +91,8 @@ __metadata:
     "@storybook/react": ^6.5.9
     "@types/react": ^17
     antd: ^4.21.4
+    ky: ^0.31.1
     swr: ^1.3.0
-    umi-request: ^1.4.0
   peerDependencies:
     "@emotion/react": ">=11.x"
     "@emotion/styled": ">=11.x"
@@ -10360,7 +10360,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"encoding@npm:^0.1.11, encoding@npm:^0.1.12":
+"encoding@npm:^0.1.12":
   version: 0.1.13
   resolution: "encoding@npm:0.1.13"
   dependencies:
@@ -13215,7 +13215,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-stream@npm:^1.0.1, is-stream@npm:^1.1.0":
+"is-stream@npm:^1.1.0":
   version: 1.1.0
   resolution: "is-stream@npm:1.1.0"
   checksum: 063c6bec9d5647aa6d42108d4c59723d2bd4ae42135a2d4db6eadbd49b7ea05b750fd69d279e5c7c45cf9da753ad2c00d8978be354d65aa9f6bb434969c6a2ae
@@ -13371,16 +13371,6 @@ __metadata:
   version: 4.0.0
   resolution: "isobject@npm:4.0.0"
   checksum: bbcb522e46d54fb22418ba49fb9a82057ffa201c8401fb6e018c042e2c98cf7d9c7b185aff88e035ec8adea0814506dc2aeff2d08891bbc158e1671a49e99c06
-  languageName: node
-  linkType: hard
-
-"isomorphic-fetch@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "isomorphic-fetch@npm:2.2.1"
-  dependencies:
-    node-fetch: ^1.0.1
-    whatwg-fetch: ">=0.10.0"
-  checksum: bb5daa7c3785d6742f4379a81e55b549a469503f7c9bf9411b48592e86632cf5e8fe8ea878dba185c0f33eb7c510c23abdeb55aebfdf5d3c70f031ced68c5424
   languageName: node
   linkType: hard
 
@@ -13764,6 +13754,13 @@ __metadata:
   version: 2.0.5
   resolution: "klona@npm:2.0.5"
   checksum: 8c976126ea252b766e648a4866e1bccff9d3b08432474ad80c559f6c7265cf7caede2498d463754d8c88c4759895edd8210c85c0d3155e6aae4968362889466f
+  languageName: node
+  linkType: hard
+
+"ky@npm:^0.31.1":
+  version: 0.31.1
+  resolution: "ky@npm:0.31.1"
+  checksum: c1ca2c60bad649d38c8545fb781851f76b9a6080bead35827ce0ebb1cc7483bd951cc327af0524f17dac1e887ef4f2d81b4d1b5b54ca37baa7d4c9caf0dba5d2
   languageName: node
   linkType: hard
 
@@ -14843,16 +14840,6 @@ __metadata:
   dependencies:
     minimatch: ^3.0.2
   checksum: 29de9560e52cdac8d3f794d38d782f6799e13d4d11aaf96d3da8c28458e1c5e33bb5f8edfb42dc34172ec5516c50c5b8850c9e1526542616757a969267263328
-  languageName: node
-  linkType: hard
-
-"node-fetch@npm:^1.0.1":
-  version: 1.7.3
-  resolution: "node-fetch@npm:1.7.3"
-  dependencies:
-    encoding: ^0.1.11
-    is-stream: ^1.0.1
-  checksum: 3bb0528c05d541316ebe52770d71ee25a6dce334df4231fd55df41a644143e07f068637488c18a5b0c43f05041dbd3346752f9e19b50df50569a802484544d5b
   languageName: node
   linkType: hard
 
@@ -16231,7 +16218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.10.0, qs@npm:^6.9.1":
+"qs@npm:^6.10.0":
   version: 6.10.3
   resolution: "qs@npm:6.10.3"
   dependencies:
@@ -19500,16 +19487,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"umi-request@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "umi-request@npm:1.4.0"
-  dependencies:
-    isomorphic-fetch: ^2.2.1
-    qs: ^6.9.1
-  checksum: 3d72035836c412976a5229126d5c963d6b64ded16cba51e27b4b260936224e8f68b1a78a9da631285ff79bc8233c3d3f354b6a972cb6867a790e811b35937509
-  languageName: node
-  linkType: hard
-
 "unbox-primitive@npm:^1.0.1":
   version: 1.0.1
   resolution: "unbox-primitive@npm:1.0.1"
@@ -20239,13 +20216,6 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: 320c41369a75051b19e18c63f408b3dcc481852e992f83d311771c5ec0f05f2946385e8ebef62030cf3587f0a3d2f12779ffdb191569a966847289ba7313f946
-  languageName: node
-  linkType: hard
-
-"whatwg-fetch@npm:>=0.10.0":
-  version: 3.6.2
-  resolution: "whatwg-fetch@npm:3.6.2"
-  checksum: ee976b7249e7791edb0d0a62cd806b29006ad7ec3a3d89145921ad8c00a3a67e4be8f3fb3ec6bc7b58498724fd568d11aeeeea1f7827e7e1e5eae6c8a275afed
   languageName: node
   linkType: hard
 

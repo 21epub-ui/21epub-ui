@@ -33,9 +33,9 @@
     "@lexical/text": "^0.3.7",
     "@lexical/utils": "^0.3.7",
     "dompurify": "^2.3.8",
+    "ky": "^0.31.1",
     "lexical": "^0.3.7",
-    "swr": "^1.3.0",
-    "umi-request": "^1.4.0"
+    "swr": "^1.3.0"
   },
   "devDependencies": {
     "@chakra-ui/icons": "^2.0.4",

@@ -192,9 +192,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:17.0.38"],\
             ["dompurify", "npm:2.3.8"],\
             ["framer-motion", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:6.3.16"],\
+            ["ky", "npm:0.31.1"],\
             ["lexical", "npm:0.3.7"],\
-            ["swr", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:1.3.0"],\
-            ["umi-request", "npm:1.4.0"]\
+            ["swr", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:1.3.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -246,8 +246,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@storybook/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:6.5.9"],\
             ["@types/react", "npm:17.0.38"],\
             ["antd", "virtual:01e4ccac085f93fd209eb09d7f29d76decf8c46bf2236c398bf9e00ad534c8e1700b0957438cbc5221f8340cf7f5c1ce2312f786eb4057b768fb13bdba5d96e9#npm:4.21.4"],\
-            ["swr", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:1.3.0"],\
-            ["umi-request", "npm:1.4.0"]\
+            ["ky", "npm:0.31.1"],\
+            ["swr", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:1.3.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -23623,17 +23623,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["isomorphic-fetch", [\
-        ["npm:2.2.1", {\
-          "packageLocation": "./.yarn/cache/isomorphic-fetch-npm-2.2.1-46b4db5d7b-bb5daa7c37.zip/node_modules/isomorphic-fetch/",\
-          "packageDependencies": [\
-            ["isomorphic-fetch", "npm:2.2.1"],\
-            ["node-fetch", "npm:1.7.3"],\
-            ["whatwg-fetch", "npm:3.6.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["isomorphic-unfetch", [\
         ["npm:3.1.0", {\
           "packageLocation": "./.yarn/cache/isomorphic-unfetch-npm-3.1.0-001a51c96c-82b92fe4ec.zip/node_modules/isomorphic-unfetch/",\
@@ -24026,6 +24015,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/klona-npm-2.0.5-5d403f2d77-8c976126ea.zip/node_modules/klona/",\
           "packageDependencies": [\
             ["klona", "npm:2.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["ky", [\
+        ["npm:0.31.1", {\
+          "packageLocation": "./.yarn/cache/ky-npm-0.31.1-56fdc94d48-c1ca2c60ba.zip/node_modules/ky/",\
+          "packageDependencies": [\
+            ["ky", "npm:0.31.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -25211,15 +25209,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["node-fetch", [\
-        ["npm:1.7.3", {\
-          "packageLocation": "./.yarn/cache/node-fetch-npm-1.7.3-eb8372f991-3bb0528c05.zip/node_modules/node-fetch/",\
-          "packageDependencies": [\
-            ["node-fetch", "npm:1.7.3"],\
-            ["encoding", "npm:0.1.13"],\
-            ["is-stream", "npm:1.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:2.6.7", {\
           "packageLocation": "./.yarn/cache/node-fetch-npm-2.6.7-777aa2a6df-8d816ffd1e.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
@@ -31317,17 +31306,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["umi-request", [\
-        ["npm:1.4.0", {\
-          "packageLocation": "./.yarn/cache/umi-request-npm-1.4.0-4be945ee55-3d72035836.zip/node_modules/umi-request/",\
-          "packageDependencies": [\
-            ["umi-request", "npm:1.4.0"],\
-            ["isomorphic-fetch", "npm:2.2.1"],\
-            ["qs", "npm:6.10.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["unbox-primitive", [\
         ["npm:1.0.1", {\
           "packageLocation": "./.yarn/cache/unbox-primitive-npm-1.0.1-50b9fde246-89d950e18f.zip/node_modules/unbox-primitive/",\
@@ -32241,15 +32219,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/webpack-virtual-modules-npm-0.4.4-b1e23da0bf-6720b4c47d.zip/node_modules/webpack-virtual-modules/",\
           "packageDependencies": [\
             ["webpack-virtual-modules", "npm:0.4.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["whatwg-fetch", [\
-        ["npm:3.6.2", {\
-          "packageLocation": "./.yarn/cache/whatwg-fetch-npm-3.6.2-4bdf324792-ee976b7249.zip/node_modules/whatwg-fetch/",\
-          "packageDependencies": [\
-            ["whatwg-fetch", "npm:3.6.2"]\
           ],\
           "linkType": "HARD"\
         }]\

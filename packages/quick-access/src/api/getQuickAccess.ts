@@ -1,9 +1,12 @@
 import postReviewTask from './postReviewTask'
+import type { Response } from './request'
 import request from './request'
 
 const getQuickAccess = async (id: string, type: string) => {
   const baseUri = `/v3/${type}`
-  const res = await request.get(`${type}/works/${id}/`)
+  const res = await request
+    .get(`${type}/works/${id}/`)
+    .json<Response<{ uuid: string; review_task?: string }[]>>()
   const { uuid, review_task } = res.data.results[0]
 
   const reviewTask = review_task ?? (await postReviewTask(uuid)).id

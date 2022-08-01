@@ -1,4 +1,4 @@
-import { extend } from 'umi-request'
+import ky from 'ky'
 
 export interface ResponseData<T> {
   content: T
@@ -8,8 +8,8 @@ export interface ResponseData<T> {
   empty: boolean
 }
 
-const request = extend({
-  prefix: '/v3/api/',
+const request = ky.extend({
+  prefixUrl: '/v3/api/',
 })
 
 export default request
