@@ -1,4 +1,6 @@
 import type { ButtonProps } from '@chakra-ui/react'
+import { Portal } from '@chakra-ui/react'
+import { useMergeRefs } from '@chakra-ui/react'
 import { Flex } from '@chakra-ui/react'
 import {
   autoUpdate,
@@ -15,7 +17,6 @@ import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import type { Key } from 'react'
 import { cloneElement, forwardRef, useEffect, useState } from 'react'
-import forwardElement from '../../helpers/forwardElement'
 import MenuItem from '../MenuItem'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
@@ -81,50 +82,49 @@ const Menu = forwardRef<Element, MenuProps>(
         {cloneElement(
           children,
           getReferenceProps({
-            ref: (element) => {
-              forwardElement(ref, element)
-              forwardElement(reference, element)
-            },
+            ref: useMergeRefs(reference, ref),
             fontSize: children.props.icon === undefined ? '12px' : '16px',
             rightIcon: <ChevronDownIcon />,
             ...children.props,
           })
         )}
-        <Transition
-          initial={false}
-          animate={isOpen ? 'enter' : 'exit'}
-          variants={motionVariants}
-          flexDirection="column"
-          padding="8px 0"
-          border="1px solid"
-          borderColor="gray.200"
-          borderRadius="md"
-          backgroundColor="white"
-          transformOrigin="top"
-          zIndex="1"
-          {...props}
-          {...getFloatingProps({
-            ref: floating,
-            style: {
-              position: strategy,
-              top: y ?? 0,
-              left: x ?? 0,
-              pointerEvents: isOpen ? 'auto' : 'none',
-            },
-          })}
-        >
-          {menuItems?.map(({ key, onClick, ...menuItemProps }) => (
-            <MenuItem
-              key={key}
-              isSelected={key === selectedKey}
-              onClick={(event) => {
-                onClick?.(event)
-                setIsOpen(false)
-              }}
-              {...menuItemProps}
-            />
-          ))}
-        </Transition>
+        <Portal>
+          <Transition
+            initial={false}
+            animate={isOpen ? 'enter' : 'exit'}
+            variants={motionVariants}
+            flexDirection="column"
+            padding="8px 0"
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="md"
+            backgroundColor="white"
+            transformOrigin="top"
+            zIndex="1"
+            {...props}
+            {...getFloatingProps({
+              ref: floating,
+              style: {
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+                pointerEvents: isOpen ? 'auto' : 'none',
+              },
+            })}
+          >
+            {menuItems?.map(({ key, onClick, ...menuItemProps }) => (
+              <MenuItem
+                key={key}
+                isSelected={key === selectedKey}
+                onClick={(event) => {
+                  onClick?.(event)
+                  setIsOpen(false)
+                }}
+                {...menuItemProps}
+              />
+            ))}
+          </Transition>
+        </Portal>
       </>
     )
   }

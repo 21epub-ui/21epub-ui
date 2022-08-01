@@ -1,5 +1,6 @@
 import type { ButtonProps, Placement } from '@chakra-ui/react'
-import { Button, Center } from '@chakra-ui/react'
+import { Portal } from '@chakra-ui/react'
+import { Button, Center, useMergeRefs } from '@chakra-ui/react'
 import {
   autoUpdate,
   flip,
@@ -15,7 +16,6 @@ import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { forwardRef, useEffect, useState } from 'react'
-import forwardElement from '../../helpers/forwardElement'
 
 export const motionVariants: Variants = {
   exit: {
@@ -82,40 +82,40 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
           aria-label={label}
           variant={isFocused ? 'solid' : 'ghost'}
           {...getReferenceProps({
-            ref: (element) => {
-              forwardElement(ref, element)
-              forwardElement(reference, element)
-            },
+            ref: useMergeRefs(reference, ref),
           })}
           {...props}
         >
           {icon ?? children}
         </Button>
-        {label !== undefined && !props.disabled && isOpen && (
-          <Transition
-            initial="exit"
-            animate="enter"
-            exit="exit"
-            variants={motionVariants}
-            padding="8px"
-            fontSize="12px"
-            color="white"
-            backgroundColor="gray.700"
-            borderRadius="2px"
-            pointerEvents="none"
-            userSelect="none"
-            {...getFloatingProps({
-              ref: floating,
-              style: {
-                position: strategy,
-                top: y ?? 0,
-                left: x ?? 0,
-              },
-            })}
-          >
-            {label}
-          </Transition>
-        )}
+        <Portal>
+          {label !== undefined && !props.disabled && isOpen && (
+            <Transition
+              initial="exit"
+              animate="enter"
+              exit="exit"
+              variants={motionVariants}
+              padding="8px"
+              fontSize="12px"
+              lineHeight="1"
+              color="white"
+              backgroundColor="gray.700"
+              borderRadius="2px"
+              pointerEvents="none"
+              userSelect="none"
+              {...getFloatingProps({
+                ref: floating,
+                style: {
+                  position: strategy,
+                  top: y ?? 0,
+                  left: x ?? 0,
+                },
+              })}
+            >
+              {label}
+            </Transition>
+          )}
+        </Portal>
       </>
     )
   }
