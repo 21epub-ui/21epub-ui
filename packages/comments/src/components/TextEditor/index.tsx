@@ -9,7 +9,7 @@ import type { LexicalEditor } from 'lexical'
 import type { CSSProperties, ReactNode } from 'react'
 import { useRef } from 'react'
 import { ImageNode } from './nodes/ImageNode'
-import ImagesPlugin from './plugins/ImagesPlugin'
+import ImagePlugin from './plugins/ImagePlugin'
 import ToolbarPlugin from './plugins/ToolbarPlugin'
 
 const onError = (error: Error) => {
@@ -64,7 +64,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
         <AutoScrollPlugin scrollRef={ref} />
         <ClearEditorPlugin />
         <HistoryPlugin />
-        <ImagesPlugin />
+        <ImagePlugin />
         <ToolbarPlugin disabled={disabled} onSave={onSave} />
         {children}
       </Flex>

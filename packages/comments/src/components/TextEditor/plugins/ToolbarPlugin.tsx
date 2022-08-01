@@ -3,8 +3,8 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import type { LexicalEditor } from 'lexical'
 import { useEffect, useRef } from 'react'
 import { ImageIcon } from '../../Icons'
-import type { InsertImagePayload } from './ImagesPlugin'
-import { INSERT_IMAGE_COMMAND } from './ImagesPlugin'
+import type { InsertImagePayload } from './ImagePlugin'
+import { INSERT_IMAGE_COMMAND } from './ImagePlugin'
 
 interface ToolbarPluginProps {
   disabled?: boolean

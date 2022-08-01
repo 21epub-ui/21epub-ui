@@ -31,7 +31,7 @@ const insertImage = (payload: ImagePayload) => {
 
 export const INSERT_IMAGE_COMMAND: InsertImageCommand = createCommand()
 
-const ImagesPlugin: React.FC = () => {
+const ImagePlugin: React.FC = () => {
   const [editor] = useLexicalComposerContext()
 
   useEffect(() => {
@@ -51,4 +51,4 @@ const ImagesPlugin: React.FC = () => {
   return null
 }
 
-export default ImagesPlugin
+export default ImagePlugin
