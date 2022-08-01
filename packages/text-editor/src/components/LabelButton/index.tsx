@@ -47,6 +47,8 @@ interface labelButtonProps extends ButtonProps {
 
 const LabelButton = forwardRef<Element, labelButtonProps>(
   ({ children, label, icon, isFocused, placement, ...props }, ref) => {
+    const { disabled } = props
+
     const [isOpen, setIsOpen] = useState(false)
 
     /**
@@ -72,6 +74,10 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
       if (isOpen) update()
     }, [isOpen, update])
 
+    useEffect(() => {
+      if (disabled) setIsOpen(false)
+    }, [disabled])
+
     return (
       <>
         <Button
@@ -89,7 +95,7 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
           {icon ?? children}
         </Button>
         <Portal>
-          {label !== undefined && !props.disabled && isOpen && (
+          {label !== undefined && isOpen && (
             <Transition
               initial="exit"
               animate="enter"
