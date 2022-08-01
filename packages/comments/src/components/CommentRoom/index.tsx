@@ -130,6 +130,12 @@ const CommentRoom: React.FC<CommentsProps & { coordinates: Coordinates }> = ({
           onArchive={async (target) => {
             await updateComment(target.id, { archived: true })
 
+            const isReplyTarget =
+              target.id === replyTarget?.id ||
+              replyTarget?.children?.some((reply) => reply.id === target.id)
+
+            if (isReplyTarget) setReplyTarget(undefined)
+
             const newComments = comments?.map(({ content, ...rest }) => {
               return {
                 ...rest,

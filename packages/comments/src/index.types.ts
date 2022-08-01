@@ -21,7 +21,7 @@ export interface CommentData {
 
 export type CommentListData = CommentData[]
 
-export interface ReplyData extends Omit<CommentData, 'children'> {
+export interface ReplyData extends CommentData {
   ref?: string
 }
 
