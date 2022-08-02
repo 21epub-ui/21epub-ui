@@ -6,13 +6,9 @@ import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
   $patchStyleText,
-  $selectAll,
   $wrapLeafNodesInElements,
 } from '@lexical/selection'
-import {
-  $getNearestBlockElementAncestorOrThrow,
-  mergeRegister,
-} from '@lexical/utils'
+import { mergeRegister } from '@lexical/utils'
 import type { RangeSelection } from 'lexical'
 import {
   $createParagraphNode,
@@ -185,13 +181,12 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
 
   const clearFormatting = () => {
     getSelection(activeEditor, (selection) => {
-      $selectAll(selection)
-      $wrapLeafNodesInElements(selection, $createParagraphNode)
-      selection.getNodes().forEach((node) => {
+      if (selection.isCollapsed()) return
+
+      selection.extract().forEach((node) => {
         if ($isTextNode(node)) {
           node.setFormat(0)
           node.setStyle('')
-          $getNearestBlockElementAncestorOrThrow(node).setFormat('')
         }
       })
     })
