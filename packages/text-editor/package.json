@@ -1,6 +1,6 @@
 {
   "name": "@21epub-ui/text-editor",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
