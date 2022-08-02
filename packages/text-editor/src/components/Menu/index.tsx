@@ -100,7 +100,7 @@ const Menu = forwardRef<Element, MenuProps>(
             borderRadius="md"
             backgroundColor="white"
             transformOrigin="top"
-            zIndex="1"
+            zIndex="1000"
             {...props}
             {...getFloatingProps({
               ref: floating,

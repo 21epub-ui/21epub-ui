@@ -109,6 +109,7 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
               borderRadius="2px"
               pointerEvents="none"
               userSelect="none"
+              zIndex="1000"
               {...getFloatingProps({
                 ref: floating,
                 style: {
