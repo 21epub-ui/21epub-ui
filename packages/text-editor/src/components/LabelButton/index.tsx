@@ -81,6 +81,7 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
     return (
       <>
         <Button
+          ref={useMergeRefs(reference, ref)}
           minWidth="fit-content"
           padding="0 8px"
           fontSize="16px"
@@ -88,10 +89,8 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
           lineHeight="1"
           aria-label={label}
           variant={isFocused ? 'solid' : 'ghost'}
-          {...getReferenceProps({
-            ref: useMergeRefs(reference, ref),
-          })}
           {...props}
+          {...getReferenceProps()}
         >
           {icon ?? children}
         </Button>

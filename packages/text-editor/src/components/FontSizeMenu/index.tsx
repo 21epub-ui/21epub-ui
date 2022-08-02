@@ -40,10 +40,8 @@ const FontSizeMenu: React.FC<FontSizeMenuProps> = ({
   })
 
   return (
-    <Menu selectedKey={fontSize} menuItems={menuItems}>
-      <LabelButton disabled={disabled} label="字号">
-        {parseInt(fontSize)}
-      </LabelButton>
+    <Menu disabled={disabled} selectedKey={fontSize} menuItems={menuItems}>
+      <LabelButton label="字号">{parseInt(fontSize)}</LabelButton>
     </Menu>
   )
 }

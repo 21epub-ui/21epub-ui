@@ -46,13 +46,14 @@ const motionVariants: Variants = {
 const Transition = motion(Flex)
 
 interface MenuProps {
+  disabled?: boolean
   children: JSX.Element
   selectedKey?: string
   menuItems?: (ButtonProps & { key: Key })[]
 }
 
 const Menu = forwardRef<Element, MenuProps>(
-  ({ children, selectedKey, menuItems, ...props }, ref) => {
+  ({ disabled, children, selectedKey, menuItems, ...props }, ref) => {
     const [isOpen, setIsOpen] = useState(false)
 
     /**
@@ -77,15 +78,20 @@ const Menu = forwardRef<Element, MenuProps>(
       if (isOpen) update()
     }, [isOpen, update])
 
+    useEffect(() => {
+      if (disabled) setIsOpen(false)
+    }, [disabled])
+
     return (
       <>
         {cloneElement(
           children,
           getReferenceProps({
-            ref: useMergeRefs(reference, ref),
             fontSize: children.props.icon === undefined ? '12px' : '16px',
             rightIcon: <ChevronDownIcon />,
             ...children.props,
+            disabled,
+            ref: useMergeRefs(reference, ref),
           })
         )}
         <Portal>

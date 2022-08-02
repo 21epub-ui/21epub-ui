@@ -28,10 +28,8 @@ const InsertionMenu: React.FC<InsertionMenuProps> = ({
   ]
 
   return (
-    <Menu menuItems={menuItems}>
-      <LabelButton disabled={disabled} label="插入">
-        插入
-      </LabelButton>
+    <Menu disabled={disabled} menuItems={menuItems}>
+      <LabelButton label="插入">插入</LabelButton>
     </Menu>
   )
 }

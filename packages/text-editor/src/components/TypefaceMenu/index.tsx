@@ -38,10 +38,8 @@ const TypefaceMenu: React.FC<TypefaceMenuProps> = ({
     menuItems.find((item) => item.key === typeface) ?? menuItems[0]
 
   return (
-    <Menu selectedKey={typeface} menuItems={menuItems}>
-      <LabelButton label="字体" disabled={disabled}>
-        {activeMenuItem.children}
-      </LabelButton>
+    <Menu disabled={disabled} selectedKey={typeface} menuItems={menuItems}>
+      <LabelButton label="字体">{activeMenuItem.children}</LabelButton>
     </Menu>
   )
 }

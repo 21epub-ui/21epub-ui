@@ -41,10 +41,8 @@ const TagMenu: React.FC<TagMenuProps> = ({ disabled, value, onSelect }) => {
     menuItems.find((item) => item.key === tag) ?? menuItems[0]
 
   return (
-    <Menu selectedKey={tag} menuItems={menuItems}>
-      <LabelButton label="标题" disabled={disabled}>
-        {activeMenuItem.children}
-      </LabelButton>
+    <Menu disabled={disabled} selectedKey={tag} menuItems={menuItems}>
+      <LabelButton label="标题">{activeMenuItem.children}</LabelButton>
     </Menu>
   )
 }

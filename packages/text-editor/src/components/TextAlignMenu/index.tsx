@@ -53,12 +53,8 @@ const TextAlignMenu: React.FC<TextAlignMenuProps> = ({
     menuItems.find((item) => item.key === textAlign) ?? menuItems[0]
 
   return (
-    <Menu selectedKey={textAlign} menuItems={menuItems}>
-      <LabelButton
-        disabled={disabled}
-        label="对齐"
-        icon={activeMenuItem.icon}
-      />
+    <Menu disabled={disabled} selectedKey={textAlign} menuItems={menuItems}>
+      <LabelButton label="对齐" icon={activeMenuItem.icon} />
     </Menu>
   )
 }
