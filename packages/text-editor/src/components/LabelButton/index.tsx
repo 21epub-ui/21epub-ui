@@ -81,6 +81,7 @@ const LabelButton = forwardRef<Element, labelButtonProps>(
     return (
       <>
         <Button
+          minWidth="fit-content"
           padding="0 8px"
           fontSize="16px"
           fontWeight="normal"
