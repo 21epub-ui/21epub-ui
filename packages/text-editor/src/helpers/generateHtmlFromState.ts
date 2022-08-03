@@ -2,7 +2,7 @@ import { createHeadlessEditor } from '@lexical/headless'
 import { $generateHtmlFromNodes } from '@lexical/html'
 import { $isRootTextContentEmpty } from '@lexical/text'
 import type {
-  LexicalEditor,
+  SerializedEditorState,
   SerializedElementNode,
   SerializedLexicalNode,
 } from 'lexical'
@@ -32,15 +32,12 @@ const headlessEditor = createHeadlessEditor({
   namespace: getRandomId(8),
 })
 
-const generateHtmlFromEditor = async (
-  editor: LexicalEditor,
+const generateHtmlFromState = async (
+  serializedState: SerializedEditorState,
   processor?: (node: SerializedLexicalNode) => void | Promise<void>
 ) => {
-  const serializedState = editor.getEditorState().toJSON()
-
   const isEditorEmpty =
-    !hasImageNode(serializedState.root) &&
-    $isRootTextContentEmpty(editor.isComposing(), true)
+    !hasImageNode(serializedState.root) && $isRootTextContentEmpty(false, true)
 
   if (isEditorEmpty) return ''
 
@@ -58,4 +55,4 @@ const generateHtmlFromEditor = async (
   })
 }
 
-export default generateHtmlFromEditor
+export default generateHtmlFromState
