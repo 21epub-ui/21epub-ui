@@ -37,6 +37,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/quick-access"\
       },\
       {\
+        "name": "@21epub-ui/request",\
+        "reference": "workspace:packages/request"\
+      },\
+      {\
         "name": "@21epub-ui/text-editor",\
         "reference": "workspace:packages/text-editor"\
       },\
@@ -52,6 +56,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@21epub-ui/comments", ["workspace:packages/comments"]],\
       ["@21epub-ui/media", ["virtual:1e785396e53d2b27b8e16379fe67e7bc621f4c9743dad021a844830a335425e6aabb2d94c147d5cb32b05705ced28036bf88a0af90fe88341d0dd8db6822d3f8#workspace:packages/media", "workspace:packages/media"]],\
       ["@21epub-ui/quick-access", ["workspace:packages/quick-access"]],\
+      ["@21epub-ui/request", ["workspace:packages/request"]],\
       ["@21epub-ui/root", ["workspace:."]],\
       ["@21epub-ui/text-editor", ["workspace:packages/text-editor"]],\
       ["@21epub-ui/uploader", ["workspace:packages/uploader"]]\
@@ -248,6 +253,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["antd", "virtual:01e4ccac085f93fd209eb09d7f29d76decf8c46bf2236c398bf9e00ad534c8e1700b0957438cbc5221f8340cf7f5c1ce2312f786eb4057b768fb13bdba5d96e9#npm:4.21.4"],\
             ["ky", "npm:0.31.1"],\
             ["swr", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:1.3.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@21epub-ui/request", [\
+        ["workspace:packages/request", {\
+          "packageLocation": "./packages/request/",\
+          "packageDependencies": [\
+            ["@21epub-ui/request", "workspace:packages/request"]\
           ],\
           "linkType": "SOFT"\
         }]\
