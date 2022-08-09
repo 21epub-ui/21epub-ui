@@ -2,10 +2,8 @@ import type {LiteralUnion, Required} from './common.js';
 import type {Hooks} from './hooks.js';
 import type {RetryOptions} from './retry.js';
 
-// eslint-disable-next-line unicorn/prevent-abbreviations
 export type SearchParamsInit = string | string[][] | Record<string, string> | URLSearchParams | undefined;
 
-// eslint-disable-next-line unicorn/prevent-abbreviations
 export type SearchParamsOption = SearchParamsInit | Record<string, string | number | boolean> | Array<Array<string | number | boolean>>;
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete';
