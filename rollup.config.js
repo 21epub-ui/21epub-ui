@@ -27,7 +27,7 @@ export default [
       },
     ],
     plugins: [
-      eslint(),
+      eslint({ exclude: 'src/modules/**/*' }),
       url(),
       babel({
         extensions,
