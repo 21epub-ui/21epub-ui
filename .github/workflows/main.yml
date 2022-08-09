@@ -1,0 +1,25 @@
+name: CI
+on:
+  - push
+  - pull_request
+jobs:
+  test:
+    name: Node.js ${{ matrix.node-version }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+          - 14
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
+      # TODO: Enable again when https://github.com/istanbuljs/nyc/issues/1287 is fixed.
+      # - uses: codecov/codecov-action@v1
+      #   if: matrix.node-version == 14
+      #   with:
+      #     fail_ci_if_error: true

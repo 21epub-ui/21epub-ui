@@ -1,0 +1,12 @@
+{
+	"extends": "./tsconfig",
+	"compilerOptions": {
+		"sourceMap": true,
+		"inlineSources": true,
+		"rootDir": "./source",
+		"outDir": "./distribution"
+	},
+	"include": [
+		"source"
+	]
+}
