@@ -6,7 +6,7 @@ export type SearchParamsInit = string | string[][] | Record<string, string> | UR
 
 export type SearchParamsOption = SearchParamsInit | Record<string, string | number | boolean> | Array<Array<string | number | boolean>>;
 
-export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete';
+export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'head' | 'options' | 'delete';
 
 export type Input = string | URL | Request;
 

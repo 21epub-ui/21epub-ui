@@ -2,7 +2,7 @@ export const supportsAbortController = typeof globalThis.AbortController === 'fu
 export const supportsStreams = typeof globalThis.ReadableStream === 'function';
 export const supportsFormData = typeof globalThis.FormData === 'function';
 
-export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
+export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'options', 'delete'] as const;
 
 export const responseTypes = {
 	json: 'application/json',
