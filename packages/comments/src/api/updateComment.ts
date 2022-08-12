@@ -1,13 +1,11 @@
 import type { CommentData, CommentListData } from '../index.types'
-import type { ResponseData } from './request'
-import request from './request'
+import type { ResponseBody } from './api'
+import api from './api'
 
-type RequestData = Pick<CommentData, 'archived'>
+type RequestBody = Pick<CommentData, 'archived'>
 
-const updateComment = (id: string, data: RequestData) => {
-  return request
-    .patch(`comments/${id}`, { json: data })
-    .json<ResponseData<CommentListData>>()
+const updateComment = (id: string, data: RequestBody) => {
+  return api.patch<ResponseBody<CommentListData>>(`comments/${id}`, data)
 }
 
 export default updateComment

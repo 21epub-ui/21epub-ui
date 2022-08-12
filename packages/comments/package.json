@@ -25,6 +25,7 @@
     "react": ">=17.x"
   },
   "dependencies": {
+    "@21epub-ui/request": "workspace:^",
     "@dnd-kit/core": "^6.0.5",
     "@dnd-kit/utilities": "^3.2.0",
     "@lexical/headless": "^0.3.7",
@@ -33,7 +34,6 @@
     "@lexical/text": "^0.3.7",
     "@lexical/utils": "^0.3.7",
     "dompurify": "^2.3.8",
-    "ky": "^0.31.1",
     "lexical": "^0.3.7",
     "swr": "^1.3.0"
   },

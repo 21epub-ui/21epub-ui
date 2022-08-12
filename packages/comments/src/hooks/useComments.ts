@@ -2,15 +2,15 @@ import { useRef } from 'react'
 import useSWRInfinite from 'swr/infinite'
 import type { GetCommentsParams } from '../api/getComments'
 import getComments from '../api/getComments'
-import type { ResponseData } from '../api/request'
+import type { ResponseBody } from '../api/api'
 import type { CommentListData } from '../index.types'
 
-const fetcher = (key: string, params: GetCommentsParams) => getComments(params)
+const fetcher = (_key: string, params: GetCommentsParams) => getComments(params)
 
 const useComments = (params: GetCommentsParams) => {
   const getKey = (
     index: number,
-    previousData: ResponseData<CommentListData> | null
+    previousData: ResponseBody<CommentListData> | null
   ) => {
     if (previousData === null) return ['comments', params]
     if (previousData.last) return null

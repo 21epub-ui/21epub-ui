@@ -1,13 +1,11 @@
 import type { CommentData, CommentListData } from '../index.types'
-import type { ResponseData } from './request'
-import request from './request'
+import type { ResponseBody } from './api'
+import api from './api'
 
-type RequestData = Pick<CommentData, 'slug' | 'target' | 'content'>
+type RequestBody = Pick<CommentData, 'slug' | 'target' | 'content'>
 
-const createComment = (data: RequestData) => {
-  return request
-    .post('comments/', { json: data })
-    .json<ResponseData<CommentListData>>()
+const createComment = (data: RequestBody) => {
+  return api.post<ResponseBody<CommentListData>>('comments/', data)
 }
 
 export default createComment

@@ -1,8 +1,8 @@
 import type { CommentListData } from '../index.types'
-import type { ResponseData } from './request'
-import request from './request'
+import type { ResponseBody } from './api'
+import api from './api'
 
-export interface GetCommentsParams {
+export type GetCommentsParams = {
   slug: string
   target: string
   archived?: boolean
@@ -11,9 +11,9 @@ export interface GetCommentsParams {
 }
 
 const getComments = (params: GetCommentsParams) => {
-  return request
-    .get('comments/', { searchParams: { ...params } })
-    .json<ResponseData<CommentListData>>()
+  return api.get<ResponseBody<CommentListData>>('comments/', {
+    searchParams: params,
+  })
 }
 
 export default getComments

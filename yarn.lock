@@ -34,6 +34,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@21epub-ui/comments@workspace:packages/comments"
   dependencies:
+    "@21epub-ui/request": "workspace:^"
     "@chakra-ui/icons": ^2.0.4
     "@chakra-ui/react": ^2.2.4
     "@chakra-ui/system": ^2.2.2
@@ -51,7 +52,6 @@ __metadata:
     "@types/react": ^17
     dompurify: ^2.3.8
     framer-motion: ^6.3.16
-    ky: ^0.31.1
     lexical: ^0.3.7
     swr: ^1.3.0
   peerDependencies:
@@ -13760,13 +13760,6 @@ __metadata:
   version: 2.0.5
   resolution: "klona@npm:2.0.5"
   checksum: 8c976126ea252b766e648a4866e1bccff9d3b08432474ad80c559f6c7265cf7caede2498d463754d8c88c4759895edd8210c85c0d3155e6aae4968362889466f
-  languageName: node
-  linkType: hard
-
-"ky@npm:^0.31.1":
-  version: 0.31.1
-  resolution: "ky@npm:0.31.1"
-  checksum: c1ca2c60bad649d38c8545fb781851f76b9a6080bead35827ce0ebb1cc7483bd951cc327af0524f17dac1e887ef4f2d81b4d1b5b54ca37baa7d4c9caf0dba5d2
   languageName: node
   linkType: hard
 

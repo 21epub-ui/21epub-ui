@@ -1,10 +1,10 @@
-import type { ResponseData } from '../../api/request'
+import type { ResponseBody } from '../../api/api'
 import type { CommentData, CommentListData, ReplyData } from '../../index.types'
 import CommentItem from '../CommentItem'
 import { Container } from './styles'
 
 interface CommentListProps {
-  value?: ResponseData<CommentListData>[]
+  value?: ResponseBody<CommentListData>[]
   onReply: (target: ReplyData) => void
   onArchive: (target: CommentData) => void
   onTouchBottom: () => void

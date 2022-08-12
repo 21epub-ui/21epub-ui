@@ -1,13 +1,11 @@
 import type { ReplyData, ReplyListData } from '../index.types'
-import type { ResponseData } from './request'
-import request from './request'
+import type { ResponseBody } from './api'
+import api from './api'
 
-type RequestData = Pick<ReplyData, 'slug' | 'target' | 'content' | 'ref'>
+type RequestBody = Pick<ReplyData, 'slug' | 'target' | 'content' | 'ref'>
 
-const createReply = (id: string, data: RequestData) => {
-  return request
-    .post(`comments/${id}/`, { json: data })
-    .json<ResponseData<ReplyListData>>()
+const createReply = (id: string, data: RequestBody) => {
+  return api.post<ResponseBody<ReplyListData>>(`comments/${id}/`, data)
 }
 
 export default createReply

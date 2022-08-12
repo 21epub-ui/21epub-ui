@@ -1,12 +1,10 @@
-import request from './request'
+import api from './api'
 
 const uploadFile = async (file: File) => {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await request
-    .post('comments/assets/', { body: formData })
-    .json<{ url: string }>()
+  const res = await api.post<{ url: string }>('comments/assets/', formData)
 
   return res.url
 }
