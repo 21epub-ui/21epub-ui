@@ -30,7 +30,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   <div
     style={{
       marginLeft: 28 * layer,
-      padding: '6px 0',
+      padding: `6px ${layer === 0 ? '6px' : 0}`,
     }}
     {...props}
   >
