@@ -1,7 +1,8 @@
-import type {KyHeadersInit, Options} from '../types/options.js';
+import type {RequestOptions} from '../../../../index.types';
+import type {KyHeadersInit} from '../types/options.js';
 import {isObject} from './is.js';
 
-export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
+export const validateAndMerge = (...sources: Array<Partial<RequestOptions> | undefined>): Partial<RequestOptions> => {
 	for (const source of sources) {
 		if ((!isObject(source) || Array.isArray(source)) && typeof source !== 'undefined') {
 			throw new TypeError('The `options` argument must be an object');
