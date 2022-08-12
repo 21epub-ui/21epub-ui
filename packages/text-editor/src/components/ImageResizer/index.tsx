@@ -6,7 +6,7 @@ const Direction = {
   south: 1 << 1,
   west: 1 << 2,
   north: 1 << 3,
-}
+} as const
 
 const userSelectProperty = 'user-select'
 const centerPosition = 'calc((100% - 10px)/2)'
@@ -121,10 +121,23 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
       const isVertical =
         positioning.direction & (Direction.south | Direction.north)
 
+      const calcOffset = (type: 'horizontal' | 'vertical') => {
+        if (type === 'vertical') {
+          const diff = Math.floor(positioning.startY - event.clientY)
+          const offset = positioning.direction & Direction.south ? -diff : diff
+
+          return offset
+        }
+
+        const diff = Math.floor(positioning.startX - event.clientX)
+        const offset = positioning.direction & Direction.east ? -diff : diff
+
+        return offset
+      }
+
       if (isHorizontal && isVertical) {
         if (positioning.ratio > 1) {
-          const diff = Math.floor(positioning.startX - event.clientX)
-          const offset = positioning.direction & Direction.east ? -diff : diff
+          const offset = calcOffset('horizontal')
 
           positioning.currentWidth = Math.max(
             positioning.startWidth + offset,
@@ -133,8 +146,7 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
           positioning.currentHeight =
             positioning.currentWidth / positioning.ratio
         } else {
-          const diff = Math.floor(positioning.startY - event.clientY)
-          const offset = positioning.direction & Direction.south ? -diff : diff
+          const offset = calcOffset('vertical')
 
           positioning.currentHeight = Math.max(
             positioning.startHeight + offset,
@@ -144,15 +156,13 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
             positioning.currentHeight * positioning.ratio
         }
       } else if (isHorizontal) {
-        const diff = Math.floor(positioning.startX - event.clientX)
-        const offset = positioning.direction & Direction.east ? -diff : diff
+        const offset = calcOffset('horizontal')
 
         const width = Math.max(positioning.startWidth + offset, minWidth)
 
         positioning.currentWidth = width
       } else {
-        const diff = Math.floor(positioning.startY - event.clientY)
-        const offset = positioning.direction & Direction.south ? -diff : diff
+        const offset = calcOffset('vertical')
 
         const newHeight = Math.max(positioning.startHeight + offset, minHeight)
 

@@ -157,11 +157,9 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
     const command =
       type === 'number' ? 'insertOrderedList' : 'insertUnorderedList'
 
-    if (nodeType !== type) {
-      return dispatchCommand(command)
-    } else {
-      return dispatchCommand('removeList')
-    }
+    if (nodeType === type) return dispatchCommand('removeList')
+
+    return dispatchCommand(command)
   }
 
   const updateSelectionTag = (value: TagType) => {
