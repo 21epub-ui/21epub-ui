@@ -1,11 +1,9 @@
 import type { LinkList } from '../index.types'
-import type { Response } from './request'
-import request from './request'
+import type { ResponseBody } from './api'
+import api from './api'
 
 const getRecentHistory = async (type: string) => {
-  const res = await request
-    .get(`${type}/works/recent`)
-    .json<Response<LinkList>>()
+  const res = await api.get<ResponseBody<LinkList>>(`${type}/works/recent`)
 
   return res.data.results
 }

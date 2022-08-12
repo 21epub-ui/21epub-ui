@@ -244,6 +244,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/quick-access/",\
           "packageDependencies": [\
             ["@21epub-ui/quick-access", "workspace:packages/quick-access"],\
+            ["@21epub-ui/request", "workspace:packages/request"],\
             ["@ant-design/colors", "npm:6.0.0"],\
             ["@ant-design/icons", "virtual:01e4ccac085f93fd209eb09d7f29d76decf8c46bf2236c398bf9e00ad534c8e1700b0957438cbc5221f8340cf7f5c1ce2312f786eb4057b768fb13bdba5d96e9#npm:4.7.0"],\
             ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.9.3"],\
@@ -251,7 +252,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@storybook/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:6.5.9"],\
             ["@types/react", "npm:17.0.38"],\
             ["antd", "virtual:01e4ccac085f93fd209eb09d7f29d76decf8c46bf2236c398bf9e00ad534c8e1700b0957438cbc5221f8340cf7f5c1ce2312f786eb4057b768fb13bdba5d96e9#npm:4.21.4"],\
-            ["ky", "npm:0.31.1"],\
             ["swr", "virtual:7ae421afb1870f72d31465a82bfc3c0f0d6ee1c7155af8bde1d5a4eb08018d9cf96031da963542a38ef8a5b7ebde194aea399cc71f2650059db156565bf00ab2#npm:1.3.0"]\
           ],\
           "linkType": "SOFT"\

@@ -1,12 +1,13 @@
 import postReviewTask from './postReviewTask'
-import type { Response } from './request'
-import request from './request'
+import type { ResponseBody } from './api'
+import api from './api'
 
 const getQuickAccess = async (id: string, type: string) => {
   const baseUri = `/v3/${type}`
-  const res = await request
-    .get(`${type}/works/${id}/`)
-    .json<Response<{ uuid: string; review_task?: string }[]>>()
+  const res = await api.get<
+    ResponseBody<{ uuid: string; review_task?: string }[]>
+  >(`${type}/works/${id}/`)
+
   const { uuid, review_task } = res.data.results[0]
 
   const reviewTask = review_task ?? (await postReviewTask(uuid)).id

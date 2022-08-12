@@ -1,10 +1,10 @@
-import type { Response } from './request'
-import request from './request'
+import type { ResponseBody } from './api'
+import api from './api'
 
 const postReviewTask = async (id: string) => {
-  const res = await request
-    .post('review/tasks/', { json: { uuid: id } })
-    .json<Response<{ id: string }[]>>()
+  const res = await api.post<ResponseBody<{ id: string }[]>>('review/tasks/', {
+    uuid: id,
+  })
 
   return res.data.results[0]
 }
