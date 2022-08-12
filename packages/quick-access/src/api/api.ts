@@ -8,6 +8,7 @@ export interface ResponseBody<T> {
 
 const api = request.extend({
   prefixUrl: '/v3/api/',
+  retry: 0,
 })
 
 export default api
