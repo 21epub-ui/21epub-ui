@@ -1,26 +1,24 @@
-import babel from '@rollup/plugin-babel'
+import { babel } from '@rollup/plugin-babel'
 import typescript from '@rollup/plugin-typescript'
 import url from '@rollup/plugin-url'
-import fs from 'fs'
-import { resolve } from 'path'
+import fs from 'fs-extra'
+import { dirname, resolve } from 'path'
 
 const extensions = ['.ts', '.tsx', '.js', '.jsx']
-const inputPath = resolve('src')
-const outputDir = 'dist'
+
+const packageConfig = await fs.readJSON(resolve('package.json'))
 
 export default [
   {
-    input: extensions
-      .map((ext) => resolve(inputPath, `index${ext}`))
-      .find((file) => fs.existsSync(file)),
+    input: packageConfig.source,
     output: [
       {
-        dir: outputDir,
+        dir: dirname(packageConfig.main),
         sourcemap: true,
         format: 'cjs',
       },
       {
-        file: `${outputDir}/index.esm.js`,
+        file: packageConfig.module,
         sourcemap: true,
         format: 'es',
       },
@@ -35,7 +33,7 @@ export default [
       typescript({
         include: ['src/**/*', '../../typings/*'],
         declaration: true,
-        declarationDir: outputDir,
+        declarationDir: dirname(packageConfig.typings),
       }),
     ],
   },

@@ -2,6 +2,7 @@ import { execute } from '@yarnpkg/shell'
 import fs from 'fs-extra'
 import { resolve } from 'path'
 import simpleGit from 'simple-git'
+import pick from '../scripts/utils/pick.mjs'
 
 const git = simpleGit()
 
@@ -22,11 +23,19 @@ if (packageName !== undefined) {
   await fs.outputJson(
     configPath,
     {
-      ...packageConfig,
+      ...pick(packageConfig, [
+        'name',
+        'version',
+        'main',
+        'module',
+        'typings',
+        'sideEffects',
+        'files',
+        'peerDependencies',
+        'dependencies',
+      ]),
       license: 'MIT',
       files: ['dist', 'README.md', 'LICENSE'],
-      scripts: undefined,
-      devDependencies: undefined,
     },
     { spaces: 2 }
   )

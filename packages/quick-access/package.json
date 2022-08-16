@@ -1,6 +1,7 @@
 {
   "name": "@21epub-ui/quick-access",
   "version": "0.3.0",
+  "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",

@@ -7,6 +7,7 @@ const genPackage = (dirPath, { packageName }) => {
   const template = {
     name: packageName,
     version: '0.0.0',
+    source: 'src/index.ts',
     main: 'dist/index.js',
     module: 'dist/index.esm.js',
     typings: 'dist/index.d.ts',
