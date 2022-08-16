@@ -3,7 +3,6 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import type { LexicalEditor } from 'lexical'
 import { useEffect, useRef } from 'react'
 import { ImageIcon } from '../../Icons'
-import type { InsertImagePayload } from './ImagePlugin'
 import { INSERT_IMAGE_COMMAND } from './ImagePlugin'
 
 interface ToolbarPluginProps {
@@ -29,7 +28,7 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({ disabled, onSave }) => {
 
       editor.focus(() => {
         editor.update(() => {
-          editor.dispatchCommand<InsertImagePayload>(INSERT_IMAGE_COMMAND, {
+          editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
             src,
             title: file.name,
           })
