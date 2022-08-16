@@ -16,14 +16,14 @@
     "version": "yarn node ../../scripts/version.mjs"
   },
   "peerDependencies": {
-    "@emotion/react": ">=11.x",
-    "@emotion/styled": ">=11.x",
-    "react": ">=17.x"
+    "@emotion/react": ">=11.*",
+    "@emotion/styled": ">=11.*",
+    "react": ">=17.*"
   },
   "devDependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@storybook/react": "^6.5.9",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@storybook/react": "^6.5.10",
     "@types/react": "^17"
   }
 }
