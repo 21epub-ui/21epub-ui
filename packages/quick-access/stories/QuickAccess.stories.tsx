@@ -13,4 +13,6 @@ const Template: ComponentStory<typeof QuickAccess> = (args) => (
 
 export const Default = Template.bind({})
 
-Default.args = { type: 'cbt' }
+Default.args = {
+  type: 'cbt',
+}

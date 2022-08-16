@@ -30,7 +30,6 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
   return (
     <>
       <TextEditor
-        style={{ height: innerHeight - 32 }}
         {...args}
         onInsert={(type, callback) => {
           if (type === 'image') {
@@ -58,4 +57,6 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
 
 export const Default = Template.bind({})
 
-Default.args = {}
+Default.args = {
+  style: { height: innerHeight - 32 },
+}

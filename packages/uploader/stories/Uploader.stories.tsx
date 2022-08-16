@@ -9,14 +9,14 @@ export default {
   component: Uploader,
 } as ComponentMeta<typeof Uploader>
 
-const Template: ComponentStory<typeof Uploader> = () => {
+const Template: ComponentStory<typeof Uploader> = (args) => {
   const [visible, setVisible] = useState(false)
 
   return (
     <>
       <Button onClick={() => setVisible(true)}>Upload</Button>
       <Uploader
-        uploadUrl="/v3/api/material/personal/"
+        {...args}
         visible={visible}
         onVisibleChange={() => setVisible(false)}
       />
@@ -26,4 +26,6 @@ const Template: ComponentStory<typeof Uploader> = () => {
 
 export const Default = Template.bind({})
 
-Default.args = {}
+Default.args = {
+  uploadUrl: '/v3/api/material/personal/',
+}

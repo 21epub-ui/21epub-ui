@@ -8,11 +8,11 @@ export default {
   component: ColorPicker,
 } as ComponentMeta<typeof ColorPicker>
 
-export const Default: ComponentStory<typeof ColorPicker> = () => {
+export const Default: ComponentStory<typeof ColorPicker> = (args) => {
   const [color, setColor] = useState<Colord>()
 
   return (
-    <ColorPicker defaultColor={color} onChange={setColor}>
+    <ColorPicker {...args} defaultColor={color} onChange={setColor}>
       <div
         style={{
           width: '24px',
@@ -26,3 +26,5 @@ export const Default: ComponentStory<typeof ColorPicker> = () => {
     </ColorPicker>
   )
 }
+
+Default.args = {}
