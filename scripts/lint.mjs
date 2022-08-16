@@ -1,3 +1,3 @@
 import { execute } from '@yarnpkg/shell'
 
-await execute(`yarn g:eslint ./`)
+await execute('yarn g:eslint ./')

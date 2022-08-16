@@ -1,5 +1,4 @@
 import babel from '@rollup/plugin-babel'
-import eslint from '@rollup/plugin-eslint'
 import typescript from '@rollup/plugin-typescript'
 import url from '@rollup/plugin-url'
 import fs from 'fs'
@@ -27,7 +26,6 @@ export default [
       },
     ],
     plugins: [
-      eslint({ exclude: 'src/modules/**/*' }),
       url(),
       babel({
         extensions,
