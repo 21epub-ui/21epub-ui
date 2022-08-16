@@ -13,7 +13,7 @@
     "create": "yarn node ./scripts/create.mjs",
     "release": "yarn node ./scripts/release.mjs",
     "storybook": "start-storybook -p 6006 --no-open",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o ./docs"
   },
   "packageManager": "yarn@3.2.2",
   "dependencies": {
