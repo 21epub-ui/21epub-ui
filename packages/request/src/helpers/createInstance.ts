@@ -30,11 +30,7 @@ const createInstance = (defaults?: RequestOptions) => {
 
   for (const method of ['get', 'head', 'options', 'delete']) {
     instance[method] = async (input: Input, options?: RequestOptions) => {
-      const newOptions = parseOptions({
-        ...options,
-        method,
-        body: options?.body,
-      })
+      const newOptions = parseOptions({ ...options, method })
       const response = await Ky.create(input, newOptions)
 
       return parseResponse(response, newOptions)
@@ -47,11 +43,7 @@ const createInstance = (defaults?: RequestOptions) => {
       body?: unknown,
       options?: Omit<RequestOptions, 'body'>
     ) => {
-      const newOptions = parseOptions({
-        ...options,
-        method,
-        body,
-      })
+      const newOptions = parseOptions({ ...options, method, body })
       const response = await Ky.create(input, newOptions)
 
       return parseResponse(response, newOptions)
