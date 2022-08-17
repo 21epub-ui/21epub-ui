@@ -4,8 +4,6 @@ import url from '@rollup/plugin-url'
 import fs from 'fs-extra'
 import { dirname, resolve } from 'path'
 
-const extensions = ['.ts', '.tsx', '.js', '.jsx']
-
 const packageConfig = await fs.readJSON(resolve('package.json'))
 
 export default [
@@ -26,7 +24,7 @@ export default [
     plugins: [
       url(),
       babel({
-        extensions,
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
         rootMode: 'upward',
         babelHelpers: 'bundled',
       }),
