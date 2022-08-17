@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import { resolve } from 'path'
 import simpleGit from 'simple-git'
 import pick from '../scripts/utils/pick.mjs'
+import outputJson from './utils/outputJson.mjs'
 
 const git = simpleGit()
 
@@ -20,28 +21,23 @@ if (packageName !== undefined) {
   await execute(`yarn workspace ${packageName} run build`)
 
   await fs.copyFile(resolve('LICENSE'), licensePath)
-  await fs.outputJson(
-    configPath,
-    {
-      ...pick(packageConfig, [
-        'name',
-        'version',
-        'main',
-        'module',
-        'typings',
-        'sideEffects',
-        'files',
-        'peerDependencies',
-        'dependencies',
-      ]),
-      license: 'MIT',
-      files: ['dist', 'README.md', 'LICENSE'],
-    },
-    { spaces: 2 }
-  )
+  await outputJson(configPath, {
+    ...pick(packageConfig, [
+      'name',
+      'version',
+      'main',
+      'module',
+      'typings',
+      'sideEffects',
+      'files',
+      'peerDependencies',
+      'dependencies',
+    ]),
+    license: 'MIT',
+  })
 
   await execute(`yarn workspace ${packageName} npm publish`)
 
   await fs.unlink(licensePath)
-  await fs.outputJson(configPath, packageConfig, { spaces: 2 })
+  await outputJson(configPath, packageConfig)
 }
