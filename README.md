@@ -30,5 +30,6 @@ yarn packages/<package> run build
 ### Release a package
 
 ```sh
-yarn packages/<package> run release <strategy>
+yarn packages/<package> run version <strategy>
+git push --follow-tags
 ```
