@@ -1,6 +1,6 @@
-import {stop} from '../core/constants.js';
-import type {HTTPError} from '../errors/HTTPError.js';
-import type {NormalizedOptions} from './options.js';
+import {stop} from '../core/constants';
+import type {HTTPError} from '../errors/HTTPError';
+import type {NormalizedOptions} from './options';
 
 export type BeforeRequestHook = (
 	request: Request,

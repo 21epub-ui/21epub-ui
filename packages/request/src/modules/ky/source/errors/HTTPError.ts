@@ -1,4 +1,4 @@
-import type {NormalizedOptions} from '../types/options.js';
+import type {NormalizedOptions} from '../types/options';
 
 // eslint-lint-disable-next-line @typescript-eslint/naming-convention
 export class HTTPError extends Error {

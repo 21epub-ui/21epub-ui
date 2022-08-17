@@ -1,13 +1,13 @@
-import {HTTPError} from '../errors/HTTPError.js';
-import {TimeoutError} from '../errors/TimeoutError.js';
-import type {Hooks} from '../types/hooks.js';
-import type {Input, InternalOptions, NormalizedOptions, Options, SearchParamsInit} from '../types/options.js';
-import {ResponsePromise} from '../types/ResponsePromise.js';
-import {deepMerge, mergeHeaders} from '../utils/merge.js';
-import {normalizeRequestMethod, normalizeRetryOptions} from '../utils/normalize.js';
-import {delay, timeout, TimeoutOptions} from '../utils/time.js';
-import {ObjectEntries} from '../utils/types.js';
-import {maxSafeTimeout, responseTypes, stop, supportsAbortController, supportsFormData, supportsStreams} from './constants.js';
+import {HTTPError} from '../errors/HTTPError';
+import {TimeoutError} from '../errors/TimeoutError';
+import type {Hooks} from '../types/hooks';
+import type {Input, InternalOptions, NormalizedOptions, Options, SearchParamsInit} from '../types/options';
+import {ResponsePromise} from '../types/ResponsePromise';
+import {deepMerge, mergeHeaders} from '../utils/merge';
+import {normalizeRequestMethod, normalizeRetryOptions} from '../utils/normalize';
+import {delay, timeout, TimeoutOptions} from '../utils/time';
+import {ObjectEntries} from '../utils/types';
+import {maxSafeTimeout, responseTypes, stop, supportsAbortController, supportsFormData, supportsStreams} from './constants';
 
 export class Ky {
 	// eslint-disable-next-line @typescript-eslint/promise-function-async

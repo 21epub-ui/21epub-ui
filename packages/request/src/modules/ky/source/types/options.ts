@@ -1,6 +1,6 @@
-import type {LiteralUnion, Required} from './common.js';
-import type {Hooks} from './hooks.js';
-import type {RetryOptions} from './retry.js';
+import type {LiteralUnion, Required} from './common';
+import type {Hooks} from './hooks';
+import type {RetryOptions} from './retry';
 
 export type SearchParamsInit = string | string[][] | Record<string, string> | URLSearchParams | undefined;
 
@@ -245,4 +245,4 @@ export interface NormalizedOptions extends RequestInit {
 	onDownloadProgress: Options['onDownloadProgress'];
 }
 
-export type {RetryOptions} from './retry.js';
+export type {RetryOptions} from './retry';

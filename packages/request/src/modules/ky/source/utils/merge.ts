@@ -1,6 +1,6 @@
 import type {RequestOptions} from '../../../../index.types';
-import type {KyHeadersInit} from '../types/options.js';
-import {isObject} from './is.js';
+import type {KyHeadersInit} from '../types/options';
+import {isObject} from './is';
 
 export const validateAndMerge = (...sources: Array<Partial<RequestOptions> | undefined>): Partial<RequestOptions> => {
 	for (const source of sources) {

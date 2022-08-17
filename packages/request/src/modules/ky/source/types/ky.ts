@@ -1,6 +1,6 @@
-import {stop} from '../core/constants.js';
-import type {Input, Options} from './options.js';
-import type {ResponsePromise} from './ResponsePromise.js';
+import {stop} from '../core/constants';
+import type {Input, Options} from './options';
+import type {ResponsePromise} from './ResponsePromise';
 
 export interface KyInstance {
 	/**
