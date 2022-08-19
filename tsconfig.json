@@ -16,5 +16,8 @@
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext"
+    // "paths": {
+    //   "@21epub-ui/*": ["./packages/*/src"]
+    // }
   }
 }
