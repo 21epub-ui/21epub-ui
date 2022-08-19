@@ -15,6 +15,9 @@
     "skipLibCheck": true,
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "esnext"
+    "target": "esnext",
+    "paths": {
+      "@21epub-ui/*": ["./packages/*/src"]
+    }
   }
 }
