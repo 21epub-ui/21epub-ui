@@ -155,12 +155,10 @@ export class Ky {
 
 		this.request = new globalThis.Request(this._input as RequestInfo, this._options as RequestInit);
 
-		if (this._options.searchParams) {
-			// eslint-disable-next-line unicorn/prevent-abbreviations
-			const textSearchParams = typeof this._options.searchParams === 'string'
-				? this._options.searchParams.replace(/^\?/, '')
-				: new URLSearchParams(this._options.searchParams as unknown as SearchParamsInit).toString();
-			// eslint-disable-next-line unicorn/prevent-abbreviations
+		if (this._options.params) {
+			const textSearchParams = typeof this._options.params === 'string'
+				? this._options.params.replace(/^\?/, '')
+				: new URLSearchParams(this._options.params as SearchParamsInit).toString();
 			const searchParams = '?' + textSearchParams;
 			const url = this.request.url.replace(/(?:\?.*?)?(?=#|$)/, searchParams);
 

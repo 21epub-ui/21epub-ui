@@ -1,5 +1,5 @@
 import type { RequestInstance, RequestOptions } from '../index.types'
-import { stop } from '../modules/ky/source/core/constants'
+import { requestMethods, stop } from '../modules/ky/source/core/constants'
 import { Ky } from '../modules/ky/source/core/Ky'
 import type { Input, Options } from '../modules/ky/source/types/options'
 import { validateAndMerge } from '../modules/ky/source/utils/merge'
@@ -28,27 +28,14 @@ const createInstance = (defaults?: RequestOptions) => {
     return parseResponse(response, newOptions)
   }
 
-  for (const method of ['get', 'head', 'options', 'delete']) {
+  requestMethods.forEach((method) => {
     instance[method] = async (input: Input, options?: RequestOptions) => {
       const newOptions = parseOptions({ ...options, method })
       const response = await Ky.create(input, newOptions)
 
       return parseResponse(response, newOptions)
     }
-  }
-
-  for (const method of ['post', 'put', 'patch']) {
-    instance[method] = async (
-      input: Input,
-      body?: unknown,
-      options?: Omit<RequestOptions, 'body'>
-    ) => {
-      const newOptions = parseOptions({ ...options, method, body })
-      const response = await Ky.create(input, newOptions)
-
-      return parseResponse(response, newOptions)
-    }
-  }
+  })
 
   instance.create = (newDefaults) => {
     return createInstance(validateAndMerge(newDefaults))

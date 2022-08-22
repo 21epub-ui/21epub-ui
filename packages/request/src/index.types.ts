@@ -40,16 +40,6 @@ type Request = <V, T extends ResponseType = 'json', U extends boolean = true>(
   options?: RequestOptions<T, U>
 ) => ResponsePromise<V, T, U>
 
-type RequestWithBody = <
-  V,
-  T extends ResponseType = 'json',
-  U extends boolean = true
->(
-  url: Input,
-  body?: unknown,
-  options?: Omit<RequestOptions<T, U>, 'body'>
-) => ResponsePromise<V, T, U>
-
 type CreateInstance = <
   T extends ResponseType = 'json',
   U extends boolean = true
@@ -62,9 +52,9 @@ export interface RequestInstance extends Request {
   delete: Request
   head: Request
   options: Request
-  post: RequestWithBody
-  put: RequestWithBody
-  patch: RequestWithBody
+  post: Request
+  put: Request
+  patch: Request
   create: CreateInstance
   extend: CreateInstance
   readonly stop: typeof stop
