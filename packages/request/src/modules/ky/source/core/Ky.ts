@@ -2,11 +2,12 @@ import {HTTPError} from '../errors/HTTPError';
 import {TimeoutError} from '../errors/TimeoutError';
 import type {Hooks} from '../types/hooks';
 import type {Input, InternalOptions, NormalizedOptions, Options, SearchParamsInit} from '../types/options';
-import {ResponsePromise} from '../types/ResponsePromise';
+import type {ResponsePromise} from '../types/ResponsePromise';
 import {deepMerge, mergeHeaders} from '../utils/merge';
 import {normalizeRequestMethod, normalizeRetryOptions} from '../utils/normalize';
-import {delay, timeout, TimeoutOptions} from '../utils/time';
-import {ObjectEntries} from '../utils/types';
+import type {TimeoutOptions} from '../utils/time';
+import {delay, timeout} from '../utils/time';
+import type {ObjectEntries} from '../utils/types';
 import {maxSafeTimeout, responseTypes, stop, supportsAbortController, supportsFormData, supportsStreams} from './constants';
 
 export class Ky {
