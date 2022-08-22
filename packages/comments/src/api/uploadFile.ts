@@ -4,7 +4,9 @@ const uploadFile = async (file: File) => {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await api.post<{ url: string }>('comments/assets/', formData)
+  const res = await api.post<{ url: string }>('comments/assets/', {
+    body: formData,
+  })
 
   return res.url
 }
