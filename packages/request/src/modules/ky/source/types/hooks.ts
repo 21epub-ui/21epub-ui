@@ -1,4 +1,4 @@
-import {stop} from '../core/constants';
+import type {stop} from '../core/constants';
 import type {HTTPError} from '../errors/HTTPError';
 import type {NormalizedOptions} from './options';
 

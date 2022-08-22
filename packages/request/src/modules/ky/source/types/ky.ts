@@ -1,4 +1,4 @@
-import {stop} from '../core/constants';
+import type {stop} from '../core/constants';
 import type {Input, Options} from './options';
 import type {ResponsePromise} from './ResponsePromise';
 
