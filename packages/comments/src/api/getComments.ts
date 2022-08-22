@@ -11,9 +11,7 @@ export type GetCommentsParams = {
 }
 
 const getComments = (params: GetCommentsParams) => {
-  return api.get<ResponseBody<CommentListData>>('comments/', {
-    searchParams: params,
-  })
+  return api.get<ResponseBody<CommentListData>>('comments/', { params })
 }
 
 export default getComments
