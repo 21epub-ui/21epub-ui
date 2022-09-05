@@ -1,8 +1,15 @@
 import fs from 'fs-extra'
 import { resolve } from 'path'
 import dedent from '../utils/dedent.mjs'
+import getName from '../utils/getName.mjs'
+import getPackagePath from '../utils/getPackagePath.mjs'
+import kebabToPascal from '../utils/kebabToPascal.mjs'
 
-const genStories = (dirPath, { componentName }) => {
+const genStories = async () => {
+  const name = getName()
+  const componentName = kebabToPascal(name)
+
+  const dirPath = resolve(getPackagePath(name))
   const filePath = resolve(dirPath, 'stories', `${componentName}.stories.tsx`)
 
   const template = dedent(`
@@ -23,7 +30,7 @@ const genStories = (dirPath, { componentName }) => {
     Default.args = {}
   `)
 
-  return fs.outputFile(filePath, template)
+  await fs.outputFile(filePath, template)
 }
 
 export default genStories

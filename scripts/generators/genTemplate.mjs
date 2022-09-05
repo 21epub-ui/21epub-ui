@@ -1,8 +1,15 @@
 import fs from 'fs-extra'
 import { resolve } from 'path'
 import dedent from '../utils/dedent.mjs'
+import getName from '../utils/getName.mjs'
+import getPackagePath from '../utils/getPackagePath.mjs'
+import kebabToPascal from '../utils/kebabToPascal.mjs'
 
-const genTemplate = (dirPath, { componentName }) => {
+const genTemplate = async () => {
+  const name = getName()
+  const componentName = kebabToPascal(name)
+
+  const dirPath = resolve(getPackagePath(name))
   const filePath = resolve(
     dirPath,
     'src',
@@ -21,7 +28,7 @@ const genTemplate = (dirPath, { componentName }) => {
     export default ${componentName}
   `)
 
-  return fs.outputFile(filePath, template)
+  await fs.outputFile(filePath, template)
 }
 
 export default genTemplate

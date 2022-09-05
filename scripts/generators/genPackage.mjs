@@ -1,8 +1,23 @@
-import outputJson from '../utils/outputJson.mjs'
+import { execute } from '@yarnpkg/shell'
 import { resolve } from 'path'
+import getName from '../utils/getName.mjs'
+import getPackageName from '../utils/getPackageName.mjs'
+import getPackagePath from '../utils/getPackagePath.mjs'
+import outputJson from '../utils/outputJson.mjs'
 
-const genPackage = (dirPath, { packageName }) => {
+const genPackage = async () => {
+  const name = getName()
+  const packageName = await getPackageName()
+
+  const dirPath = getPackagePath(name)
   const filePath = resolve(dirPath, 'package.json')
+
+  const devDependencies = [
+    '@emotion/react',
+    '@emotion/styled',
+    '@storybook/react',
+    '@types/react@^18',
+  ]
 
   const template = {
     name: packageName,
@@ -25,15 +40,12 @@ const genPackage = (dirPath, { packageName }) => {
       '@emotion/styled': '>=11.*',
       react: '>=17.*',
     },
-    devDependencies: {
-      '@emotion/react': '^11.9.3',
-      '@emotion/styled': '^11.9.3',
-      '@storybook/react': '^6.5.9',
-      '@types/react': '^17',
-    },
   }
 
-  return outputJson(filePath, template)
+  await outputJson(filePath, template)
+  await execute(
+    `yarn workspace ${packageName} add --dev ${devDependencies.join(' ')}`
+  )
 }
 
 export default genPackage

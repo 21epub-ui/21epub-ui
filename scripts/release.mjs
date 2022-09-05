@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import { resolve } from 'path'
 import simpleGit from 'simple-git'
 import pick from '../scripts/utils/pick.mjs'
+import getPackagePath from './utils/getPackagePath.mjs'
 import outputJson from './utils/outputJson.mjs'
 
 const git = simpleGit()
@@ -12,11 +13,11 @@ const tagName = tags.latest
 const packageName = tagName?.match(/^@.+\/.+(?=@(?:\d+\.){2}\d+)/)[0]
 
 if (packageName !== undefined) {
-  const dirPath = resolve('packages', packageName.split('/')[1])
+  const dirPath = resolve(getPackagePath(packageName.split('/')[1]))
   const configPath = resolve(dirPath, 'package.json')
   const licensePath = resolve(dirPath, 'LICENSE')
 
-  const packageConfig = await fs.readJSON(configPath)
+  const packageConfig = await fs.readJson(configPath)
 
   await execute(`yarn workspace ${packageName} run build`)
 

@@ -4,7 +4,7 @@ import url from '@rollup/plugin-url'
 import fs from 'fs-extra'
 import { dirname, resolve } from 'path'
 
-const packageConfig = await fs.readJSON(resolve('package.json'))
+const packageConfig = await fs.readJson(resolve('package.json'))
 
 export default [
   {

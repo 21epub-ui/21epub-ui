@@ -17,7 +17,7 @@ if (changed !== 0) {
   await execute(`yarn version ${strategy}`)
   await execute('yarn stage')
 
-  const { version } = await fs.readJSON('package.json')
+  const { version } = await fs.readJson('package.json')
   const { current } = await git.status()
 
   const tagName = `${process.env.npm_package_name}@${version}`
