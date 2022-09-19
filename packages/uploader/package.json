@@ -31,7 +31,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@storybook/react": "^6.5.10",
-    "@types/react": "^17",
+    "@types/react": "^18",
     "antd": "^4.22.5"
   }
 }
