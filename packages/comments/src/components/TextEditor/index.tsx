@@ -17,6 +17,7 @@ const onError = (error: Error) => {
 }
 
 export interface TextEditorProps {
+  children?: ReactNode
   className?: string
   style?: CSSProperties
   disabled?: boolean
