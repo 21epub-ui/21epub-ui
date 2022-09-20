@@ -13,10 +13,8 @@ const centerPosition = 'calc((100% - 10px)/2)'
 
 interface ImageResizerProps {
   imageRef: { current: HTMLElement | null }
-  maxWidth: number
-  maxHeight: number
-  onResizeEnd: (width: number, height: number) => void
   onResizeStart: () => void
+  onResizeEnd: (width: number, height: number) => void
 }
 
 const ImageResizer: React.FC<ImageResizerProps> = ({

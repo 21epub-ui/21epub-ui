@@ -8,11 +8,11 @@ const Content: React.FC<MediaProps> = ({
   controls,
   controlsList,
   disablePictureInPicture,
-  ...mediaProps
+  ...props
 }) => {
   switch (type) {
     case 'image': {
-      return <Image {...mediaProps} />
+      return <Image {...props} />
     }
     case 'video': {
       return (
@@ -20,17 +20,13 @@ const Content: React.FC<MediaProps> = ({
           controls={controls}
           controlsList={controlsList}
           disablePictureInPicture={disablePictureInPicture}
-          {...mediaProps}
+          {...props}
         />
       )
     }
     case 'audio': {
       return (
-        <Audio
-          controls={controls}
-          controlsList={controlsList}
-          {...mediaProps}
-        />
+        <Audio controls={controls} controlsList={controlsList} {...props} />
       )
     }
     default: {
@@ -46,7 +42,7 @@ const Media: React.FC<MediaProps> = ({
   className,
   style,
   type = 'image',
-  ...mediaProps
+  ...props
 }) => {
   const [mediaType, setMediaType] = useState(type)
 
@@ -58,7 +54,7 @@ const Media: React.FC<MediaProps> = ({
           setMediaType('image')
           e.currentTarget.src = fallback
         }}
-        {...mediaProps}
+        {...props}
       />
     </Container>
   )

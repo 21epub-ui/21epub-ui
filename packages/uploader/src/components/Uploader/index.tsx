@@ -121,10 +121,8 @@ const Uploader: React.FC<UploaderProps> = ({
 
             if (fileList !== undefined) {
               const uploadList = fileList?.map((item, index) => {
-                const uid = `${Date.now()}_${index}`
-
                 return {
-                  uid,
+                  uid: `${Date.now()}_${index}`,
                   name: item.name,
                   size: item.size,
                   type: item.type,
