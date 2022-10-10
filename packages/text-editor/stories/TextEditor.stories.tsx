@@ -17,6 +17,7 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
     callback: (payload: MediaPayload) => void
   ) => {
     const fileReader = new FileReader()
+
     fileReader.onload = (e) => {
       const src = e.target?.result
 
@@ -24,6 +25,7 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
 
       callback({ src, title: file.name })
     }
+
     fileReader.readAsDataURL(file)
   }
 
@@ -45,9 +47,11 @@ const Template: ComponentStory<typeof TextEditor> = (args) => {
         accept="image/*"
         onChange={(e) => {
           const file = e.currentTarget.files?.[0]
+
           if (file === undefined) return
 
           onInsertRef.current?.(file)
+
           e.currentTarget.value = ''
         }}
       />

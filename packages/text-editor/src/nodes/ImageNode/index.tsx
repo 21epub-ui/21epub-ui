@@ -32,6 +32,7 @@ export interface ImagePayload {
   title: string
   width?: number
   height?: number
+  isProportional?: boolean
 }
 
 type SelectionType = ReturnType<typeof $getSelection>
@@ -105,6 +106,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   title,
   width,
   height,
+  isProportional = true,
   nodeKey,
 }) => {
   const ref = useRef(null)
@@ -167,7 +169,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
     )
   }, [clearSelection, editor, isResizing, isSelected, onDelete, setIsSelected])
 
-  const onDragStart = () => {
+  const onResizeStart = () => {
     setIsResizing(true)
     editor.getRootElement()?.style.setProperty('user-select', 'none')
   }
@@ -180,7 +182,9 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
     editor.update(() => {
       const node = $getNodeByKey(nodeKey)
 
-      if ($isImageNode(node)) node.setWidthAndHeight(newWidth, newHeight)
+      if ($isImageNode(node)) {
+        node.setWidthAndHeight(newWidth, isProportional ? undefined : newHeight)
+      }
     })
   }
 
@@ -202,10 +206,9 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
       />
       {isFocused && (
         <ImageResizer
-          maxWidth={innerWidth}
-          maxHeight={innerHeight}
+          isProportional={isProportional}
           imageRef={ref}
-          onResizeStart={onDragStart}
+          onResizeStart={onResizeStart}
           onResizeEnd={onResizeEnd}
         />
       )}
@@ -226,6 +229,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   declare __title: string
   declare __width?: number
   declare __height?: number
+  declare __isProportional: boolean
 
   static getType(): string {
     return 'image'
@@ -237,6 +241,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       node.__title,
       node.__width,
       node.__height,
+      node.__isProportional,
       node.__key
     )
   }
@@ -255,7 +260,10 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     image.setAttribute('src', this.__src)
     image.setAttribute('alt', this.__title)
     image.style.setProperty('width', `${this.__width}px`)
-    image.style.setProperty('height', `${this.__height}px`)
+    image.style.setProperty(
+      'height',
+      this.__isProportional ? 'auto' : `${this.__height}px`
+    )
 
     element.appendChild(image)
 
@@ -276,6 +284,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     title: string,
     width?: number,
     height?: number,
+    isProportional?: boolean,
     key?: NodeKey
   ) {
     super(key)
@@ -283,6 +292,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     this.__title = title
     this.__width = width
     this.__height = height
+    this.__isProportional = isProportional ?? true
   }
 
   exportJSON(): SerializedImageNode {
@@ -291,12 +301,13 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       src: this.getSrc(),
       width: this.__width,
       height: this.__height,
+      isProportional: this.__isProportional,
       type: 'image',
       version: 1,
     }
   }
 
-  setWidthAndHeight(width: number, height: number): void {
+  setWidthAndHeight(width?: number, height?: number): void {
     const writable = this.getWritable()
     writable.__width = width
     writable.__height = height
@@ -332,6 +343,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
         title={this.__title}
         width={this.__width}
         height={this.__height}
+        isProportional={this.__isProportional}
         nodeKey={this.getKey()}
       />
     )
@@ -343,9 +355,10 @@ export const $createImageNode = ({
   title,
   width,
   height,
+  isProportional,
   key,
 }: ImagePayload) => {
-  return new ImageNode(src, title, width, height, key)
+  return new ImageNode(src, title, width, height, isProportional, key)
 }
 
 export const $isImageNode = (

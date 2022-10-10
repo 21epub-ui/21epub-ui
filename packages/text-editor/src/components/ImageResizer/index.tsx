@@ -12,12 +12,14 @@ const userSelectProperty = 'user-select'
 const centerPosition = 'calc((100% - 10px)/2)'
 
 interface ImageResizerProps {
+  isProportional?: boolean
   imageRef: { current: HTMLElement | null }
   onResizeStart: () => void
   onResizeEnd: (width: number, height: number) => void
 }
 
 const ImageResizer: React.FC<ImageResizerProps> = ({
+  isProportional = true,
   imageRef,
   onResizeStart,
   onResizeEnd,
@@ -159,18 +161,31 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
         const width = Math.max(positioning.startWidth + offset, minWidth)
 
         positioning.currentWidth = width
+
+        if (isProportional) {
+          positioning.currentHeight =
+            positioning.currentWidth / positioning.ratio
+        }
       } else {
         const offset = calcOffset('vertical')
 
         const newHeight = Math.max(positioning.startHeight + offset, minHeight)
 
         positioning.currentHeight = newHeight
+
+        if (isProportional) {
+          positioning.currentWidth =
+            positioning.currentHeight * positioning.ratio
+        }
       }
 
       image.style.setProperty('width', `${positioning.currentWidth}px`)
-      image.style.setProperty('height', `${positioning.currentHeight}px`)
+      image.style.setProperty(
+        'height',
+        isProportional ? 'auto' : `${positioning.currentHeight}px`
+      )
     },
-    [imageRef]
+    [imageRef, isProportional]
   )
 
   const onPointerUp = useCallback(() => {
