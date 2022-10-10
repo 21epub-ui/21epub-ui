@@ -13,7 +13,7 @@ const centerPosition = 'calc((100% - 10px)/2)'
 
 interface ImageResizerProps {
   isProportional?: boolean
-  imageRef: { current: HTMLElement | null }
+  imageRef: { current: HTMLImageElement | null }
   onResizeStart: () => void
   onResizeEnd: (width: number, height: number) => void
 }
@@ -41,7 +41,7 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
     currentHeight: 0,
     currentWidth: 0,
     direction: 0,
-    ratio: 0,
+    ratio: 1,
     startHeight: 0,
     startWidth: 0,
     startX: 0,
@@ -49,9 +49,6 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
   })
 
   const [isResizing, setIsResizing] = useState(false)
-
-  const minWidth = 18
-  const minHeight = 18
 
   const setCursor = (direction: number) => {
     const ew = direction === Direction.east || direction === Direction.west
@@ -115,6 +112,8 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
       if (image === null) return
 
       const positioning = positioningRef.current
+      const minWidth = positioning.ratio > 1 ? 18 * positioning.ratio : 18
+      const minHeight = positioning.ratio > 1 ? 18 : 18 / positioning.ratio
 
       const isHorizontal =
         positioning.direction & (Direction.east | Direction.west)
@@ -136,25 +135,13 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
       }
 
       if (isHorizontal && isVertical) {
-        if (positioning.ratio > 1) {
-          const offset = calcOffset('horizontal')
+        const offset = calcOffset('horizontal')
 
-          positioning.currentWidth = Math.max(
-            positioning.startWidth + offset,
-            minHeight * positioning.ratio // 横图的最小宽度为最小高度乘以比例
-          )
-          positioning.currentHeight =
-            positioning.currentWidth / positioning.ratio
-        } else {
-          const offset = calcOffset('vertical')
-
-          positioning.currentHeight = Math.max(
-            positioning.startHeight + offset,
-            minWidth / positioning.ratio // 竖图的最小高度为最小宽度除以比例
-          )
-          positioning.currentWidth =
-            positioning.currentHeight * positioning.ratio
-        }
+        positioning.currentWidth = Math.max(
+          positioning.startWidth + offset,
+          minWidth
+        )
+        positioning.currentHeight = positioning.currentWidth / positioning.ratio
       } else if (isHorizontal) {
         const offset = calcOffset('horizontal')
 

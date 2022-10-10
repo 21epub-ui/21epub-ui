@@ -69,7 +69,8 @@ const convertImageElement = (domNode: Node): DOMConversionOutput | null => {
   return null
 }
 
-interface LazyImageProps extends Omit<ImagePayload, 'key'> {
+interface LazyImageProps
+  extends Omit<ImagePayload, 'key' | 'width' | 'height'> {
   style: CSSProperties
   imageRef: { current: null | HTMLImageElement }
 }
@@ -78,8 +79,6 @@ const LazyImage: React.FC<LazyImageProps> = ({
   style,
   src,
   title,
-  width,
-  height,
   imageRef,
   ...props
 }) => {
@@ -90,7 +89,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
       ref={imageRef}
       src={src}
       alt={title}
-      style={{ width, height, ...style }}
+      style={style}
       draggable="false"
       {...props}
     />
@@ -109,7 +108,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   isProportional = true,
   nodeKey,
 }) => {
-  const ref = useRef(null)
+  const imageRef = useRef<HTMLImageElement>(null)
 
   const [selection, setSelection] = useState<SelectionType>(null)
   const [isResizing, setIsResizing] = useState(false)
@@ -146,7 +145,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
         (event) => {
           if (isResizing) return true
 
-          if (event.target === ref.current) {
+          if (event.target === imageRef.current) {
             if (!event.shiftKey) clearSelection()
             setIsSelected(!isSelected)
             return true
@@ -183,7 +182,7 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
       const node = $getNodeByKey(nodeKey)
 
       if ($isImageNode(node)) {
-        node.setWidthAndHeight(newWidth, isProportional ? undefined : newHeight)
+        node.setWidthAndHeight(newWidth, newHeight)
       }
     })
   }
@@ -191,23 +190,18 @@ const ImageComponent: React.FC<ImageComponentProps> = ({
   const isFocused = $isNodeSelection(selection) && (isSelected || isResizing)
 
   const style = {
+    width,
+    height: isProportional ? 'auto' : height,
     outline: isFocused ? '2px solid var(--chakra-colors-gray-600)' : undefined,
   }
 
   return (
     <Suspense fallback={null}>
-      <LazyImage
-        style={style}
-        src={src}
-        title={title}
-        width={width}
-        height={height}
-        imageRef={ref}
-      />
+      <LazyImage style={style} src={src} title={title} imageRef={imageRef} />
       {isFocused && (
         <ImageResizer
           isProportional={isProportional}
-          imageRef={ref}
+          imageRef={imageRef}
           onResizeStart={onResizeStart}
           onResizeEnd={onResizeEnd}
         />
@@ -307,7 +301,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     }
   }
 
-  setWidthAndHeight(width?: number, height?: number): void {
+  setWidthAndHeight(width: number, height: number): void {
     const writable = this.getWritable()
     writable.__width = width
     writable.__height = height
