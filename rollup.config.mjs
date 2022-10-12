@@ -34,7 +34,9 @@ export default [
     ],
     plugins: [
       url(),
-      eslint(),
+      eslint({
+        include: 'src/**/*.{ts,tsx,js,jsx}',
+      }),
       typescript({
         include: ['src/**/*', '../../typings/*'],
         declaration: true,
