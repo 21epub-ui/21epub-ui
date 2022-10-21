@@ -1,0 +1,28 @@
+{
+  "name": "@21epub-ui/tree",
+  "version": "0.0.0",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "preinstall": "node ../../scripts/preinstall.mjs",
+    "dev": "yarn node ../../scripts/dev.mjs",
+    "build": "yarn node ../../scripts/build.mjs",
+    "lint": "yarn node ../../scripts/lint.mjs",
+    "version": "yarn node ../../scripts/version.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=17.*"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@storybook/react": "^6.5.12",
+    "@types/react": "^18"
+  }
+}
