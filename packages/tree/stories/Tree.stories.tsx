@@ -1,7 +1,7 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useRef, useState } from 'react'
-import type { TreeNode } from '../src'
-import { Tree } from '../src'
+import type { TreeNode } from '@21epub-ui/tree'
+import { Tree } from '@21epub-ui/tree'
 
 export default {
   title: 'Tree/Default',

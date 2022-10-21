@@ -1,7 +1,7 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
-import type { Colord } from '../src'
-import { ColorPicker } from '../src'
+import type { Colord } from '@21epub-ui/color-picker'
+import { ColorPicker } from '@21epub-ui/color-picker'
 
 export default {
   title: 'ColorPicker/Default',

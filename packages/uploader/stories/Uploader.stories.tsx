@@ -2,7 +2,7 @@ import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import { Button } from 'antd'
 import 'antd/dist/antd.css'
 import { useState } from 'react'
-import { Uploader } from '../src'
+import { Uploader } from '@21epub-ui/uploader'
 
 export default {
   title: 'Uploader/Default',

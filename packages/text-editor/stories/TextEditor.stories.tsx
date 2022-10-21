@@ -1,7 +1,7 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useRef } from 'react'
-import type { MediaPayload } from '../src'
-import { TextEditor } from '../src'
+import type { MediaPayload } from '@21epub-ui/text-editor'
+import { TextEditor } from '@21epub-ui/text-editor'
 
 export default {
   title: 'TextEditor/Default',
