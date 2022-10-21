@@ -1,1 +1,4 @@
-/Users/stars/Developer/21epub-ui/shared/tsconfig.json
+{
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*", "stories/**/*", "../../typings/*"]
+}
