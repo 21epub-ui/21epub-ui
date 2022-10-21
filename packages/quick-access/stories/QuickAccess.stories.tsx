@@ -1,6 +1,6 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import 'antd/dist/antd.css'
-import { QuickAccess } from '../src'
+import { QuickAccess } from '@21epub-ui/quick-access'
 
 export default {
   title: 'QuickAccess/Default',

@@ -1,5 +1,5 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Comments } from '../src'
+import { Comments } from '@21epub-ui/comments'
 
 export default {
   title: 'Comments/Default',
