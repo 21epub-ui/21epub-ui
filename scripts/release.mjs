@@ -8,8 +8,7 @@ import outputJson from './utils/outputJson.mjs'
 
 const git = simpleGit()
 
-const tags = await git.tags()
-const tagName = tags.latest
+const tagName = await git.raw(['describe', '--tags'])
 const packageName = tagName?.match(/^@.+\/.+(?=@(?:\d+\.){2}\d+)/)[0]
 
 if (packageName !== undefined) {

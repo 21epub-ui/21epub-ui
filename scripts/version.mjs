@@ -5,9 +5,9 @@ import printer from './utils/printer.mjs'
 
 const git = simpleGit()
 
-const { changed } = await git.diffSummary()
+const { isClean, current } = await git.status()
 
-if (changed !== 0) {
+if (!isClean()) {
   console.error(printer.red('Git working directory not clean.'))
   process.exitCode = 1
 } else {
@@ -18,7 +18,6 @@ if (changed !== 0) {
   await execute('yarn stage')
 
   const { version } = await fs.readJson('package.json')
-  const { current } = await git.status()
 
   const tagName = `${process.env.npm_package_name}@${version}`
   const message = `chore(release): ${tagName}`
