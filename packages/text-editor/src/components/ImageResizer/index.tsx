@@ -245,7 +245,7 @@ const ImageResizer: React.FC<ImageResizerProps> = ({
         style={{
           bottom: -6,
           right: -6,
-          cursor: isResizing ? undefined : 'nwse-resize',
+          cursor: isResizing ? undefined : 'se-resize',
         }}
         onPointerDown={(event) => {
           onPointerDown(event, Direction.south | Direction.east)

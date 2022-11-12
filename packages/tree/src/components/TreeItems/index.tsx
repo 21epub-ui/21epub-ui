@@ -42,12 +42,12 @@ const TreeItems = <T extends TreeNode>({
           onPointerDown={(event) => onPointerDown(event, node.id)}
           onPointerUp={(event) => onPointerUp(event, node.id)}
           onClick={(event) => {
-            const isDisabled =
+            const disabled =
               node.children === undefined ||
               event[getModifierKey()] ||
               event.shiftKey
 
-            if (isDisabled) return
+            if (disabled) return
 
             if (expandedIds.includes(node.id)) {
               onNodeToggle?.(expandedIds.filter((id) => id !== node.id))
