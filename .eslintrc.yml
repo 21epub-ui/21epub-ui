@@ -50,6 +50,7 @@ rules:
     - warn
     - additionalHooks: useRecoilCallback
   sonarjs/cognitive-complexity: warn
+  sonarjs/no-duplicate-string: off
   sonarjs/no-nested-template-literals: off
   sonarjs/prefer-immediate-return: off
 
