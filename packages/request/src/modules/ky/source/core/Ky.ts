@@ -5,10 +5,19 @@ import type {Input, InternalOptions, NormalizedOptions, Options, SearchParamsIni
 import type {ResponsePromise} from '../types/ResponsePromise';
 import {deepMerge, mergeHeaders} from '../utils/merge';
 import {normalizeRequestMethod, normalizeRetryOptions} from '../utils/normalize';
-import type {TimeoutOptions} from '../utils/time';
-import {delay, timeout} from '../utils/time';
+import type {TimeoutOptions} from '../utils/timeout';
+import timeout from '../utils/timeout';
+import delay from '../utils/delay';
 import type {ObjectEntries} from '../utils/types';
-import {maxSafeTimeout, responseTypes, stop, supportsAbortController, supportsFormData, supportsStreams} from './constants';
+import {
+	maxSafeTimeout,
+	responseTypes,
+	stop,
+	supportsAbortController,
+	supportsFormData,
+	supportsResponseStreams,
+	supportsRequestStreams,
+} from './constants';
 
 export class Ky {
 	// eslint-disable-next-line @typescript-eslint/promise-function-async
@@ -57,7 +66,7 @@ export class Ky {
 					throw new TypeError('The `onDownloadProgress` option must be a function');
 				}
 
-				if (!supportsStreams) {
+				if (!supportsResponseStreams) {
 					throw new Error('Streams are not supported in your environment. `ReadableStream` is missing.');
 				}
 
@@ -80,6 +89,12 @@ export class Ky {
 
 				if (type === 'json') {
 					if (response.status === 204) {
+						return '';
+					}
+
+					const arrayBuffer = await response.clone().arrayBuffer();
+					const responseSize = arrayBuffer.byteLength;
+					if (responseSize === 0) {
 						return '';
 					}
 
@@ -146,8 +161,10 @@ export class Ky {
 		if (supportsAbortController) {
 			this.abortController = new globalThis.AbortController();
 			if (this._options.signal) {
+				const originalSignal = this._options.signal;
+
 				this._options.signal.addEventListener('abort', () => {
-					this.abortController!.abort();
+					this.abortController!.abort(originalSignal.reason);
 				});
 			}
 
@@ -155,6 +172,11 @@ export class Ky {
 		}
 
 		this.request = new globalThis.Request(this._input as RequestInfo, this._options as RequestInit);
+
+		if (supportsRequestStreams) {
+			// @ts-expect-error - Types are outdated.
+			this.request.duplex = 'half';
+		}
 
 		if (this._options.params) {
 			const textSearchParams = typeof this._options.params === 'string'
@@ -233,7 +255,7 @@ export class Ky {
 		} catch (error) {
 			const ms = Math.min(this._calculateRetryDelay(error), maxSafeTimeout);
 			if (ms !== 0 && this._retryCount > 0) {
-				await delay(ms);
+				await delay(ms, {signal: this._options.signal});
 
 				for (const hook of this._options.hooks.beforeRetry) {
 					// eslint-disable-next-line no-await-in-loop

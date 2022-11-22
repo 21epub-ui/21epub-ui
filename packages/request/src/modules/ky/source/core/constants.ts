@@ -1,5 +1,25 @@
+export const supportsRequestStreams = (() => {
+	let duplexAccessed = false;
+	let hasContentType = false;
+	const supportsReadableStream = typeof globalThis.ReadableStream === 'function';
+
+	if (supportsReadableStream) {
+		hasContentType = new globalThis.Request('https://a.com', {
+			body: new globalThis.ReadableStream(),
+			method: 'POST',
+			// @ts-expect-error - Types are outdated.
+			get duplex() {
+				duplexAccessed = true;
+				return 'half';
+			},
+		}).headers.has('Content-Type');
+	}
+
+	return duplexAccessed && !hasContentType;
+})();
+
 export const supportsAbortController = typeof globalThis.AbortController === 'function';
-export const supportsStreams = typeof globalThis.ReadableStream === 'function';
+export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
 export const supportsFormData = typeof globalThis.FormData === 'function';
 
 export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'options', 'delete'] as const;
