@@ -5,7 +5,7 @@ import api from './api'
 type RequestBody = Pick<CommentData, 'slug' | 'target' | 'content'>
 
 const createComment = (body: RequestBody) => {
-  return api.post<ResponseBody<CommentListData>>('comments/', { body })
+  return api.post('comments/', { body }).json<ResponseBody<CommentListData>>()
 }
 
 export default createComment

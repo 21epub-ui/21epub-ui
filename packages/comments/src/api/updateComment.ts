@@ -5,7 +5,9 @@ import api from './api'
 type RequestBody = Pick<CommentData, 'archived'>
 
 const updateComment = (id: string, body: RequestBody) => {
-  return api.patch<ResponseBody<CommentListData>>(`comments/${id}`, { body })
+  return api
+    .patch(`comments/${id}`, { body })
+    .json<ResponseBody<CommentListData>>()
 }
 
 export default updateComment
