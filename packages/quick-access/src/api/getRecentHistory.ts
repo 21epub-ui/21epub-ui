@@ -3,7 +3,9 @@ import type { ResponseBody } from './api'
 import api from './api'
 
 const getRecentHistory = async (type: string) => {
-  const res = await api.get<ResponseBody<LinkList>>(`${type}/works/recent`)
+  const res = await api
+    .get(`${type}/works/recent`)
+    .json<ResponseBody<LinkList>>()
 
   return res.data.results
 }

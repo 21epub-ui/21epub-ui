@@ -4,9 +4,9 @@ import api from './api'
 
 const getQuickAccess = async (id: string, type: string) => {
   const baseUri = `/v3/${type}`
-  const res = await api.get<
-    ResponseBody<{ uuid: string; review_task?: string }[]>
-  >(`${type}/works/${id}/`)
+  const res = await api
+    .get(`${type}/works/${id}/`)
+    .json<ResponseBody<{ uuid: string; review_task?: string }[]>>()
 
   const { uuid, review_task } = res.data.results[0]
 
