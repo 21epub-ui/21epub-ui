@@ -1,51 +1,14 @@
 import type { stop } from './modules/ky/source/core/constants'
 import type { Input, Options } from './modules/ky/source/types/options'
-import type { KyResponse } from './modules/ky/source/types/response'
+import type { ResponsePromise } from './modules/ky/source/types/ResponsePromise'
 
-export type ResponseType = 'json' | 'text' | 'blob' | 'arraybuffer'
-
-export interface RequestOptions<
-  T extends ResponseType = ResponseType,
-  U extends boolean = boolean
-> extends Omit<Options, 'body' | 'json'> {
+export interface RequestOptions extends Omit<Options, 'body' | 'json'> {
   body?: unknown
-  /**
-   * @default 'json'
-   */
-  responseType?: T
-  /**
-   * @default true
-   */
-  extractResponse?: U
 }
 
-type ResponseContent<V, T extends ResponseType> = T extends 'json'
-  ? V
-  : T extends 'text'
-  ? string
-  : T extends 'blob'
-  ? Blob
-  : T extends 'arraybuffer'
-  ? ArrayBuffer
-  : never
+type CreateInstance = (defaultOptions?: RequestOptions) => RequestInstance
 
-type ResponsePromise<
-  V,
-  T extends ResponseType = 'json',
-  U extends boolean = true
-> = Promise<U extends false ? KyResponse : ResponseContent<V, T>>
-
-type Request = <V, T extends ResponseType = 'json', U extends boolean = true>(
-  url: Input,
-  options?: RequestOptions<T, U>
-) => ResponsePromise<V, T, U>
-
-type CreateInstance = <
-  T extends ResponseType = 'json',
-  U extends boolean = true
->(
-  defaultOptions?: RequestOptions<T, U>
-) => RequestInstance
+export type Request = (url: Input, options?: RequestOptions) => ResponsePromise
 
 export interface RequestInstance extends Request {
   get: Request
@@ -61,6 +24,13 @@ export interface RequestInstance extends Request {
 }
 
 export type {
+  NormalizedOptions,
+  RetryOptions,
+  SearchParamsOption,
+  DownloadProgress,
+} from './modules/ky/source/types/options'
+
+export type {
   AfterResponseHook,
   BeforeErrorHook,
   BeforeRequestHook,
@@ -68,8 +38,7 @@ export type {
   BeforeRetryState,
   Hooks,
 } from './modules/ky/source/types/hooks'
-export type {
-  DownloadProgress,
-  RetryOptions,
-  SearchParamsOption,
-} from './modules/ky/source/types/options'
+
+export type { RequestResponse } from './modules/ky/source/types/response.js'
+
+export type { ResponsePromise }
