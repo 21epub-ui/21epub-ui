@@ -68,12 +68,12 @@ const Uploader: React.FC<UploaderProps> = ({
         e: ProgressEvent<EventTarget>,
         xhr: XMLHttpRequest
       ) => {
-        const status = xhr.status
+        const isDone = checkStatus(xhr.status)
 
         const result: UploadFile = {
           ...file,
-          status: checkStatus(status) ? 'done' : 'error',
-          percent: checkStatus(status) ? 100 : 0,
+          status: isDone ? 'done' : 'error',
+          percent: isDone ? 100 : 0,
           response: JSON.parse(xhr.response),
         }
 
