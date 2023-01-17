@@ -1,4 +1,4 @@
-const getRect = () => {
+const createRect = () => {
   return {
     width: 0,
     height: 0,
@@ -7,4 +7,4 @@ const getRect = () => {
   }
 }
 
-export default getRect
+export default createRect

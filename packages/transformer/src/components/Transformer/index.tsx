@@ -1,10 +1,13 @@
 import type { PointerEvent } from 'react'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import useCursor from '../../hooks/useCursor'
 import useResize from '../../hooks/useResize'
 import useRotate from '../../hooks/useRotate'
 import type { TransformerProps } from '../../index.types'
 import getElementRect from '../../utils/getElementRect'
 import getOriginPosition from '../../utils/getOriginPosition'
+import getResizeCursor from '../../utils/getResizeCursor'
+import getRotateCursor from '../../utils/getRotateCursor'
 import ResizeControlCorner from '../ResizeControlCorner'
 import ResizeControlEdge from '../ResizeControlEdge'
 import RotateControlCorner from '../RotateControlCorner'
@@ -14,10 +17,9 @@ export const south = 1 << 1
 export const west = 1 << 2
 export const north = 1 << 3
 
-const cardinalDirections = ['n', 'e', 's', 'w'] as const
-const ordinalDirections = ['nw', 'ne', 'sw', 'se'] as const
-
-export const principalDirections = [
+const cardinalDirections = ['n', 'e', 's', 'w']
+const ordinalDirections = ['nw', 'ne', 'sw', 'se']
+const principalDirections = [
   ...cardinalDirections,
   ...ordinalDirections,
 ] as const
@@ -32,6 +34,8 @@ const compass = {
   sw: south | west,
   se: south | east,
 } as const
+
+export type Direction = keyof typeof compass
 
 const Transformer: React.FC<TransformerProps> = ({
   className,
@@ -54,6 +58,9 @@ const Transformer: React.FC<TransformerProps> = ({
   onRotateEnd,
 }) => {
   const indicatorRef = useRef<HTMLDivElement>(null)
+  const getCursorRef = useRef<(rotation: number) => string>()
+
+  const { setCursor, resetCursor } = useCursor()
 
   const { isResizing, startResize } = useResize({
     left,
@@ -66,6 +73,7 @@ const Transformer: React.FC<TransformerProps> = ({
     onResize,
     onResizeEnd,
   })
+
   const { isRotating, startRotate } = useRotate({
     rotation,
     onRotate,
@@ -74,10 +82,22 @@ const Transformer: React.FC<TransformerProps> = ({
 
   const isTransforming = isResizing || isRotating
 
+  useEffect(() => {
+    if (getCursorRef.current === undefined) return
+
+    if (isTransforming) {
+      setCursor(getCursorRef.current(rotation))
+    } else {
+      getCursorRef.current = undefined
+
+      resetCursor()
+    }
+  }, [isTransforming, resetCursor, rotation, setCursor])
+
   const handleResize = (
     event: PointerEvent,
-    direction: number,
-    cursor: string
+    cursorAngle: number,
+    direction: number
   ) => {
     const { clientX, clientY } = event
 
@@ -87,11 +107,15 @@ const Transformer: React.FC<TransformerProps> = ({
       startY: clientY,
     }
 
+    getCursorRef.current = (rotation: number) => {
+      return getResizeCursor(rotation + cursorAngle)
+    }
+
     onResizeStart?.({ clientX, clientY })
-    startResize(positioning, cursor)
+    startResize(positioning)
   }
 
-  const handleRotate = (event: PointerEvent, cursor: string) => {
+  const handleRotate = (event: PointerEvent, cursorAngle: number) => {
     const { clientX, clientY } = event
     const positioning = {
       startX: clientX,
@@ -99,8 +123,12 @@ const Transformer: React.FC<TransformerProps> = ({
       ...getOriginPosition(getElementRect(indicatorRef.current)),
     }
 
+    getCursorRef.current = (rotation: number) => {
+      return getRotateCursor(rotation + cursorAngle)
+    }
+
     onRotateStart?.({ clientX, clientY })
-    startRotate(positioning, cursor)
+    startRotate(positioning)
   }
 
   return (
@@ -125,33 +153,29 @@ const Transformer: React.FC<TransformerProps> = ({
             disabled={isTransforming}
             rotation={rotation}
             direction={compass[direction]}
-            onRotate={handleRotate}
+            onAction={handleRotate}
           />
         ))}
       {resizable &&
-        cardinalDirections
+        principalDirections
           .filter((direction) => directions.includes(direction))
-          .map((direction) => (
-            <ResizeControlEdge
-              key={direction}
-              disabled={isTransforming}
-              rotation={rotation}
-              direction={compass[direction]}
-              onResize={handleResize}
-            />
-          ))}
-      {resizable &&
-        ordinalDirections
-          .filter((direction) => directions.includes(direction))
-          .map((direction) => (
-            <ResizeControlCorner
-              key={direction}
-              disabled={isTransforming}
-              rotation={rotation}
-              direction={compass[direction]}
-              onResize={handleResize}
-            />
-          ))}
+          .map((direction) => {
+            const ResizeControl = cardinalDirections.includes(direction)
+              ? ResizeControlEdge
+              : ResizeControlCorner
+
+            return (
+              <ResizeControl
+                key={direction}
+                disabled={isTransforming}
+                rotation={rotation}
+                direction={compass[direction]}
+                onAction={(event, cursorAngle) => {
+                  handleResize(event, cursorAngle, compass[direction])
+                }}
+              />
+            )
+          })}
     </div>
   )
 }

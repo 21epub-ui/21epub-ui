@@ -1,7 +1,7 @@
-import getRect from './getRect'
+import createRect from './createRect'
 
 const getElementRect = (element: HTMLElement | null) => {
-  return element?.getBoundingClientRect() ?? getRect()
+  return element?.getBoundingClientRect() ?? createRect()
 }
 
 export default getElementRect

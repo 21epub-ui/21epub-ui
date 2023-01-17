@@ -1,6 +1,4 @@
-import type { principalDirections } from './components/Transformer'
-
-export type Direction = typeof principalDirections[number]
+import type { Direction } from './components/Transformer'
 
 export interface Rect {
   left: number

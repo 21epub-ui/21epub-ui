@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react'
 import resizeRect from '../helpers/resizeRect'
 import type { Rect, ResizeEvents } from '../index.types'
 import degreeToRadian from '../utils/degreeToRadian'
-import useCursor from './useCursor'
 
 export interface Positioning {
   startX: number
@@ -23,8 +22,6 @@ const useResize = (context: Context) => {
   const contextRef = useRef(context)
 
   contextRef.current = context
-
-  const { setCursor, resetCursor } = useCursor()
 
   const resize = (event: PointerEvent, positioning: Positioning) => {
     const { clientX, clientY } = event
@@ -67,9 +64,8 @@ const useResize = (context: Context) => {
   }
 
   const startResize = useCallback(
-    (positioning: Omit<Positioning, 'startRect'>, cursor: string) => {
+    (positioning: Omit<Positioning, 'startRect'>) => {
       setIsResizing(true)
-      setCursor(cursor)
 
       const { left, top, width, height } = contextRef.current
       const startRect = { left, top, width, height }
@@ -83,7 +79,7 @@ const useResize = (context: Context) => {
         const { clientX, clientY } = event
 
         setIsResizing(false)
-        resetCursor()
+
         contextRef.current.onResizeEnd?.({ clientX, clientY })
 
         document.removeEventListener('pointermove', onPointerMove)
@@ -93,7 +89,7 @@ const useResize = (context: Context) => {
       document.addEventListener('pointermove', onPointerMove)
       document.addEventListener('pointerup', onPointerUp)
     },
-    [setCursor, resetCursor]
+    []
   )
 
   return { isResizing, startResize }

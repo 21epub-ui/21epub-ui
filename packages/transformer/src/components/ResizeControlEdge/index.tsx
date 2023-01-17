@@ -13,19 +13,17 @@ export interface ResizeControlEdgeProps
   extends Omit<ControlProps, 'cursor' | 'onAction'> {
   rotation: number
   direction: number
-  onResize: (event: PointerEvent, direction: number, cursor: string) => void
+  onAction: (event: PointerEvent, cursorAngle: number) => void
 }
 
 const ResizeControlEdge: React.FC<ResizeControlEdgeProps> = ({
   rotation,
   direction,
-  onResize,
+  onAction,
   ...props
 }) => {
   const isHorizontal = (direction & (east | west)) > 0
-  const cursor = isHorizontal
-    ? getResizeCursor(rotation + 90)
-    : getResizeCursor(rotation)
+  const cursorAngle = isHorizontal ? 90 : 0
 
   return (
     <Control
@@ -36,10 +34,8 @@ const ResizeControlEdge: React.FC<ResizeControlEdgeProps> = ({
         height: isHorizontal ? '100%' : controlSize,
         ...getControlOffset(direction, controlOffset),
       }}
-      cursor={cursor}
-      onAction={(event: PointerEvent) => {
-        onResize(event, direction, cursor)
-      }}
+      cursor={getResizeCursor(rotation + cursorAngle)}
+      onAction={(event) => onAction(event, cursorAngle)}
       {...props}
     />
   )

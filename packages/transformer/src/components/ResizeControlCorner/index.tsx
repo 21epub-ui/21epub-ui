@@ -13,18 +13,16 @@ export interface ResizeControlCornerProps
   extends Omit<ControlProps, 'cursor' | 'onAction'> {
   rotation: number
   direction: number
-  onResize: (event: PointerEvent, direction: number, cursor: string) => void
+  onAction: (event: PointerEvent, cursorAngle: number) => void
 }
 
 const ResizeControlCorner: React.FC<ResizeControlCornerProps> = ({
   rotation,
   direction,
-  onResize,
+  onAction,
   ...props
 }) => {
-  const cursor = isAscending(direction)
-    ? getResizeCursor(rotation + 45)
-    : getResizeCursor(rotation - 45)
+  const cursorAngle = isAscending(direction) ? 45 : -45
 
   return (
     <Control
@@ -37,10 +35,8 @@ const ResizeControlCorner: React.FC<ResizeControlCornerProps> = ({
         backgroundColor: 'white',
         ...getControlOffset(direction, controlOffset),
       }}
-      cursor={cursor}
-      onAction={(event: PointerEvent) => {
-        onResize(event, direction, cursor)
-      }}
+      cursor={getResizeCursor(rotation + cursorAngle)}
+      onAction={(event) => onAction(event, cursorAngle)}
       {...props}
     />
   )

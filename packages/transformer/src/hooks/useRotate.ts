@@ -1,46 +1,39 @@
 import { useRef, useState } from 'react'
 import type { OriginPosition, RotateEvents } from '../index.types'
-import getRotateCursor from '../utils/getRotateCursor'
-import getPointerRotation from '../utils/getPointerRotation'
-import useCursor from './useCursor'
 import clampRotation from '../utils/clampRotation'
+import getVertexAngle from '../utils/getVertexAngle'
 
 export interface Positioning extends OriginPosition {
   startX: number
   startY: number
-  startRotation: number
+  startAngle: number
 }
 
 interface Context extends Omit<RotateEvents, 'onRotateStart'> {
   rotation: number
 }
 
-const useResize = (context: Context) => {
+const useRotate = (context: Context) => {
   const [isRotating, setIsRotating] = useState(false)
 
   const contextRef = useRef(context)
 
   contextRef.current = context
 
-  const { setCursor, resetCursor } = useCursor()
-
   const rotate = (event: PointerEvent, positioning: Positioning) => {
     const mousePosition = {
       clientX: event.clientX,
       clientY: event.clientY,
     }
-    const { startRotation, originX, originY } = positioning
+    const { startAngle, originX, originY } = positioning
     const { rotation, onRotate } = contextRef.current
-    const pointerRotation = getPointerRotation({
+    const vertexAngle = getVertexAngle({
       ...mousePosition,
       originX,
       originY,
     })
-    const deltaRotation = clampRotation(
-      pointerRotation - startRotation - rotation
-    )
+    const deltaRotation = clampRotation(vertexAngle - startAngle - rotation)
 
-    setCursor(getRotateCursor(pointerRotation + 45))
     onRotate?.({
       ...mousePosition,
       deltaRotation,
@@ -48,22 +41,18 @@ const useResize = (context: Context) => {
     })
   }
 
-  const startRotate = (
-    positioning: Omit<Positioning, 'startRotation'>,
-    cursor: string
-  ) => {
+  const startRotate = (positioning: Omit<Positioning, 'startAngle'>) => {
     setIsRotating(true)
-    setCursor(cursor)
 
     const { startX, startY, originX, originY } = positioning
-    const pointerRotation = getPointerRotation({
+    const vertexAngle = getVertexAngle({
       clientX: startX,
       clientY: startY,
       originX,
       originY,
     })
-    const startRotation = pointerRotation - contextRef.current.rotation
-    const newPositioning = { ...positioning, startRotation }
+    const startAngle = vertexAngle - contextRef.current.rotation
+    const newPositioning = { ...positioning, startAngle }
 
     const onPointerMove = (event: PointerEvent) => {
       rotate(event, newPositioning)
@@ -73,7 +62,7 @@ const useResize = (context: Context) => {
       const { clientX, clientY } = event
 
       setIsRotating(false)
-      resetCursor()
+
       contextRef.current.onRotateEnd?.({ clientX, clientY })
 
       document.removeEventListener('pointermove', onPointerMove)
@@ -87,4 +76,4 @@ const useResize = (context: Context) => {
   return { isRotating, startRotate }
 }
 
-export default useResize
+export default useRotate
