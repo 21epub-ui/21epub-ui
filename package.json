@@ -39,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "@yarnpkg/shell": "^3.2.3",
-    "babel-loader": "^8.2.5",
+    "babel-loader": "^9.1.2",
     "core-js": "^3.24.1",
     "eslint": "^8.25.0",
     "eslint-plugin-react": "^7.31.10",
