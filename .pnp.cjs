@@ -94,7 +94,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@storybook/builder-webpack5", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:6.5.13"],\
             ["@storybook/manager-webpack5", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:6.5.13"],\
             ["@storybook/react", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:6.5.13"],\
-            ["@types/fs-extra", "npm:9.0.13"],\
+            ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/react", "npm:18.0.14"],\
             ["@types/react-dom", "npm:18.0.5"],\
             ["@typescript-eslint/eslint-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.40.0"],\
@@ -108,7 +108,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-sonarjs", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.16.0"],\
             ["eslint-plugin-storybook", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.6.7"],\
             ["eslint-plugin-yml", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.2.0"],\
-            ["fs-extra", "npm:10.1.0"],\
+            ["fs-extra", "npm:11.1.0"],\
             ["http-proxy-middleware", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:2.0.6"],\
             ["husky", "npm:8.0.1"],\
             ["lint-staged", "npm:13.0.3"],\
@@ -286,7 +286,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@storybook/builder-webpack5", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:6.5.13"],\
             ["@storybook/manager-webpack5", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:6.5.13"],\
             ["@storybook/react", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:6.5.13"],\
-            ["@types/fs-extra", "npm:9.0.13"],\
+            ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/react", "npm:18.0.14"],\
             ["@types/react-dom", "npm:18.0.5"],\
             ["@typescript-eslint/eslint-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.40.0"],\
@@ -300,7 +300,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-sonarjs", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.16.0"],\
             ["eslint-plugin-storybook", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.6.7"],\
             ["eslint-plugin-yml", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.2.0"],\
-            ["fs-extra", "npm:10.1.0"],\
+            ["fs-extra", "npm:11.1.0"],\
             ["http-proxy-middleware", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:2.0.6"],\
             ["husky", "npm:8.0.1"],\
             ["lint-staged", "npm:13.0.3"],\
@@ -13819,10 +13819,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/fs-extra", [\
-        ["npm:9.0.13", {\
-          "packageLocation": "./.yarn/cache/@types-fs-extra-npm-9.0.13-12fb7badd7-add79e212a.zip/node_modules/@types/fs-extra/",\
+        ["npm:11.0.1", {\
+          "packageLocation": "./.yarn/cache/@types-fs-extra-npm-11.0.1-f11620397b-3e930346e5.zip/node_modules/@types/fs-extra/",\
           "packageDependencies": [\
-            ["@types/fs-extra", "npm:9.0.13"],\
+            ["@types/fs-extra", "npm:11.0.1"],\
+            ["@types/jsonfile", "npm:6.1.1"],\
             ["@types/node", "npm:17.0.8"]\
           ],\
           "linkType": "HARD"\
@@ -13935,6 +13936,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-json-schema-npm-7.0.9-361918cff3-259d0e25f1.zip/node_modules/@types/json-schema/",\
           "packageDependencies": [\
             ["@types/json-schema", "npm:7.0.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/jsonfile", [\
+        ["npm:6.1.1", {\
+          "packageLocation": "./.yarn/cache/@types-jsonfile-npm-6.1.1-62ad833c58-0f8fe0a922.zip/node_modules/@types/jsonfile/",\
+          "packageDependencies": [\
+            ["@types/jsonfile", "npm:6.1.1"],\
+            ["@types/node", "npm:17.0.8"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -20058,10 +20069,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:10.1.0", {\
-          "packageLocation": "./.yarn/cache/fs-extra-npm-10.1.0-86573680ed-dc94ab3709.zip/node_modules/fs-extra/",\
+        ["npm:11.1.0", {\
+          "packageLocation": "./.yarn/cache/fs-extra-npm-11.1.0-2cd157426f-5ca476103f.zip/node_modules/fs-extra/",\
           "packageDependencies": [\
-            ["fs-extra", "npm:10.1.0"],\
+            ["fs-extra", "npm:11.1.0"],\
             ["graceful-fs", "npm:4.2.9"],\
             ["jsonfile", "npm:6.1.0"],\
             ["universalify", "npm:2.0.0"]\
