@@ -1,9 +1,9 @@
 import { execute } from '@yarnpkg/shell'
-import { resolve } from 'path'
-import getName from '../utils/getName.mjs'
-import getPackageName from '../utils/getPackageName.mjs'
-import getPackagePath from '../utils/getPackagePath.mjs'
-import outputJson from '../utils/outputJson.mjs'
+import { resolve } from 'node:path'
+import getName from '../helpers/getName.mjs'
+import getPackageName from '../helpers/getPackageName.mjs'
+import getPackagePath from '../helpers/getPackagePath.mjs'
+import outputJson from '../helpers/outputJson.mjs'
 
 const genPackage = async () => {
   const name = getName()
@@ -30,7 +30,6 @@ const genPackage = async () => {
     files: ['dist'],
     scripts: {
       preinstall: 'node ../../scripts/preinstall.mjs',
-      dev: 'yarn node ../../scripts/dev.mjs',
       build: 'yarn node ../../scripts/build.mjs',
       lint: 'yarn node ../../scripts/lint.mjs',
       version: 'yarn node ../../scripts/version.mjs',

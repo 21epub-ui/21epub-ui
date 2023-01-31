@@ -1,7 +1,7 @@
-import { resolve } from 'path'
-import getName from '../utils/getName.mjs'
-import getPackagePath from '../utils/getPackagePath.mjs'
-import outputJson from '../utils/outputJson.mjs'
+import { resolve } from 'node:path'
+import getName from '../helpers/getName.mjs'
+import getPackagePath from '../helpers/getPackagePath.mjs'
+import outputJson from '../helpers/outputJson.mjs'
 
 const genTsConfig = async () => {
   const name = getName()
@@ -14,7 +14,7 @@ const genTsConfig = async () => {
     compilerOptions: {
       jsxImportSource: '@emotion/react',
     },
-    include: ['src/**/*', 'stories/**/*', '../../typings/*'],
+    include: ['./src', './stories', '../../typings'],
   }
 
   await outputJson(filePath, template)

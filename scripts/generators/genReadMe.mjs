@@ -1,9 +1,9 @@
 import fs from 'fs-extra'
-import { resolve } from 'path'
+import { resolve } from 'node:path'
+import getName from '../helpers/getName.mjs'
+import getPackageName from '../helpers/getPackageName.mjs'
+import getPackagePath from '../helpers/getPackagePath.mjs'
 import dedent from '../utils/dedent.mjs'
-import getName from '../utils/getName.mjs'
-import getPackagePath from '../utils/getPackagePath.mjs'
-import getPackageName from '../utils/getPackageName.mjs'
 import kebabToPascal from '../utils/kebabToPascal.mjs'
 
 const genReadMe = async () => {

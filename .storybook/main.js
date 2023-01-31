@@ -10,9 +10,12 @@ module.exports = {
     disableTelemetry: true,
   },
   stories: ['../packages/*/stories/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    'storybook-addon-swc',
+  ],
   framework: '@storybook/react',
-  babel: () => require('../babel.config.json'),
   webpackFinal: (config) => {
     return {
       ...config,

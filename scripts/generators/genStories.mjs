@@ -1,9 +1,9 @@
 import fs from 'fs-extra'
-import { resolve } from 'path'
+import { resolve } from 'node:path'
+import getName from '../helpers/getName.mjs'
+import getPackageName from '../helpers/getPackageName.mjs'
+import getPackagePath from '../helpers/getPackagePath.mjs'
 import dedent from '../utils/dedent.mjs'
-import getName from '../utils/getName.mjs'
-import getPackageName from '../utils/getPackageName.mjs'
-import getPackagePath from '../utils/getPackagePath.mjs'
 import kebabToPascal from '../utils/kebabToPascal.mjs'
 
 const genStories = async () => {
@@ -11,7 +11,7 @@ const genStories = async () => {
   const packageName = await getPackageName()
   const componentName = kebabToPascal(name)
 
-  const dirPath = resolve(getPackagePath(name))
+  const dirPath = getPackagePath(name)
   const filePath = resolve(dirPath, 'stories', `${componentName}.stories.tsx`)
 
   const template = dedent(`

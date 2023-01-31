@@ -9,4 +9,4 @@
 /packages/*/dist
 /packages/*/src/modules
 
-/storybook-static
+/docs

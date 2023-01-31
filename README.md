@@ -27,6 +27,12 @@ yarn packages/<package> run lint
 yarn packages/<package> run build
 ```
 
+### Watch a package
+
+```sh
+yarn packages/<package> run build --watch
+```
+
 ### Release a package
 
 ```sh

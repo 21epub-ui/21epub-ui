@@ -3,5 +3,5 @@
   "compilerOptions": {
     "jsxImportSource": "@emotion/react"
   },
-  "include": ["src/**/*", "stories/**/*", "../../typings/*"]
+  "include": ["./src", "./stories", "../../typings"]
 }

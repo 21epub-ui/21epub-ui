@@ -1,5 +1,6 @@
 import { execute } from '@yarnpkg/shell'
 import fs from 'fs-extra'
+import process from 'node:process'
 import simpleGit from 'simple-git'
 import printer from './utils/printer.mjs'
 

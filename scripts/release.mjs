@@ -1,18 +1,18 @@
 import { execute } from '@yarnpkg/shell'
 import fs from 'fs-extra'
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import simpleGit from 'simple-git'
 import pick from '../scripts/utils/pick.mjs'
-import getPackagePath from './utils/getPackagePath.mjs'
-import outputJson from './utils/outputJson.mjs'
+import getPackagePath from './helpers/getPackagePath.mjs'
+import outputJson from './helpers/outputJson.mjs'
 
 const git = simpleGit()
 
 const tagName = await git.raw(['describe', '--tags'])
-const packageName = tagName?.match(/^@.+\/.+(?=@(?:\d+\.){2}\d+)/)[0]
+const packageName = tagName?.match(/^@.+\/.+(?=@(?:\d+\.){2}\d+)/)?.at(0)
 
 if (packageName !== undefined) {
-  const dirPath = resolve(getPackagePath(packageName.split('/')[1]))
+  const dirPath = getPackagePath(packageName.split('/').at(1))
   const configPath = resolve(dirPath, 'package.json')
   const licensePath = resolve(dirPath, 'LICENSE')
 
