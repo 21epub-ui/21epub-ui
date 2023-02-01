@@ -9,6 +9,7 @@
     "g:tsc": "cd $INIT_CWD && tsc",
     "preinstall": "node ./scripts/preinstall.mjs",
     "bootstrap": "node ./scripts/bootstrap.mjs",
+    "upgrade": "node ./scripts/upgrade.mjs",
     "create": "yarn node ./scripts/create.mjs",
     "release": "yarn node ./scripts/release.mjs",
     "storybook": "start-storybook -p 6006 --no-open",
