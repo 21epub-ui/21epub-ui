@@ -82,6 +82,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/react", "npm:18.0.14"],\
             ["@types/react-dom", "npm:18.0.5"],\
+            ["@types/yargs", "npm:17.0.22"],\
             ["@typescript-eslint/eslint-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.50.0"],\
             ["@typescript-eslint/parser", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.50.0"],\
             ["@yarnpkg/shell", "npm:3.2.3"],\
@@ -104,7 +105,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["storybook-addon-swc", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.1.9"],\
             ["terser-webpack-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.3.6"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
-            ["yaml-eslint-parser", "npm:1.1.0"]\
+            ["yaml-eslint-parser", "npm:1.1.0"],\
+            ["yargs", "npm:17.6.2"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -260,6 +262,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/react", "npm:18.0.14"],\
             ["@types/react-dom", "npm:18.0.5"],\
+            ["@types/yargs", "npm:17.0.22"],\
             ["@typescript-eslint/eslint-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.50.0"],\
             ["@typescript-eslint/parser", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.50.0"],\
             ["@yarnpkg/shell", "npm:3.2.3"],\
@@ -282,7 +285,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["storybook-addon-swc", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.1.9"],\
             ["terser-webpack-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.3.6"],\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"],\
-            ["yaml-eslint-parser", "npm:1.1.0"]\
+            ["yaml-eslint-parser", "npm:1.1.0"],\
+            ["yargs", "npm:17.6.2"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -12133,6 +12137,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/yargs-parser", "npm:20.2.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:17.0.22", {\
+          "packageLocation": "./.yarn/cache/@types-yargs-npm-17.0.22-35cdb1bdeb-0773523fda.zip/node_modules/@types/yargs/",\
+          "packageDependencies": [\
+            ["@types/yargs", "npm:17.0.22"],\
+            ["@types/yargs-parser", "npm:20.2.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@types/yargs-parser", [\
@@ -14977,6 +14989,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/cliui-npm-7.0.4-d6b8a9edb6-ce2e8f578a.zip/node_modules/cliui/",\
           "packageDependencies": [\
             ["cliui", "npm:7.0.4"],\
+            ["string-width", "npm:4.2.3"],\
+            ["strip-ansi", "npm:6.0.1"],\
+            ["wrap-ansi", "npm:7.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:8.0.1", {\
+          "packageLocation": "./.yarn/cache/cliui-npm-8.0.1-3b029092cf-79648b3b00.zip/node_modules/cliui/",\
+          "packageDependencies": [\
+            ["cliui", "npm:8.0.1"],\
             ["string-width", "npm:4.2.3"],\
             ["strip-ansi", "npm:6.0.1"],\
             ["wrap-ansi", "npm:7.0.0"]\
@@ -28618,6 +28640,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["yargs-parser", "npm:21.0.0"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:17.6.2", {\
+          "packageLocation": "./.yarn/cache/yargs-npm-17.6.2-1dd8b38d1b-47da1b0d85.zip/node_modules/yargs/",\
+          "packageDependencies": [\
+            ["yargs", "npm:17.6.2"],\
+            ["cliui", "npm:8.0.1"],\
+            ["escalade", "npm:3.1.1"],\
+            ["get-caller-file", "npm:2.0.5"],\
+            ["require-directory", "npm:2.1.1"],\
+            ["string-width", "npm:4.2.3"],\
+            ["y18n", "npm:5.0.8"],\
+            ["yargs-parser", "npm:21.1.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["yargs-parser", [\
@@ -28632,6 +28668,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/yargs-parser-npm-21.0.0-d564c0a5d4-1e205fca1c.zip/node_modules/yargs-parser/",\
           "packageDependencies": [\
             ["yargs-parser", "npm:21.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:21.1.1", {\
+          "packageLocation": "./.yarn/cache/yargs-parser-npm-21.1.1-8fdc003314-ed2d96a616.zip/node_modules/yargs-parser/",\
+          "packageDependencies": [\
+            ["yargs-parser", "npm:21.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\

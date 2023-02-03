@@ -1,15 +1,15 @@
 import { execute } from '@yarnpkg/shell'
 import { resolve } from 'node:path'
-import getName from '../helpers/getName.mjs'
-import getPackageName from '../helpers/getPackageName.mjs'
+import getFirstArgv from '../helpers/getFirstArgv.mjs'
+import getScopedPackageName from '../helpers/getScopedPackageName.mjs'
 import getPackagePath from '../helpers/getPackagePath.mjs'
 import outputJson from '../helpers/outputJson.mjs'
 
 const genPackage = async () => {
-  const name = getName()
-  const packageName = await getPackageName()
+  const packageName = getFirstArgv()
+  const scopedPackageName = await getScopedPackageName(packageName)
 
-  const dirPath = getPackagePath(name)
+  const dirPath = getPackagePath(packageName)
   const filePath = resolve(dirPath, 'package.json')
 
   const devDependencies = [
@@ -20,7 +20,7 @@ const genPackage = async () => {
   ]
 
   const template = {
-    name: packageName,
+    name: scopedPackageName,
     version: '0.0.0',
     source: 'src/index.ts',
     main: 'dist/index.js',
@@ -43,7 +43,7 @@ const genPackage = async () => {
 
   await outputJson(filePath, template)
   await execute(
-    `yarn workspace ${packageName} add --dev ${devDependencies.join(' ')}`
+    `yarn workspace ${scopedPackageName} add --dev ${devDependencies.join(' ')}`
   )
 }
 

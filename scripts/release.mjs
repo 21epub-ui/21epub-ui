@@ -10,16 +10,16 @@ import outputJson from './helpers/outputJson.mjs'
 const git = simpleGit()
 
 const tagName = await git.raw(['describe', '--tags'])
-const packageName = tagName?.match(/^@.+\/.+(?=@(?:\d+\.){2}\d+)/)?.at(0)
+const scopedPackageName = tagName?.match(/^@.+\/.+(?=@(?:\d+\.){2}\d+)/)?.at(0)
 
-if (packageName !== undefined) {
-  const dirPath = getPackagePath(packageName.split('/').at(1))
+if (scopedPackageName !== undefined) {
+  const dirPath = getPackagePath(scopedPackageName.split('/').at(1))
   const configPath = resolve(dirPath, 'package.json')
   const licensePath = resolve(dirPath, 'LICENSE')
 
   const packageConfig = await readJson(configPath)
 
-  await execute(`yarn workspace ${packageName} run build`)
+  await execute(`yarn workspace ${scopedPackageName} run build`)
 
   await copyFile(resolve('LICENSE'), licensePath)
   await outputJson(configPath, {
@@ -38,7 +38,7 @@ if (packageName !== undefined) {
     license: 'MIT',
   })
 
-  await execute(`yarn workspace ${packageName} npm publish`)
+  await execute(`yarn workspace ${scopedPackageName} npm publish`)
 
   await unlink(licensePath)
   await outputJson(configPath, packageConfig)

@@ -1,6 +1,6 @@
-const pick = (object, paths) => {
+const pick = (object, keys) => {
   return Object.fromEntries(
-    Object.entries(object).filter(([key]) => paths.includes(key))
+    Object.entries(object).filter(([key]) => keys.includes(key))
   )
 }
 

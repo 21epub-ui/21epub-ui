@@ -1,12 +1,12 @@
 import { resolve } from 'node:path'
-import getName from '../helpers/getName.mjs'
+import getFirstArgv from '../helpers/getFirstArgv.mjs'
 import getPackagePath from '../helpers/getPackagePath.mjs'
 import outputJson from '../helpers/outputJson.mjs'
 
 const genTsConfig = async () => {
-  const name = getName()
+  const packageName = getFirstArgv()
 
-  const dirPath = getPackagePath(name)
+  const dirPath = getPackagePath(packageName)
   const filePath = resolve(dirPath, 'tsconfig.json')
 
   const template = {

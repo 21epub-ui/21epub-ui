@@ -1,31 +1,37 @@
 import { execute } from '@yarnpkg/shell'
 import { build, context } from 'esbuild'
 import { readJson } from 'fs-extra/esm'
-import { resolve } from 'node:path'
 import { argv } from 'node:process'
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 import getBuildOptions from './helpers/getBuildOptions.mjs'
+import getDependencies from './helpers/getDependencies.mjs'
 
-const packageConfig = await readJson(resolve('package.json'))
+const packageConfig = await readJson('package.json')
 
-const dependencies = Object.entries(packageConfig.dependencies ?? {}).filter(
-  (dependency) => /^workspace/.test(dependency[1])
-)
+const { watch, excludeDependencies } = yargs(hideBin(argv)).argv
 
-await Promise.all(
-  dependencies.map((dependency) => {
-    return execute(`yarn workspace ${dependency[0]} run build`)
-  })
-)
+if (!excludeDependencies) {
+  const dependencies = await getDependencies(packageConfig.name)
 
-const incremental = argv.slice(2).includes('--watch')
+  console.log(`Running build in ${dependencies.length + 1} packages\n`)
 
-if (incremental) {
-  const esmContext = await context(await getBuildOptions('esm', true))
+  for await (const dependency of dependencies.reverse()) {
+    await execute(
+      `yarn workspace ${dependency} run build --exclude-dependencies`
+    )
+  }
+}
+
+console.log(`Building ${packageConfig.name}...`)
+
+if (!watch) {
+  await build(await getBuildOptions('cjs'))
+  await build(await getBuildOptions('esm'))
+} else {
   const cjsContext = await context(await getBuildOptions('cjs', true))
+  const esmContext = await context(await getBuildOptions('esm', true))
 
   await esmContext.watch()
   await cjsContext.watch()
-} else {
-  await build(await getBuildOptions('esm'))
-  await build(await getBuildOptions('cjs'))
 }

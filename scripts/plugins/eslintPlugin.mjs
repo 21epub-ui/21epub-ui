@@ -6,16 +6,16 @@ const eslintPlugin = ({ filter, eslintOptions = {} } = {}) => {
     setup(builder) {
       const eslint = new ESLint(eslintOptions)
 
-      const files = []
+      const filePaths = []
 
       builder.onLoad({ filter: filter ?? /\.[tj]sx?$/ }, async ({ path }) => {
         if (await eslint.isPathIgnored(path)) return
 
-        files.push(path)
+        filePaths.push(path)
       })
 
       builder.onEnd(async () => {
-        const results = await eslint.lintFiles(files)
+        const results = await eslint.lintFiles(filePaths)
 
         if (eslintOptions.fix) {
           await ESLint.outputFixes(results)

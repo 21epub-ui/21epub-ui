@@ -1,8 +1,6 @@
 import deepmerge from '@fastify/deepmerge'
 import { transformFile } from '@swc/core'
-import browserslist from 'browserslist'
 import { basename } from 'node:path'
-import { cwd, env } from 'node:process'
 
 const deepMergeAll = deepmerge({ all: true })
 
@@ -20,11 +18,6 @@ const swcPlugin = ({ filter, swcOptions = {} } = {}) => {
 
         const defaultOptions = {
           jsc: { parser },
-          env: {
-            targets: browserslist
-              .loadConfig({ path: cwd(), env: env.NODE_ENV })
-              ?.join(),
-          },
         }
 
         const initialOptions = deepMergeAll(defaultOptions, swcOptions, {

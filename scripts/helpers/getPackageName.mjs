@@ -1,14 +1,5 @@
-import getPackageConfig from './getPackageConfig.mjs'
-import getName from './getName.mjs'
-import getScope from './getScope.mjs'
-
-const getPackageName = async () => {
-  const { name: rootPackageName } = await getPackageConfig('root')
-
-  const scope = getScope(rootPackageName)
-  const name = getName()
-
-  return `${scope}/${name}`
+const getPackageName = (scopedPackageName) => {
+  return scopedPackageName.slice(scopedPackageName.indexOf('/') + 1)
 }
 
 export default getPackageName

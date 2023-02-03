@@ -8,12 +8,12 @@ const typescriptPlugin = ({ filter, typescriptOptions = {} } = {}) => {
   return {
     name: 'typescript',
     setup(builder) {
-      const rootNames = []
+      const filePaths = []
 
       builder.onLoad({ filter: filter ?? /\.[tj]sx?$/ }, ({ path }) => {
         if (path.includes('node_modules')) return
 
-        rootNames.push(path)
+        filePaths.push(path)
       })
 
       const basePath = cwd()
@@ -26,16 +26,15 @@ const typescriptPlugin = ({ filter, typescriptOptions = {} } = {}) => {
         compilerOptions: {
           allowJs: true,
           declaration: true,
-          declarationMap: true,
           emitDeclarationOnly: true,
           declarationDir:
-            typescriptOptions.compilerOptions.outDir ??
+            typescriptOptions.compilerOptions?.outDir ??
             builder.initialOptions.outdir,
         },
       }
 
       const { config = {} } = ts.readConfigFile(configPath, ts.sys.readFile)
-      const { options } = ts.parseJsonConfigFileContent(
+      const { options, fileNames } = ts.parseJsonConfigFileContent(
         deepMergeAll(defaultOptions, config, typescriptOptions),
         ts.sys,
         basePath
@@ -47,6 +46,10 @@ const typescriptPlugin = ({ filter, typescriptOptions = {} } = {}) => {
         ? ts.createIncrementalCompilerHost(options)
         : ts.createCompilerHost(options)
 
+      const rootNames = filePaths.concat(
+        fileNames.filter((fileName) => fileName.endsWith('.d.ts'))
+      )
+
       builder.onEnd(() => {
         const program = incremental
           ? ts.createIncrementalProgram({
@@ -56,7 +59,18 @@ const typescriptPlugin = ({ filter, typescriptOptions = {} } = {}) => {
             })
           : ts.createProgram(rootNames, options, host)
 
-        program.emit()
+        const result = program.emit()
+
+        const diagnostics = ts
+          .getPreEmitDiagnostics(program)
+          .concat(result.diagnostics)
+
+        const output = ts.formatDiagnosticsWithColorAndContext(
+          diagnostics,
+          host
+        )
+
+        console.log(output)
       })
     },
   }

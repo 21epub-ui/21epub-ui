@@ -1,26 +1,26 @@
 import { outputFile } from 'fs-extra/esm'
 import { resolve } from 'node:path'
-import getName from '../helpers/getName.mjs'
-import getPackageName from '../helpers/getPackageName.mjs'
+import getFirstArgv from '../helpers/getFirstArgv.mjs'
+import getScopedPackageName from '../helpers/getScopedPackageName.mjs'
 import getPackagePath from '../helpers/getPackagePath.mjs'
 import dedent from '../utils/dedent.mjs'
 import kebabToPascal from '../utils/kebabToPascal.mjs'
 
 const genReadMe = async () => {
-  const name = getName()
-  const packageName = await getPackageName()
-  const componentName = kebabToPascal(name)
+  const packageName = getFirstArgv()
+  const scopedPackageName = await getScopedPackageName(packageName)
+  const componentName = kebabToPascal(packageName)
 
-  const dirPath = getPackagePath(name)
+  const dirPath = getPackagePath(packageName)
   const filePath = resolve(dirPath, 'README.md')
 
   const template = dedent(`
-    # ${packageName}
+    # ${scopedPackageName}
 
     ## Usage
 
     \`\`\`tsx
-    import { ${componentName} } from '${packageName}'
+    import { ${componentName} } from '${scopedPackageName}'
     \`\`\`
 
     ### Examples

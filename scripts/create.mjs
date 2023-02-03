@@ -1,4 +1,3 @@
-import { argv } from 'node:process'
 import genIndex from './generators/genIndex.mjs'
 import genPackage from './generators/genPackage.mjs'
 import genReadMe from './generators/genReadMe.mjs'
@@ -6,10 +5,11 @@ import genStories from './generators/genStories.mjs'
 import genTemplate from './generators/genTemplate.mjs'
 import genTsConfig from './generators/genTsConfig.mjs'
 import genTypes from './generators/genTypes.mjs'
+import getFirstArgv from './helpers/getFirstArgv.mjs'
 
-const name = argv.slice(2).at(0)
+const packageName = getFirstArgv()
 
-if (name !== undefined) {
+if (packageName !== undefined) {
   await genPackage()
   await genTsConfig()
   await genTemplate()

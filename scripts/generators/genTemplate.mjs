@@ -1,15 +1,15 @@
 import { outputFile } from 'fs-extra/esm'
 import { resolve } from 'node:path'
 import dedent from '../utils/dedent.mjs'
-import getName from '../helpers/getName.mjs'
+import getFirstArgv from '../helpers/getFirstArgv.mjs'
 import getPackagePath from '../helpers/getPackagePath.mjs'
 import kebabToPascal from '../utils/kebabToPascal.mjs'
 
 const genTemplate = async () => {
-  const name = getName()
-  const componentName = kebabToPascal(name)
+  const packageName = getFirstArgv()
+  const componentName = kebabToPascal(packageName)
 
-  const dirPath = getPackagePath(name)
+  const dirPath = getPackagePath(packageName)
   const filePath = resolve(
     dirPath,
     'src',

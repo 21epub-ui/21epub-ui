@@ -1,24 +1,23 @@
+import browserslist from 'browserslist'
 import { readJson } from 'fs-extra/esm'
-import { readdir } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
-import { env } from 'node:process'
+import { dirname } from 'node:path'
+import { cwd, env } from 'node:process'
 import eslintPlugin from '../plugins/eslintPlugin.mjs'
 import swcPlugin from '../plugins/swcPlugin.mjs'
 import typescriptPlugin from '../plugins/typescriptPlugin.mjs'
+import filterDependencies from './filterDependencies.mjs'
 import getPackageConfig from './getPackageConfig.mjs'
-
-const projectPath = env.PROJECT_CWD
+import getPackageName from './getPackageName.mjs'
 
 const assetExtNames = ['.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp']
 
 const getBuildOptions = async (format, incremental) => {
   const packageConfig = await readJson('package.json')
-  const dependencies = Array.from(
-    Object.keys({
-      ...packageConfig.dependencies,
-      ...packageConfig.peerDependencies,
-    })
-  )
+
+  const dependencies = Object.keys({
+    ...packageConfig.dependencies,
+    ...packageConfig.peerDependencies,
+  })
 
   const buildOptions = {
     format,
@@ -34,14 +33,18 @@ const getBuildOptions = async (format, incremental) => {
     ),
   }
 
-  const names = await readdir(resolve(projectPath, 'packages'))
+  const packageMap = await filterDependencies(packageConfig).reduce(
+    async (previousPackageMap, currentScopedPackageName) => {
+      const packageMap = await previousPackageMap
 
-  const packageMap = await names.reduce(async (previousMap, currentName) => {
-    const packageMap = await previousMap
-    const packageConfig = await getPackageConfig(currentName)
+      const packageName = getPackageName(currentScopedPackageName)
+      const packageConfig = await getPackageConfig(packageName)
+      const packagePath = `../${packageName}/${dirname(packageConfig.typings)}`
 
-    return packageMap.set(packageConfig.name, [dirname(packageConfig.typings)])
-  }, Promise.resolve(new Map()))
+      return packageMap.set(currentScopedPackageName, [packagePath])
+    },
+    Promise.resolve(new Map())
+  )
 
   const typescriptOptions = {
     compilerOptions: {
@@ -51,6 +54,8 @@ const getBuildOptions = async (format, incremental) => {
       declarationDir: dirname(packageConfig.typings),
     },
   }
+
+  const targets = browserslist.loadConfig({ path: cwd(), env: env.NODE_ENV })
 
   const swcOptions = {
     rootMode: 'upward',
@@ -63,6 +68,7 @@ const getBuildOptions = async (format, incremental) => {
         },
       },
     },
+    env: { targets },
   }
 
   if (format === 'esm') {
