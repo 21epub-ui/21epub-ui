@@ -1,4 +1,4 @@
-import { request } from '@21epub-ui/request'
+import wretch from 'wretch'
 
 export interface ResponseBody<T> {
   data: {
@@ -6,9 +6,6 @@ export interface ResponseBody<T> {
   }
 }
 
-const api = request.extend({
-  prefixUrl: '/v3/api/',
-  retry: 0,
-})
+const api = wretch('/v3/api/')
 
 export default api

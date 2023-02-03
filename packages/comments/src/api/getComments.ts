@@ -11,7 +11,10 @@ export type GetCommentsParams = {
 }
 
 const getComments = (params: GetCommentsParams) => {
-  return api.get('comments/', { params }).json<ResponseBody<CommentListData>>()
+  return api
+    .query(params)
+    .get('comments/')
+    .json<ResponseBody<CommentListData>>()
 }
 
 export default getComments

@@ -3,7 +3,7 @@ import api from './api'
 
 const postReviewTask = async (id: string) => {
   const res = await api
-    .post('review/tasks/', { body: { uuid: id } })
+    .post({ uuid: id }, 'review/tasks/')
     .json<ResponseBody<{ id: string }[]>>()
 
   return res.data.results[0]

@@ -1,4 +1,6 @@
-import { request } from '@21epub-ui/request'
+import wretch from 'wretch'
+import FormDataAddon from 'wretch/addons/formData'
+import QueryStringAddon from 'wretch/addons/queryString'
 
 export interface ResponseBody<T> {
   content: T
@@ -8,9 +10,6 @@ export interface ResponseBody<T> {
   empty: boolean
 }
 
-const api = request.extend({
-  prefixUrl: '/v3/api/',
-  retry: 0,
-})
+const api = wretch('/v3/api/').addon(FormDataAddon).addon(QueryStringAddon)
 
 export default api
