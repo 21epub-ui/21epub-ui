@@ -96,12 +96,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@21epub-ui/request@workspace:packages/request":
-  version: 0.0.0-use.local
-  resolution: "@21epub-ui/request@workspace:packages/request"
-  languageName: unknown
-  linkType: soft
-
 "@21epub-ui/root@workspace:.":
   version: 0.0.0-use.local
   resolution: "@21epub-ui/root@workspace:."

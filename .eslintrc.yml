@@ -56,5 +56,4 @@ rules:
 ignorePatterns:
   - "/packages/*/coverage"
   - "/packages/*/dist"
-  - "/packages/*/src/modules"
   - /docs
