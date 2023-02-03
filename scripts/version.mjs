@@ -1,5 +1,5 @@
 import { execute } from '@yarnpkg/shell'
-import fs from 'fs-extra'
+import { readJson } from 'fs-extra/esm'
 import process from 'node:process'
 import simpleGit from 'simple-git'
 import printer from './utils/printer.mjs'
@@ -18,7 +18,7 @@ if (!isClean()) {
   await execute(`yarn version ${strategy}`)
   await execute('yarn stage')
 
-  const { version } = await fs.readJson('package.json')
+  const { version } = await readJson('package.json')
 
   const tagName = `${process.env.npm_package_name}@${version}`
   const message = `chore(release): ${tagName}`

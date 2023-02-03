@@ -1,7 +1,7 @@
-import fs from 'fs-extra'
+import { outputJSON } from 'fs-extra/esm'
 
 const outputJson = (file, object, options) => {
-  return fs.outputJson(file, object, { spaces: 2, ...options })
+  return outputJSON(file, object, { spaces: 2, ...options })
 }
 
 export default outputJson

@@ -1,4 +1,4 @@
-import fs from 'fs-extra'
+import { outputFile } from 'fs-extra/esm'
 import { resolve } from 'node:path'
 import getName from '../helpers/getName.mjs'
 import getPackagePath from '../helpers/getPackagePath.mjs'
@@ -16,7 +16,7 @@ const genTypes = async () => {
     export interface ${componentName}Props {}
   `)
 
-  await fs.outputFile(filePath, template)
+  await outputFile(filePath, template)
 }
 
 export default genTypes

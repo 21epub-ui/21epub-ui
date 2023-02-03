@@ -1,5 +1,6 @@
 import { execute } from '@yarnpkg/shell'
-import fs from 'fs-extra'
+import { readJson } from 'fs-extra/esm'
+import { copyFile, unlink } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import simpleGit from 'simple-git'
 import pick from '../scripts/utils/pick.mjs'
@@ -16,14 +17,15 @@ if (packageName !== undefined) {
   const configPath = resolve(dirPath, 'package.json')
   const licensePath = resolve(dirPath, 'LICENSE')
 
-  const packageConfig = await fs.readJson(configPath)
+  const packageConfig = await readJson(configPath)
 
   await execute(`yarn workspace ${packageName} run build`)
 
-  await fs.copyFile(resolve('LICENSE'), licensePath)
+  await copyFile(resolve('LICENSE'), licensePath)
   await outputJson(configPath, {
     ...pick(packageConfig, [
       'name',
+      'type',
       'version',
       'main',
       'module',
@@ -38,6 +40,6 @@ if (packageName !== undefined) {
 
   await execute(`yarn workspace ${packageName} npm publish`)
 
-  await fs.unlink(licensePath)
+  await unlink(licensePath)
   await outputJson(configPath, packageConfig)
 }

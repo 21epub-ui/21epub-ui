@@ -1,11 +1,11 @@
 import { execute } from '@yarnpkg/shell'
 import { build, context } from 'esbuild'
-import fs from 'fs-extra'
+import { readJson } from 'fs-extra/esm'
 import { resolve } from 'node:path'
 import { argv } from 'node:process'
 import getBuildOptions from './helpers/getBuildOptions.mjs'
 
-const packageConfig = await fs.readJson(resolve('package.json'))
+const packageConfig = await readJson(resolve('package.json'))
 
 const dependencies = Object.entries(packageConfig.dependencies ?? {}).filter(
   (dependency) => /^workspace/.test(dependency[1])

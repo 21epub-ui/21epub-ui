@@ -1,4 +1,4 @@
-import fs from 'fs-extra'
+import { outputFile } from 'fs-extra/esm'
 import { resolve } from 'node:path'
 import dedent from '../utils/dedent.mjs'
 import getName from '../helpers/getName.mjs'
@@ -28,7 +28,7 @@ const genTemplate = async () => {
     export default ${componentName}
   `)
 
-  await fs.outputFile(filePath, template)
+  await outputFile(filePath, template)
 }
 
 export default genTemplate
