@@ -17,14 +17,14 @@ if (scopedPackageName !== undefined) {
   const configPath = resolve(dirPath, 'package.json')
   const licensePath = resolve(dirPath, 'LICENSE')
 
-  const packageConfig = await readJson(configPath)
+  const manifest = await readJson(configPath)
 
   await execute('yarn')
   await execute(`yarn workspace ${scopedPackageName} run build`)
 
   await copyFile(resolve('LICENSE'), licensePath)
   await outputJson(configPath, {
-    ...pick(packageConfig, [
+    ...pick(manifest, [
       'name',
       'type',
       'version',
@@ -42,5 +42,5 @@ if (scopedPackageName !== undefined) {
   await execute(`yarn workspace ${scopedPackageName} npm publish`)
 
   await unlink(licensePath)
-  await outputJson(configPath, packageConfig)
+  await outputJson(configPath, manifest)
 }

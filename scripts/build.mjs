@@ -7,12 +7,12 @@ import { hideBin } from 'yargs/helpers'
 import getBuildOptions from './helpers/getBuildOptions.mjs'
 import getDependencies from './helpers/getDependencies.mjs'
 
-const packageConfig = await readJson('package.json')
+const manifest = await readJson('package.json')
 
 const { watch, excludeDependencies } = yargs(hideBin(argv)).argv
 
 if (!excludeDependencies) {
-  const dependencies = await getDependencies(packageConfig.name)
+  const dependencies = await getDependencies(manifest.name)
 
   console.log(`Running build in ${dependencies.length + 1} packages\n`)
 
@@ -23,7 +23,7 @@ if (!excludeDependencies) {
   }
 }
 
-console.log(`Building ${packageConfig.name}...`)
+console.log(`Building ${manifest.name}...`)
 
 if (!watch) {
   await build(await getBuildOptions('cjs'))

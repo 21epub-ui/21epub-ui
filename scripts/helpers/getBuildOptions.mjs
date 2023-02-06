@@ -6,7 +6,7 @@ import eslintPlugin from '../plugins/eslintPlugin.mjs'
 import swcPlugin from '../plugins/swcPlugin.mjs'
 import typescriptPlugin from '../plugins/typescriptPlugin.mjs'
 import filterDependencies from './filterDependencies.mjs'
-import getPackageConfig from './getPackageConfig.mjs'
+import getManifest from './getManifest.mjs'
 import getPackageName from './getPackageName.mjs'
 
 const assetExtNames = [
@@ -20,11 +20,11 @@ const assetExtNames = [
 ]
 
 const getBuildOptions = async (format, incremental) => {
-  const packageConfig = await readJson('package.json')
+  const manifest = await readJson('package.json')
 
   const dependencies = Object.keys({
-    ...packageConfig.dependencies,
-    ...packageConfig.peerDependencies,
+    ...manifest.dependencies,
+    ...manifest.peerDependencies,
   })
 
   const buildOptions = {
@@ -32,7 +32,7 @@ const getBuildOptions = async (format, incremental) => {
     bundle: true,
     sourcemap: true,
     logLevel: 'info',
-    entryPoints: [packageConfig.source],
+    entryPoints: [manifest.source],
     external: dependencies,
     loader: Object.fromEntries(
       assetExtNames.map((extName) => {
@@ -41,13 +41,13 @@ const getBuildOptions = async (format, incremental) => {
     ),
   }
 
-  const packageMap = await filterDependencies(packageConfig).reduce(
+  const packageMap = await filterDependencies(manifest).reduce(
     async (previousPackageMap, currentScopedPackageName) => {
       const packageMap = await previousPackageMap
 
       const packageName = getPackageName(currentScopedPackageName)
-      const packageConfig = await getPackageConfig(packageName)
-      const packagePath = `../${packageName}/${dirname(packageConfig.typings)}`
+      const manifest = await getManifest(packageName)
+      const packagePath = `../${packageName}/${dirname(manifest.typings)}`
 
       return packageMap.set(currentScopedPackageName, [packagePath])
     },
@@ -59,7 +59,7 @@ const getBuildOptions = async (format, incremental) => {
       incremental,
       noEmit: false,
       paths: Object.fromEntries(packageMap),
-      declarationDir: dirname(packageConfig.typings),
+      declarationDir: dirname(manifest.typings),
     },
   }
 
@@ -82,7 +82,7 @@ const getBuildOptions = async (format, incremental) => {
   if (format === 'esm') {
     return {
       ...buildOptions,
-      outfile: packageConfig.module,
+      outfile: manifest.module,
       plugins: [
         eslintPlugin(),
         typescriptPlugin({ typescriptOptions }),
@@ -93,7 +93,7 @@ const getBuildOptions = async (format, incremental) => {
 
   return {
     ...buildOptions,
-    outfile: packageConfig.main,
+    outfile: manifest.main,
     plugins: [swcPlugin(swcOptions)],
   }
 }

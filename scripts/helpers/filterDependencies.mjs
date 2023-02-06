@@ -1,8 +1,8 @@
-const filterDependencies = (packageConfig) => {
+const filterDependencies = (manifest) => {
   const dependencies = Object.entries({
-    ...packageConfig.dependencies,
-    ...packageConfig.peerDependencies,
-    ...packageConfig.devDependencies,
+    ...manifest.dependencies,
+    ...manifest.peerDependencies,
+    ...manifest.devDependencies,
   })
 
   return dependencies

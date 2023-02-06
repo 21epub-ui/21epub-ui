@@ -1,8 +1,8 @@
-import getPackageConfig from './getPackageConfig.mjs'
+import getManifest from './getManifest.mjs'
 import getPackageScope from './getPackageScope.mjs'
 
 const getScopedPackageName = async (packageName) => {
-  const { name: rootPackageName } = await getPackageConfig('root')
+  const { name: rootPackageName } = await getManifest('root')
 
   const scope = getPackageScope(rootPackageName)
 

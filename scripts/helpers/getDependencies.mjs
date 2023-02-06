@@ -1,12 +1,12 @@
 import filterDependencies from './filterDependencies.mjs'
-import getPackageConfig from './getPackageConfig.mjs'
+import getManifest from './getManifest.mjs'
 
 const findDependencies = async (scopedPackageName, dependencies) => {
   if (dependencies.includes(scopedPackageName)) return dependencies
 
-  const packageConfig = await getPackageConfig(scopedPackageName)
+  const manifest = await getManifest(scopedPackageName)
 
-  return filterDependencies(packageConfig).reduce(
+  return filterDependencies(manifest).reduce(
     async (previousDependencies, currentScopedPackageName) => {
       return await findDependencies(
         currentScopedPackageName,
