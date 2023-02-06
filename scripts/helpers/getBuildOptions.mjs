@@ -9,7 +9,15 @@ import filterDependencies from './filterDependencies.mjs'
 import getPackageConfig from './getPackageConfig.mjs'
 import getPackageName from './getPackageName.mjs'
 
-const assetExtNames = ['.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp']
+const assetExtNames = [
+  '.svg',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.webp',
+  '.avif',
+]
 
 const getBuildOptions = async (format, incremental) => {
   const packageConfig = await readJson('package.json')
