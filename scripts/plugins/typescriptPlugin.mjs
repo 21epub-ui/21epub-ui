@@ -46,11 +46,11 @@ const typescriptPlugin = ({ filter, typescriptOptions = {} } = {}) => {
         ? ts.createIncrementalCompilerHost(options)
         : ts.createCompilerHost(options)
 
-      const rootNames = filePaths.concat(
-        fileNames.filter((fileName) => fileName.endsWith('.d.ts'))
-      )
-
       builder.onEnd(() => {
+        const rootNames = filePaths.concat(
+          fileNames.filter((fileName) => fileName.endsWith('.d.ts'))
+        )
+
         const program = incremental
           ? ts.createIncrementalProgram({
               rootNames,
