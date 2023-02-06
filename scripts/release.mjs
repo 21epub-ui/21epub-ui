@@ -19,6 +19,7 @@ if (scopedPackageName !== undefined) {
 
   const packageConfig = await readJson(configPath)
 
+  await execute('yarn')
   await execute(`yarn workspace ${scopedPackageName} run build`)
 
   await copyFile(resolve('LICENSE'), licensePath)
