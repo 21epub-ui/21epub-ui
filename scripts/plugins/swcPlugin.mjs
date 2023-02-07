@@ -4,13 +4,18 @@ import { basename } from 'node:path'
 
 const deepMergeAll = deepmerge({ all: true })
 
-const swcPlugin = ({ filter, swcOptions = {} } = {}) => {
+const defaultFilter = /\.([mc]?[jt]s|[jt]sx)$/
+
+const swcPlugin = ({ filter = defaultFilter, swcOptions = {} } = {}) => {
   return {
     name: 'swc',
     setup(builder) {
-      builder.onLoad({ filter: filter ?? /\.[tj]sx?$/ }, async ({ path }) => {
-        const isJs = path.endsWith('.js') || path.endsWith('.jsx')
-        const isJsx = path.endsWith('x')
+      builder.onLoad({ filter }, async ({ path }) => {
+        /**
+         * @see https://github.com/microsoft/TypeScript/issues/44442
+         */
+        const isJs = /\.([mc]?js|jsx)$/.test(path)
+        const isJsx = /\.([mc][jt]s|[jt]sx)$/.test(path)
 
         const parser = isJs
           ? { syntax: 'ecmascript', jsx: isJsx }

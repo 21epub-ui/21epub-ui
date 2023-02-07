@@ -1,6 +1,8 @@
 import { ESLint } from 'eslint'
 
-const eslintPlugin = ({ filter, eslintOptions = {} } = {}) => {
+const defaultFilter = /\.([mc]?[jt]s|[jt]sx)$/
+
+const eslintPlugin = ({ filter = defaultFilter, eslintOptions = {} } = {}) => {
   return {
     name: 'eslint',
     setup(builder) {
@@ -8,7 +10,7 @@ const eslintPlugin = ({ filter, eslintOptions = {} } = {}) => {
 
       const filePaths = []
 
-      builder.onLoad({ filter: filter ?? /\.[tj]sx?$/ }, async ({ path }) => {
+      builder.onLoad({ filter }, async ({ path }) => {
         if (await eslint.isPathIgnored(path)) return
 
         filePaths.push(path)

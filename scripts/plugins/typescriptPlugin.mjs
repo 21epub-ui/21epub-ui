@@ -4,13 +4,18 @@ import ts from 'typescript'
 
 const deepMergeAll = deepmerge({ all: true })
 
-const typescriptPlugin = ({ filter, typescriptOptions = {} } = {}) => {
+const defaultFilter = /\.([mc]?[jt]s|[jt]sx)$/
+
+const typescriptPlugin = ({
+  filter = defaultFilter,
+  typescriptOptions = {},
+} = {}) => {
   return {
     name: 'typescript',
     setup(builder) {
       const filePaths = []
 
-      builder.onLoad({ filter: filter ?? /\.[tj]sx?$/ }, ({ path }) => {
+      builder.onLoad({ filter }, ({ path }) => {
         if (path.includes('node_modules')) return
 
         filePaths.push(path)
