@@ -30,9 +30,9 @@ const genPackage = async () => {
     files: ['dist'],
     scripts: {
       preinstall: 'node ../../scripts/preinstall.mjs',
-      build: 'yarn node ../../scripts/build.mjs',
-      lint: 'yarn node ../../scripts/lint.mjs',
-      version: 'yarn node ../../scripts/version.mjs',
+      build: 'node ../../scripts/build.mjs',
+      lint: 'node ../../scripts/lint.mjs',
+      version: 'node ../../scripts/version.mjs',
     },
     peerDependencies: {
       '@emotion/react': '>=11.*',
