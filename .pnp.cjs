@@ -91,7 +91,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.33.0"],\
             ["eslint-plugin-react", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:7.31.10"],\
             ["eslint-plugin-react-hooks", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:4.6.0"],\
-            ["eslint-plugin-sonarjs", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.16.0"],\
             ["eslint-plugin-storybook", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.6.7"],\
             ["eslint-plugin-yml", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.2.0"],\
             ["fs-extra", "npm:11.1.0"],\
@@ -271,7 +270,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.33.0"],\
             ["eslint-plugin-react", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:7.31.10"],\
             ["eslint-plugin-react-hooks", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:4.6.0"],\
-            ["eslint-plugin-sonarjs", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.16.0"],\
             ["eslint-plugin-storybook", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.6.7"],\
             ["eslint-plugin-yml", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.2.0"],\
             ["fs-extra", "npm:11.1.0"],\
@@ -16825,28 +16823,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/eslint-plugin-react-hooks-virtual-78c1092006/0/cache/eslint-plugin-react-hooks-npm-4.6.0-b429fac07f-23001801f1.zip/node_modules/eslint-plugin-react-hooks/",\
           "packageDependencies": [\
             ["eslint-plugin-react-hooks", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:4.6.0"],\
-            ["@types/eslint", "npm:8.4.10"],\
-            ["eslint", "npm:8.33.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/eslint",\
-            "eslint"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["eslint-plugin-sonarjs", [\
-        ["npm:0.16.0", {\
-          "packageLocation": "./.yarn/cache/eslint-plugin-sonarjs-npm-0.16.0-e8acc285ba-8421059eb2.zip/node_modules/eslint-plugin-sonarjs/",\
-          "packageDependencies": [\
-            ["eslint-plugin-sonarjs", "npm:0.16.0"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.16.0", {\
-          "packageLocation": "./.yarn/__virtual__/eslint-plugin-sonarjs-virtual-a592196868/0/cache/eslint-plugin-sonarjs-npm-0.16.0-e8acc285ba-8421059eb2.zip/node_modules/eslint-plugin-sonarjs/",\
-          "packageDependencies": [\
-            ["eslint-plugin-sonarjs", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:0.16.0"],\
             ["@types/eslint", "npm:8.4.10"],\
             ["eslint", "npm:8.33.0"]\
           ],\
