@@ -6,7 +6,7 @@ const packageManager = userAgent?.split(' ').at(0)?.split('/')
 
 if (
   packageManager?.at(0) !== 'yarn' ||
-  Number(packageManager[1].split('.').at(0)) < 2
+  Number(packageManager?.at(1)?.split('.').at(0) ?? 0) < 2
 ) {
   console.error(printer.red('Use "yarn" for installation in this project.'))
   kill(pid)
