@@ -7,13 +7,13 @@ interface NodeLocation {
 
 const locateNode = (
   node: FlatTreeNode | FlatTreeNodeParent,
-  depth: number
+  level: number
 ): NodeLocation => {
   if (node.parent === undefined) return { parentId: node.id, childIndex: 0 }
 
-  if (depth < node.depth) return locateNode(node.parent, depth)
+  if (level < node.level) return locateNode(node.parent, level)
 
-  if (depth > node.depth) return { parentId: node.id, childIndex: 0 }
+  if (level > node.level) return { parentId: node.id, childIndex: 0 }
 
   const childIndex =
     node.parent.children.findIndex((child) => child.id === node.id) + 1

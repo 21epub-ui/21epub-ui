@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import flattenTree from '../../helpers/flattenTree'
-import getNodeDepth from '../../helpers/getNodeDepth'
+import getTargetLevel from '../../helpers/getTargetLevel'
 import getNodeIds from '../../helpers/getNodeIds'
 import isContainParent from '../../helpers/isContainParent'
 import locateNode from '../../helpers/locateNode'
@@ -69,7 +69,7 @@ const Tree = <T extends TreeNodeParent>({
     return offsetY < 0 ? 0 : Math.trunc(offsetY / rowHeight)
   }
 
-  const getPointerDepth = (event: PointerEvent) => {
+  const getPointerLevel = (event: PointerEvent) => {
     if (positioningRef.current === null) return 0
 
     const movementX = event.clientX - positioningRef.current.x
@@ -82,7 +82,7 @@ const Tree = <T extends TreeNodeParent>({
 
     if (index === 0) {
       return {
-        depth: 1,
+        level: 0,
         index: 0,
         parentId: data.id,
         childIndex: 0,
@@ -92,15 +92,15 @@ const Tree = <T extends TreeNodeParent>({
     const flatNodes = flatNodesRef.current
     const targetIndex = index > flatNodes.length ? flatNodes.length : index
     const nearestNode = flatNodes[targetIndex - 1]
-    const depth = getNodeDepth(
+    const level = getTargetLevel(
       nearestNode,
       expandedIds,
-      nearestNode.depth + getPointerDepth(event)
+      nearestNode.level + getPointerLevel(event)
     )
-    const { parentId, childIndex } = locateNode(nearestNode, depth)
+    const { parentId, childIndex } = locateNode(nearestNode, level)
 
     return {
-      depth,
+      level,
       index: targetIndex,
       parentId,
       childIndex,
@@ -135,10 +135,10 @@ const Tree = <T extends TreeNodeParent>({
         isDraggingRef.current = moveable
 
         const rowIndex = getPointerIndex(event)
-        const { depth, index, parentId } = getMoveTarget(event, rowIndex)
+        const { level, index, parentId } = getMoveTarget(event, rowIndex)
 
         setHoveringId(parentId)
-        setCursorLocation({ depth, index })
+        setCursorLocation({ level, index })
       }
     }
 
@@ -250,7 +250,7 @@ const Tree = <T extends TreeNodeParent>({
       {cursorLocation &&
         renderCursor?.({
           top: cursorLocation.index * rowHeight,
-          left: (cursorLocation.depth - 1) * indent,
+          left: cursorLocation.level * indent,
         })}
       <TreeItems
         nodes={data.children}

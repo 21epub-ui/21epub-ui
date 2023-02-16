@@ -4,7 +4,7 @@ import getModifierKey from '../../utils/getModifierKey'
 
 interface TreeItemsProps<T extends TreeNode>
   extends Omit<TreeProps, 'data' | 'onNodeSelect' | 'renderCursor'> {
-  depth?: number
+  level?: number
   nodes: T[]
   hoveringId?: string
   onPointerDown: (event: React.PointerEvent, targetId: string) => void
@@ -14,7 +14,7 @@ interface TreeItemsProps<T extends TreeNode>
 const TreeItems = <T extends TreeNode>({
   className,
   style,
-  depth = 0,
+  level = 0,
   nodes,
   indent,
   rowHeight,
@@ -58,7 +58,7 @@ const TreeItems = <T extends TreeNode>({
         >
           {renderNode({
             data: node,
-            indent: indent * depth,
+            indent: indent * level,
             isExpanded: expandedIds.includes(node.id),
             isSelected: selectedIds.includes(node.id),
             isHovering: hoveringId === node.id,
@@ -66,7 +66,7 @@ const TreeItems = <T extends TreeNode>({
         </div>
         {isParentNode(node) && expandedIds.includes(node.id) && (
           <TreeItems
-            depth={depth + 1}
+            level={level + 1}
             nodes={node.children}
             indent={indent}
             rowHeight={rowHeight}

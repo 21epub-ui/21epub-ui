@@ -8,16 +8,16 @@ export default {
   component: Tree,
 } as ComponentMeta<typeof Tree>
 
-const genTreeNodes = (parent = '', depth = 1) => {
+const genTreeNodes = (parent = '', level = 0) => {
   return Array.from({ length: Math.floor(Math.random() * 10) + 5 }).map(
     (_, index): TreeNode => {
       const number = index + 1
       const id = parent ? `${parent}-${number.toString()}` : number.toString()
 
-      if (Math.round(Math.random()) === 0 && depth < 3) {
+      if (Math.round(Math.random()) === 0 && level < 2) {
         return {
           id,
-          children: genTreeNodes(id, depth + 1),
+          children: genTreeNodes(id, level + 1),
         }
       }
 

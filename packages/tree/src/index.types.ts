@@ -17,14 +17,14 @@ export interface FlatTreeNode {
   id: string
   parent: FlatTreeNodeParent
   children?: TreeNode[]
-  depth: number
+  level: number
 }
 
 export interface FlatTreeNodeParent {
   id: string
   parent?: FlatTreeNodeParent
   children: TreeNode[]
-  depth: number
+  level: number
 }
 
 export interface TreeItemProps<T extends TreeNode> {
@@ -37,7 +37,7 @@ export interface TreeItemProps<T extends TreeNode> {
 
 export interface CursorLocation {
   index: number
-  depth: number
+  level: number
 }
 
 export interface CursorProps {

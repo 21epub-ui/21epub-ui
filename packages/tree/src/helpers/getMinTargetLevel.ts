@@ -1,24 +1,24 @@
 import type { FlatTreeNode, FlatTreeNodeParent } from '../index.types'
 import isLastChildNode from './isLastChildNode'
 
-const getMinNodeDepth = (
+const getMinTargetLevel = (
   node: FlatTreeNode | FlatTreeNodeParent,
   expandedIds: string[]
 ): number => {
-  if (node.parent === undefined) return 1
+  if (node.parent === undefined) return 0
 
   if (expandedIds.includes(node.id)) {
-    return node.depth + 1
+    return node.level + 1
   }
 
   if (isLastChildNode(node)) {
-    return getMinNodeDepth(
+    return getMinTargetLevel(
       node.parent,
       expandedIds.filter((id) => id !== node.parent.id)
     )
   }
 
-  return node.depth
+  return node.level
 }
 
-export default getMinNodeDepth
+export default getMinTargetLevel
