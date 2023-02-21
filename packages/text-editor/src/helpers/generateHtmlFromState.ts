@@ -5,9 +5,9 @@ import type {
   SerializedElementNode,
   SerializedLexicalNode,
 } from 'lexical'
+import { nanoid } from 'nanoid'
 import { onError } from '../components/TextEditor'
 import { editorNodes, editorTheme } from '../config'
-import getRandomId from '../utils/getRandomId'
 import isParagraphNode from './isParagraphNode'
 
 const processNodes = async (
@@ -27,7 +27,7 @@ const headlessEditor = createHeadlessEditor({
   onError,
   nodes: editorNodes,
   theme: editorTheme,
-  namespace: getRandomId(8),
+  namespace: nanoid(8),
 })
 
 const generateHtmlFromState = async (

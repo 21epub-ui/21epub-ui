@@ -8,6 +8,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
+import { nanoid } from 'nanoid'
 import { useRef } from 'react'
 import {
   chakraTheme,
@@ -19,7 +20,6 @@ import type { TextEditorProps } from '../../index.types'
 import HorizontalRulePlugin from '../../plugins/HorizontalRulePlugin'
 import ImagePlugin from '../../plugins/ImagePlugin'
 import ToolbarPlugin from '../../plugins/ToolbarPlugin'
-import getRandomId from '../../utils/getRandomId'
 import { Editor } from './styles'
 
 export const onError = (error: Error) => {
@@ -37,7 +37,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
   onInsert,
   ...props
 }) => {
-  const namespace = useRef(getRandomId(8))
+  const namespace = useRef(nanoid(8))
   const scrollRef = useRef<HTMLDivElement>(null)
 
   return (
