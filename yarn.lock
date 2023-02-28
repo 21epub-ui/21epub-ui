@@ -27,39 +27,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@21epub-ui/comments@workspace:packages/comments":
-  version: 0.0.0-use.local
-  resolution: "@21epub-ui/comments@workspace:packages/comments"
-  dependencies:
-    "@chakra-ui/icons": ^2.0.8
-    "@chakra-ui/react": ^2.2.8
-    "@chakra-ui/system": ^2.2.6
-    "@dnd-kit/core": ^6.0.5
-    "@dnd-kit/utilities": ^3.2.0
-    "@emotion/react": ^11.10.0
-    "@emotion/styled": ^11.10.0
-    "@lexical/headless": ^0.3.11
-    "@lexical/html": ^0.3.11
-    "@lexical/react": ^0.3.11
-    "@lexical/text": ^0.3.11
-    "@lexical/utils": ^0.3.11
-    "@storybook/react": ^6.5.13
-    "@types/dompurify": ^2
-    "@types/react": ^18
-    dompurify: ^2.3.10
-    framer-motion: ^7.1.1
-    lexical: ^0.3.11
-    swr: ^1.3.0
-    wretch: ^2.4.1
-  peerDependencies:
-    "@chakra-ui/icons": ">=1.*"
-    "@chakra-ui/react": ">=1.*"
-    "@emotion/react": ">=11.*"
-    "@emotion/styled": ">=11.*"
-    react: ">=17.*"
-  languageName: unknown
-  linkType: soft
-
 "@21epub-ui/media@workspace:^, @21epub-ui/media@workspace:packages/media":
   version: 0.0.0-use.local
   resolution: "@21epub-ui/media@workspace:packages/media"
@@ -3170,42 +3137,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dnd-kit/accessibility@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "@dnd-kit/accessibility@npm:3.0.1"
-  dependencies:
-    tslib: ^2.0.0
-  peerDependencies:
-    react: ">=16.8.0"
-  checksum: 0afc2c0fce9a1c107453620ca0da1778f182d340e74ffbc6e369ef0ac8943cafb929d3a6c0891d9b915aa23b2b92137ff4fad958f43118466586d8129a3359d5
-  languageName: node
-  linkType: hard
-
-"@dnd-kit/core@npm:^6.0.5":
-  version: 6.0.5
-  resolution: "@dnd-kit/core@npm:6.0.5"
-  dependencies:
-    "@dnd-kit/accessibility": ^3.0.0
-    "@dnd-kit/utilities": ^3.2.0
-    tslib: ^2.0.0
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 09061e741bea9d2ba3987d01bb760c354fe29ca27996e74da3774e68c4783cf09ad21087703b5ffb036d3c2f86d16bea3c9f24466c2f266c8698f1e76c29d386
-  languageName: node
-  linkType: hard
-
-"@dnd-kit/utilities@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "@dnd-kit/utilities@npm:3.2.0"
-  dependencies:
-    tslib: ^2.0.0
-  peerDependencies:
-    react: ">=16.8.0"
-  checksum: 575e554992c5ff26622854b889b6288580f308e1125620a4aae55d0a113d47f05fdb7c6e2023ce51c58d5a206091fc1deac868222dd5f9c35c80c3e2f99db9af
-  languageName: node
-  linkType: hard
-
 "@emotion/babel-plugin@npm:^11.10.0":
   version: 11.10.0
   resolution: "@emotion/babel-plugin@npm:11.10.0"
@@ -5872,15 +5803,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dompurify@npm:^2":
-  version: 2.3.3
-  resolution: "@types/dompurify@npm:2.3.3"
-  dependencies:
-    "@types/trusted-types": "*"
-  checksum: 427e2dc60d94d13d7860a293b926b376727cb2f545a3334a3f2e7de695a2bb23058dd15108e49e0651378229b443ee8ae0028034b6f2df9a9008c04fb7ad6f8f
-  languageName: node
-  linkType: hard
-
 "@types/emscripten@npm:^1.38.0":
   version: 1.39.6
   resolution: "@types/emscripten@npm:1.39.6"
@@ -6216,13 +6138,6 @@ __metadata:
   version: 1.0.8
   resolution: "@types/tapable@npm:1.0.8"
   checksum: b4b754dd0822c407b8f29ef6b766490721c276880f9e976d92ee2b3ef915f11a05a2442ae36c8978bcd872ad6bc833b0a2c4d267f2d611590668a366bad50652
-  languageName: node
-  linkType: hard
-
-"@types/trusted-types@npm:*":
-  version: 2.0.2
-  resolution: "@types/trusted-types@npm:2.0.2"
-  checksum: 3371eef5f1c50e1c3c07a127c1207b262ba65b83dd167a1c460fc1b135a3fb0c97b9f508efebd383f239cc5dd5b7169093686a692a501fde9c3f7208657d9b0d
   languageName: node
   linkType: hard
 
@@ -9617,13 +9532,6 @@ __metadata:
   dependencies:
     domelementtype: ^2.2.0
   checksum: d2a2dbf40dd99abf936b65ad83c6b530afdb3605a87cad37a11b5d9220e68423ebef1b86c89e0f6d93ffaf315cc327cf1a988652e7a9a95cce539e3984f4c64d
-  languageName: node
-  linkType: hard
-
-"dompurify@npm:^2.3.10":
-  version: 2.3.10
-  resolution: "dompurify@npm:2.3.10"
-  checksum: ee343876b4c065e82d194818c66af76a6d2290264c7db583ad71761c11781fd626f0245f9f4670175d5707c4b8fcfb89adae80bed0418a9426a47ee7f36b0ffc
   languageName: node
   linkType: hard
 
