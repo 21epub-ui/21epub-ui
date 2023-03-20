@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 import type { Colord } from 'colord'
 import { colord } from 'colord'
-import type React from 'react'
 import { useEffect, useState } from 'react'
 import backslash from '../../assets/backslash.svg'
 import { ThemeColors } from '../../config'
