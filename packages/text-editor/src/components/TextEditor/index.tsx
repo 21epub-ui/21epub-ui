@@ -1,6 +1,5 @@
 import { Box, ChakraProvider, Flex } from '@chakra-ui/react'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
-import { AutoScrollPlugin } from '@lexical/react/LexicalAutoScrollPlugin'
 import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -8,6 +7,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { nanoid } from 'nanoid'
 import { useRef } from 'react'
 import {
@@ -45,7 +45,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
       <LexicalComposer
         initialConfig={{
           onError,
-          readOnly: disabled,
+          editable: !disabled,
           nodes: editorNodes,
           theme: editorTheme,
           namespace: namespace.current,
@@ -91,6 +91,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
                 {placeholder}
               </Box>
             }
+            ErrorBoundary={LexicalErrorBoundary}
           />
           <OnChangePlugin
             ignoreSelectionChange
@@ -99,7 +100,6 @@ export const TextEditor: React.FC<TextEditorProps> = ({
             }}
           />
           <AutoFocusPlugin />
-          <AutoScrollPlugin scrollRef={scrollRef} />
           <ClearEditorPlugin />
           <HistoryPlugin />
           <ListPlugin />

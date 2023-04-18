@@ -14,7 +14,7 @@ export interface MediaPayload {
 
 type LexicalComposerProps = Parameters<typeof LexicalComposer>[0]
 
-type OmittedInitialConfig = 'readOnly' | 'editorState'
+type OmittedInitialConfig = 'editable' | 'editorState'
 
 type InitialConfig = Partial<
   Omit<LexicalComposerProps['initialConfig'], OmittedInitialConfig>

@@ -6,7 +6,7 @@ import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
   $patchStyleText,
-  $wrapLeafNodesInElements,
+  $setBlocksType,
 } from '@lexical/selection'
 import { mergeRegister } from '@lexical/utils'
 import type { RangeSelection } from 'lexical'
@@ -74,7 +74,7 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
   const isActiveEditor = !disabled && editor === activeEditor
 
   useEffect(() => {
-    editor.setReadOnly(disabled ?? false)
+    editor.setEditable(!disabled)
   }, [disabled, editor])
 
   const getSelectionStyles = useCallback((selection: RangeSelection) => {
@@ -167,7 +167,7 @@ const ToolbarPlugin: React.FC<ToolbarPluginProps> = ({
       const creator =
         value === 'p' ? $createParagraphNode : () => $createHeadingNode(value)
 
-      $wrapLeafNodesInElements(selection, creator)
+      $setBlocksType(selection, creator)
     })
   }
 
