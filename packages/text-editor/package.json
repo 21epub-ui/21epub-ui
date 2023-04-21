@@ -45,8 +45,9 @@
     "@chakra-ui/system": "^2.2.6",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@storybook/react": "^6.5.13",
+    "@storybook/react": "^7.0.6",
     "@types/react": "^18",
-    "framer-motion": "^7.1.1"
+    "framer-motion": "^7.1.1",
+    "react": "^18.2.0"
   }
 }

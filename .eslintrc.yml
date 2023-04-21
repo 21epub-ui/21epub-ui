@@ -19,6 +19,10 @@ overrides:
     rules:
       no-undef: off
   - files:
+      - "*.stories.tsx"
+    rules:
+      react-hooks/rules-of-hooks: off
+  - files:
       - "*.yml"
       - "*.yaml"
     parser: yaml-eslint-parser
