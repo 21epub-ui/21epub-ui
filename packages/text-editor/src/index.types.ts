@@ -1,7 +1,6 @@
-import type { LexicalComposer } from '@lexical/react/LexicalComposer'
+import type { InitialConfigType } from '@lexical/react/LexicalComposer'
 import type { HeadingTagType } from '@lexical/rich-text'
-import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
-import type { CSSProperties, ReactNode } from 'react'
+import type { EditorState, LexicalEditor } from 'lexical'
 
 export type TagType = 'p' | HeadingTagType
 
@@ -12,23 +11,13 @@ export interface MediaPayload {
   title: string
 }
 
-type LexicalComposerProps = Parameters<typeof LexicalComposer>[0]
-
-type OmittedInitialConfig = 'editable' | 'editorState'
-
-type InitialConfig = Partial<
-  Omit<LexicalComposerProps['initialConfig'], OmittedInitialConfig>
->
+type InitialConfig = Partial<Omit<InitialConfigType, 'editable'>>
 
 export interface TextEditorProps
-  extends Omit<LexicalComposerProps, 'children' | 'initialConfig'> {
-  style?: CSSProperties
-  className?: string
-  children?: ReactNode
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   disabled?: boolean
+  placeholder?: string
   initialConfig?: InitialConfig
-  initialState?: SerializedEditorState | ((editor: LexicalEditor) => void)
-  placeholder?: ReactNode
   onChange?: (editorState: EditorState, editor: LexicalEditor) => void
   onInsert?: (
     type: MediaType,

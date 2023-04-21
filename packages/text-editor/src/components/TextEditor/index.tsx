@@ -31,14 +31,12 @@ export const TextEditor: React.FC<TextEditorProps> = ({
   children,
   disabled,
   initialConfig,
-  initialState,
   placeholder,
   onChange,
   onInsert,
   ...props
 }) => {
-  const namespace = useRef(nanoid(8))
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const namespaceRef = useRef(nanoid(8))
 
   return (
     <ChakraProvider theme={chakraTheme}>
@@ -48,16 +46,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           editable: !disabled,
           nodes: editorNodes,
           theme: editorTheme,
-          namespace: namespace.current,
-          editorState: (editor) => {
-            if (!initialState) return
-
-            if (typeof initialState === 'function') {
-              initialState(editor)
-            } else {
-              editor.setEditorState(editor.parseEditorState(initialState))
-            }
-          },
+          namespace: namespaceRef.current,
           ...initialConfig,
         }}
       >
@@ -74,7 +63,7 @@ export const TextEditor: React.FC<TextEditorProps> = ({
           <ToolbarPlugin disabled={disabled} onInsert={onInsert} />
           <RichTextPlugin
             contentEditable={
-              <Box ref={scrollRef} height="100%" padding="10px" overflow="auto">
+              <Box height="100%" padding="10px" overflow="auto">
                 <Editor as={ContentEditable} />
               </Box>
             }
