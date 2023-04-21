@@ -21,6 +21,8 @@ import ColorRect from '../ColorRect'
 import Swatches from '../Swatches'
 import { StyledColorPicker, SwatchesSet } from './styles'
 
+const colorChannels = ['r', 'g', 'b', 'a'] as const
+
 interface PickerProps
   extends Omit<ColorPickerProps, 'defaultColor' | 'children'> {
   defaultColor: Colord
@@ -96,7 +98,7 @@ const Picker: React.FC<PickerProps> = ({
       <Stack width="220px" padding="0 10px">
         <StyledColorPicker color={currColor.rgba} onChange={onColorChange} />
         <HStack>
-          {['r', 'g', 'b', 'a'].map((item) => {
+          {colorChannels.map((item) => {
             const isAlpha = item === 'a'
 
             return (

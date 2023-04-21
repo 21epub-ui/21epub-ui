@@ -17,8 +17,8 @@ export const south = 1 << 1
 export const west = 1 << 2
 export const north = 1 << 3
 
-const cardinalDirections = ['n', 'e', 's', 'w']
-const ordinalDirections = ['nw', 'ne', 'sw', 'se']
+const cardinalDirections = ['n', 'e', 's', 'w'] as const
+const ordinalDirections = ['nw', 'ne', 'sw', 'se'] as const
 const principalDirections = [
   ...cardinalDirections,
   ...ordinalDirections,
@@ -157,25 +157,33 @@ const Transformer: React.FC<TransformerProps> = ({
           />
         ))}
       {resizable &&
-        principalDirections
+        cardinalDirections
           .filter((direction) => directions.includes(direction))
-          .map((direction) => {
-            const ResizeControl = cardinalDirections.includes(direction)
-              ? ResizeControlEdge
-              : ResizeControlCorner
-
-            return (
-              <ResizeControl
-                key={direction}
-                disabled={isTransforming}
-                rotation={rotation}
-                direction={compass[direction]}
-                onAction={(event, cursorAngle) => {
-                  handleResize(event, cursorAngle, compass[direction])
-                }}
-              />
-            )
-          })}
+          .map((direction) => (
+            <ResizeControlEdge
+              key={direction}
+              disabled={isTransforming}
+              rotation={rotation}
+              direction={compass[direction]}
+              onAction={(event, cursorAngle) => {
+                handleResize(event, cursorAngle, compass[direction])
+              }}
+            />
+          ))}
+      {resizable &&
+        ordinalDirections
+          .filter((direction) => directions.includes(direction))
+          .map((direction) => (
+            <ResizeControlCorner
+              key={direction}
+              disabled={isTransforming}
+              rotation={rotation}
+              direction={compass[direction]}
+              onAction={(event, cursorAngle) => {
+                handleResize(event, cursorAngle, compass[direction])
+              }}
+            />
+          ))}
     </div>
   )
 }

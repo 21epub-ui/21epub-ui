@@ -41,9 +41,12 @@ const Tree = <T extends TreeNodeParent>({
   })
   const flatNodesRef = useRef<FlatTreeNode[]>([])
 
-  Object.keys(contextRef.current).forEach((key) => {
-    contextRef.current[key] = props[key]
-  })
+  contextRef.current.data = props.data
+  contextRef.current.indent = props.indent
+  contextRef.current.rowHeight = props.rowHeight
+  contextRef.current.selectedIds = props.selectedIds
+  contextRef.current.expandedIds = props.expandedIds
+  contextRef.current.onNodeMove = props.onNodeMove
 
   flatNodesRef.current = flattenTree(
     contextRef.current.data,
