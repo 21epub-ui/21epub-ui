@@ -1,23 +1,19 @@
 import { execute } from '@yarnpkg/shell'
 import { resolve } from 'node:path'
 import getFirstArgv from '../helpers/getFirstArgv.mjs'
-import getScopedPackageName from '../helpers/getScopedPackageName.mjs'
+import getManifest from '../helpers/getManifest.mjs'
 import getPackagePath from '../helpers/getPackagePath.mjs'
+import getScopedPackageName from '../helpers/getScopedPackageName.mjs'
 import outputJson from '../helpers/outputJson.mjs'
+import pick from '../utils/pick.mjs'
 
 const genPackage = async () => {
+  const manifest = await getManifest('root')
   const packageName = getFirstArgv()
   const scopedPackageName = await getScopedPackageName(packageName)
 
   const dirPath = getPackagePath(packageName)
   const filePath = resolve(dirPath, 'package.json')
-
-  const devDependencies = [
-    '@emotion/react',
-    '@emotion/styled',
-    '@storybook/react',
-    '@types/react@^18',
-  ]
 
   const template = {
     name: scopedPackageName,
@@ -35,16 +31,17 @@ const genPackage = async () => {
       version: 'node ../../scripts/version.mjs',
     },
     peerDependencies: {
-      '@emotion/react': '>=11.*',
-      '@emotion/styled': '>=11.*',
       react: '>=17.*',
     },
+    devDependencies: pick(manifest.dependencies, [
+      '@storybook/react',
+      '@types/react',
+      'react',
+    ]),
   }
 
   await outputJson(filePath, template)
-  await execute(
-    `yarn workspace ${scopedPackageName} add --dev ${devDependencies.join(' ')}`
-  )
+  await execute('yarn')
 }
 
 export default genPackage

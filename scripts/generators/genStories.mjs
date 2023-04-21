@@ -15,21 +15,19 @@ const genStories = async () => {
   const filePath = resolve(dirPath, 'stories', `${componentName}.stories.tsx`)
 
   const template = dedent(`
-    import type { ComponentMeta, ComponentStory } from '@storybook/react'
+    import type { Meta, StoryObj } from '@storybook/react'
     import { ${componentName} } from '${scopedPackageName}'
 
-    export default {
-      title: '${componentName}/Default',
+    export const Default: StoryObj<typeof ${componentName}> = {
+      args: {},
+    }
+
+    const meta: Meta<typeof ${componentName}> = {
+      title: '${componentName}',
       component: ${componentName},
-    } as ComponentMeta<typeof ${componentName}>
+    }
 
-    const Template: ComponentStory<typeof ${componentName}> = (args) => (
-      <${componentName} {...args} />
-    )
-
-    export const Default = Template.bind({})
-
-    Default.args = {}
+    export default meta
   `)
 
   await outputFile(filePath, template)

@@ -11,9 +11,6 @@ const genTsConfig = async () => {
 
   const template = {
     extends: '../../tsconfig.json',
-    compilerOptions: {
-      jsxImportSource: '@emotion/react',
-    },
     include: ['./src', './stories', '../../typings'],
   }
 
