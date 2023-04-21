@@ -1,0 +1,36 @@
+{
+  "name": "@21epub-ui/code-editor",
+  "version": "0.0.0",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "preinstall": "node ../../scripts/preinstall.mjs",
+    "build": "node ../../scripts/build.mjs",
+    "lint": "node ../../scripts/lint.mjs",
+    "version": "node ../../scripts/version.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=17.*"
+  },
+  "devDependencies": {
+    "@codemirror/lang-javascript": "^6.1.7",
+    "@storybook/react": "^7.0.6",
+    "@types/react": "^18",
+    "react": "^18.2.0"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.5.1",
+    "@codemirror/commands": "^6.2.3",
+    "@codemirror/language": "^6.6.0",
+    "@codemirror/lint": "^6.2.1",
+    "@codemirror/search": "^6.3.0",
+    "@codemirror/state": "^6.2.0",
+    "@codemirror/view": "^6.9.6"
+  }
+}
