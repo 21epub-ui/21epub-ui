@@ -14,6 +14,10 @@ extends:
 
 overrides:
   - files:
+      - "*.mjs"
+    rules:
+      "@typescript-eslint/explicit-module-boundary-types": off
+  - files:
       - "*.ts"
       - "*.tsx"
     rules:
