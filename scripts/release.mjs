@@ -26,7 +26,6 @@ if (scopedPackageName !== undefined) {
   await outputJson(configPath, {
     ...pick(manifest, [
       'name',
-      'type',
       'version',
       'main',
       'module',
