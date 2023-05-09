@@ -174,8 +174,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@21epub-ui/transformer@workspace:packages/transformer"
   dependencies:
-    "@emotion/react": ^11.10.5
-    "@emotion/styled": ^11.10.5
     "@storybook/react": ^7.0.6
     "@types/react": ^18
     react: ^18.2.0
@@ -188,7 +186,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@21epub-ui/tree@workspace:packages/tree"
   dependencies:
-    "@emotion/react": ^11.10.4
     "@storybook/react": ^7.0.6
     "@types/react": ^18
     react: ^18.2.0
@@ -3040,7 +3037,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11.10.0, @emotion/react@npm:^11.10.4, @emotion/react@npm:^11.10.5":
+"@emotion/react@npm:^11.10.0":
   version: 11.10.5
   resolution: "@emotion/react@npm:11.10.5"
   dependencies:
@@ -3084,7 +3081,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:^11.10.0, @emotion/styled@npm:^11.10.5":
+"@emotion/styled@npm:^11.10.0":
   version: 11.10.5
   resolution: "@emotion/styled@npm:11.10.5"
   dependencies:

@@ -324,8 +324,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/transformer/",\
           "packageDependencies": [\
             ["@21epub-ui/transformer", "workspace:packages/transformer"],\
-            ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.10.5"],\
-            ["@emotion/styled", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.10.5"],\
             ["@storybook/react", "virtual:a87119f8623acdeae6e1fa2dca8d5ceec4f92af8767ca0398b25dea04211d9b1fe82c35cfb8f46ebdfb661c05237a5ef4c8177817aa756639fc697d1a0bc0dc0#npm:7.0.6"],\
             ["@types/react", "npm:18.0.37"],\
             ["react", "npm:18.2.0"]\
@@ -338,7 +336,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/tree/",\
           "packageDependencies": [\
             ["@21epub-ui/tree", "workspace:packages/tree"],\
-            ["@emotion/react", "virtual:6665c538689de55a822cb683ae11f70814e49d13f779e5f9d85250973c6fe7316f789205d72c3469fc93566ec234dd864f4c86f6cfe024f5706096b84426a299#npm:11.10.5"],\
             ["@storybook/react", "virtual:a87119f8623acdeae6e1fa2dca8d5ceec4f92af8767ca0398b25dea04211d9b1fe82c35cfb8f46ebdfb661c05237a5ef4c8177817aa756639fc697d1a0bc0dc0#npm:7.0.6"],\
             ["@types/react", "npm:18.0.37"],\
             ["react", "npm:18.2.0"]\
