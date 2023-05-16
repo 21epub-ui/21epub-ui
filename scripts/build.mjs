@@ -9,9 +9,9 @@ import getDependencies from './helpers/getDependencies.mjs'
 
 const manifest = await readJson('package.json')
 
-const { watch, excludeDependencies } = yargs(hideBin(argv)).argv
+const { watch, standalone } = yargs(hideBin(argv)).alias('w', 'watch').argv
 
-if (!excludeDependencies) {
+if (!standalone) {
   const dependencies = await getDependencies(manifest.name)
 
   console.log(`Running build in ${dependencies.length + 1} packages\n`)

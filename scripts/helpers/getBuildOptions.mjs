@@ -19,7 +19,7 @@ const assetExtNames = [
   '.avif',
 ]
 
-const getBuildOptions = async (format, incremental) => {
+const getBuildOptions = async (format) => {
   const manifest = await readJson('package.json')
 
   const dependencies = Object.keys({
@@ -56,7 +56,6 @@ const getBuildOptions = async (format, incremental) => {
 
   const typescriptOptions = {
     compilerOptions: {
-      incremental,
       noEmit: false,
       paths: Object.fromEntries(packageMap),
       declarationDir: dirname(manifest.typings),
