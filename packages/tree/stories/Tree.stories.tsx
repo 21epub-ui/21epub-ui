@@ -74,7 +74,7 @@ export const Default: StoryObj<typeof Tree> = {
             }}
           />
         )}
-        onNodeSelect={(ids) => setSelectedNodes(ids)}
+        onNodeSelect={setSelectedNodes}
         onNodeToggle={setExpandedNodes}
       />
     )

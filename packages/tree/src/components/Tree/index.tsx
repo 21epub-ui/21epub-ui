@@ -23,7 +23,7 @@ const Tree = <T extends TreeNodeParent>({
   onNodeToggle,
   ...props
 }: TreeProps<T>) => {
-  const { data, indent, rowHeight, expandedIds, selectedIds, onNodeMove } =
+  const { data, indent, rowHeight, selectedIds, expandedIds, onNodeMove } =
     props
 
   const currentIdRef = useRef<string>()
@@ -31,6 +31,7 @@ const Tree = <T extends TreeNodeParent>({
   const isDraggingRef = useRef(false)
   const isSelectingRef = useRef(false)
   const positioningRef = useRef<Positioning | null>(null)
+  const toggleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const contextRef = useRef({
     data,
     indent,
@@ -38,15 +39,19 @@ const Tree = <T extends TreeNodeParent>({
     selectedIds,
     expandedIds,
     onNodeMove,
+    onNodeToggle,
   })
   const flatNodesRef = useRef<FlatTreeNode[]>([])
 
-  contextRef.current.data = props.data
-  contextRef.current.indent = props.indent
-  contextRef.current.rowHeight = props.rowHeight
-  contextRef.current.selectedIds = props.selectedIds
-  contextRef.current.expandedIds = props.expandedIds
-  contextRef.current.onNodeMove = props.onNodeMove
+  contextRef.current = {
+    data,
+    indent,
+    rowHeight,
+    selectedIds,
+    expandedIds,
+    onNodeMove,
+    onNodeToggle,
+  }
 
   flatNodesRef.current = flattenTree(
     contextRef.current.data,
@@ -110,6 +115,28 @@ const Tree = <T extends TreeNodeParent>({
     }
   }
 
+  const clearToggleTimer = () => {
+    if (toggleTimerRef.current !== null) {
+      clearTimeout(toggleTimerRef.current)
+
+      toggleTimerRef.current = null
+    }
+  }
+
+  useEffect(() => {
+    if (hoveringId === undefined || hoveringId === 'root') return
+
+    const { expandedIds, onNodeToggle } = contextRef.current
+
+    toggleTimerRef.current = setTimeout(() => {
+      if (!expandedIds.includes(hoveringId)) {
+        onNodeToggle?.(expandedIds.concat(hoveringId))
+      }
+    }, 1000)
+
+    return () => clearToggleTimer()
+  }, [hoveringId])
+
   useEffect(() => {
     const currentId = currentIdRef.current
 
@@ -135,7 +162,7 @@ const Tree = <T extends TreeNodeParent>({
         Math.abs(event.clientY - positioning.y) > constraint
 
       if (moveable) {
-        isDraggingRef.current = moveable
+        isDraggingRef.current = true
 
         const rowIndex = getPointerIndex(event)
         const { level, index, parentId } = getMoveTarget(event, rowIndex)
@@ -161,6 +188,7 @@ const Tree = <T extends TreeNodeParent>({
         return
       }
 
+      clearToggleTimer()
       setHoveringId(undefined)
       setCursorLocation(null)
 
