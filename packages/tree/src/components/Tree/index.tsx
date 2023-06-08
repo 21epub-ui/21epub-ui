@@ -141,9 +141,9 @@ const Tree = <T extends TreeNodeParent>({
     const currentId = currentIdRef.current
 
     if (currentId !== undefined && !selectedIds.includes(currentId)) {
-      currentIdRef.current = flatNodesRef.current
-        .filter((node) => selectedIds.includes(node.id))
-        .at(-1)?.id
+      currentIdRef.current = flatNodesRef.current.findLast((node) => {
+        return selectedIds.includes(node.id)
+      })?.id
     }
   }, [selectedIds])
 
