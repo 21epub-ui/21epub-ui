@@ -26,13 +26,21 @@ const Uploader: React.FC<UploaderProps> = ({
   const [uploadList, setUploadList] = useState<UploadState[]>([])
 
   const inputElementRef = useRef<HTMLInputElement>(null)
-  const contextRef = useRef({ uploadUrl })
+  const contextRef = useRef({
+    uploadUrl,
+    uploadData,
+    onReceive,
+    onUploaded,
+  })
 
-  contextRef.current = { uploadUrl }
+  contextRef.current = {
+    uploadUrl,
+    uploadData,
+    onReceive,
+    onUploaded,
+  }
 
-  useEffect(() => {
-    setUploadList([])
-  }, [visible])
+  useEffect(() => setUploadList([]), [visible])
 
   const failureList = uploadList.filter((item) => item.status === 'error')
 
@@ -47,7 +55,7 @@ const Uploader: React.FC<UploaderProps> = ({
   }
 
   const uploadFiles = (files: UploadState[]) => {
-    const { uploadUrl } = contextRef.current
+    const { uploadUrl, uploadData, onUploaded } = contextRef.current
 
     const newUploadList: UploadState[] = files.map((item) => ({
       ...item,
@@ -104,6 +112,8 @@ const Uploader: React.FC<UploaderProps> = ({
   }
 
   const handleReceive = async (files: File[]) => {
+    const { onReceive } = contextRef.current
+
     for await (const [index, file] of files.entries()) {
       const uploadFile = createState(index, file)
 
