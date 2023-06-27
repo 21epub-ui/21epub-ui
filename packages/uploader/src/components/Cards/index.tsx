@@ -1,18 +1,18 @@
 import { Tooltip } from 'antd'
-import type { UploadFile } from 'antd/lib/upload/interface'
+import type { UploadState } from '../../index.types'
 import Status from '../Status'
 import { Card, Container } from './styles'
 
 interface Props {
-  fileList: UploadFile[]
+  uploadList: UploadState[]
 }
 
-const Cards: React.FC<Props> = ({ fileList }) => (
+const Cards: React.FC<Props> = ({ uploadList }) => (
   <Container wrap align="start">
-    {fileList.map((item) => (
-      <Tooltip key={item.uid} title={item.name}>
-        <Card status={item.status} onClick={(e) => e.stopPropagation()}>
-          <Status file={item} />
+    {uploadList.map((state) => (
+      <Tooltip key={state.uid} title={state.name}>
+        <Card status={state.status} onClick={(e) => e.stopPropagation()}>
+          <Status {...state} />
         </Card>
       </Tooltip>
     ))}

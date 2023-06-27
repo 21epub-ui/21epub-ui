@@ -1,15 +1,23 @@
 import type { ModalProps } from 'antd'
-import type { RcFile } from 'antd/lib/upload'
-import type { UploadFile } from 'antd/lib/upload/interface'
 
-export type UploadParams = Record<
+export type UploadStatus = 'error' | 'success' | 'done' | 'uploading'
+
+export interface UploadState {
+  uid: string
+  name: string
+  size: number
+  type: string
+  file: File
+  lastModified: number
+  status?: UploadStatus
+  percent?: number
+  response?: any
+}
+
+export type UploadData = Record<
   string,
   string | number | boolean | Blob | undefined
 >
-
-export type FileData = File & { uid: string }
-
-export type FileList = FileData[]
 
 export interface UploaderProps
   extends Omit<
@@ -25,8 +33,12 @@ export interface UploaderProps
   > {
   uploadUrl: string
   accept?: string[]
-  data?: UploadParams | ((file: RcFile) => UploadParams | Promise<UploadParams>)
+  uploadData?:
+    | UploadData
+    | ((uploadState: UploadState) => UploadData | Promise<UploadData>)
   onVisibleChange?: (visible: boolean) => void
-  onReceive?: (file: RcFile) => void | FileList | Promise<void | FileList>
-  onUploaded?: (file: UploadFile) => void
+  onReceive?: (
+    uploadState: UploadState
+  ) => void | File[] | Promise<void | File[]>
+  onUploaded?: (uploadState: UploadState) => void
 }

@@ -1,11 +1,9 @@
-import { message, Upload } from 'antd'
-import type { UploadFile, UploadProps } from 'antd/lib/upload/interface'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import uploadFile from '../../api/uploadFile'
-import type { UploaderProps } from '../../index.types'
+import type { UploadState, UploaderProps } from '../../index.types'
 import Cards from '../Cards'
-import checkFileSize from './helpers/checkFileSize'
 import checkStatus from './helpers/checkStatus'
+import createState from './helpers/createState'
 import {
   Actions,
   DropZone,
@@ -19,22 +17,27 @@ const Uploader: React.FC<UploaderProps> = ({
   uploadUrl,
   onVisibleChange,
   accept,
-  data,
+  uploadData,
   onReceive,
   onUploaded,
   children,
   ...props
 }) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([])
+  const [uploadList, setUploadList] = useState<UploadState[]>([])
+
+  const inputElementRef = useRef<HTMLInputElement>(null)
+  const contextRef = useRef({ uploadUrl })
+
+  contextRef.current = { uploadUrl }
 
   useEffect(() => {
-    setFileList([])
+    setUploadList([])
   }, [visible])
 
-  const failureList = fileList.filter((item) => item.status === 'error')
+  const failureList = uploadList.filter((item) => item.status === 'error')
 
-  const updateFile = (patch: Partial<UploadFile>) => {
-    setFileList((files) => {
+  const updateFile = (patch: Partial<UploadState>) => {
+    setUploadList((files) => {
       return files.map((item) => {
         if (item.uid === patch.uid) return { ...item, ...patch }
 
@@ -43,17 +46,20 @@ const Uploader: React.FC<UploaderProps> = ({
     })
   }
 
-  const uploadFiles = (files: UploadFile[]) => {
-    const uploadList: UploadFile[] = files.map((item) => ({
+  const uploadFiles = (files: UploadState[]) => {
+    const { uploadUrl } = contextRef.current
+
+    const newUploadList: UploadState[] = files.map((item) => ({
       ...item,
       status: 'uploading',
     }))
-    setFileList((fileList) => fileList.concat(uploadList))
 
-    const requestList = uploadList.map(async (file) => {
-      if (file.originFileObj === undefined) return
+    setUploadList((fileList) => fileList.concat(newUploadList))
 
-      const { uid } = file
+    const requestList = newUploadList.map(async (uploadState) => {
+      if (uploadState.file === undefined) return
+
+      const { uid } = uploadState
 
       const onProgress = (e: ProgressEvent<EventTarget>) => {
         const percent = (e.loaded / e.total) * 100
@@ -70,15 +76,15 @@ const Uploader: React.FC<UploaderProps> = ({
       ) => {
         const isDone = checkStatus(xhr.status)
 
-        const result: UploadFile = {
-          ...file,
+        const newUploadState: UploadState = {
+          ...uploadState,
           status: isDone ? 'done' : 'error',
           percent: isDone ? 100 : 0,
           response: JSON.parse(xhr.response),
         }
 
-        updateFile(result)
-        onUploaded?.(result)
+        updateFile(newUploadState)
+        onUploaded?.(newUploadState)
       }
 
       const addListeners = (xhr: XMLHttpRequest) => {
@@ -86,17 +92,33 @@ const Uploader: React.FC<UploaderProps> = ({
         xhr.addEventListener('loadend', (e) => onLoadEnd(e, xhr))
       }
 
-      const params =
-        typeof data === 'function' ? await data(file.originFileObj) : data
+      const data =
+        typeof uploadData === 'function'
+          ? await uploadData(uploadState)
+          : uploadData
 
-      uploadFile(
-        uploadUrl,
-        { ...params, file: file.originFileObj },
-        addListeners
-      )
+      uploadFile(uploadUrl, { ...data, file: uploadState.file }, addListeners)
     })
 
     Promise.all(requestList)
+  }
+
+  const handleReceive = async (files: File[]) => {
+    for await (const [index, file] of files.entries()) {
+      const uploadFile = createState(index, file)
+
+      const fileList = await onReceive?.(uploadFile)
+
+      if (fileList === undefined) {
+        uploadFiles([uploadFile])
+      } else {
+        const uploadList = fileList.map((file, index) => {
+          return createState(index, file)
+        })
+
+        uploadFiles(uploadList)
+      }
+    }
   }
 
   return (
@@ -108,54 +130,52 @@ const Uploader: React.FC<UploaderProps> = ({
       onCancel={() => onVisibleChange?.(false)}
       {...props}
     >
+      <input
+        multiple
+        ref={inputElementRef}
+        style={{ display: 'none' }}
+        type="file"
+        accept={accept?.join()}
+        onChange={(event) => {
+          const files = event.target.files
+
+          if (files !== null) {
+            handleReceive(Array.from(files))
+
+            if (inputElementRef.current !== null) {
+              inputElementRef.current.files = null
+            }
+          }
+        }}
+      />
       <ModalBody>
         <DropZone
-          action={uploadUrl}
-          accept={accept?.join()}
-          data={data as UploadProps['data']}
-          multiple
-          fileList={fileList}
-          showUploadList={false}
-          beforeUpload={async (file) => {
-            const fileList = await onReceive?.(file)
+          onClick={() => inputElementRef.current?.click()}
+          onDragOver={(event) => event.preventDefault()}
+          onDrop={(event) => {
+            event.preventDefault()
 
-            if (fileList !== undefined) {
-              const uploadList = fileList?.map((item, index) => {
-                return {
-                  uid: `${Date.now()}_${index}`,
-                  name: item.name,
-                  size: item.size,
-                  type: item.type,
-                  lastModified: item.lastModified,
-                  originFileObj: item,
-                } as UploadFile
-              })
+            const fileList = Array.from(event.dataTransfer.files).filter(
+              (file) => {
+                return accept?.some((suffix) => file.name.endsWith(suffix))
+              }
+            )
 
-              uploadFiles(uploadList ?? [])
-
-              return Upload.LIST_IGNORE
-            }
-
-            if (!checkFileSize(file.size)) {
-              message.error(`无法上传大于200M的文件（${file.name}）`, 5)
-
-              return Upload.LIST_IGNORE
-            }
-          }}
-          onChange={({ file, fileList }) => {
-            setFileList(fileList)
-
-            if (file.status === 'done') onUploaded?.(file)
+            handleReceive(fileList)
           }}
         >
-          {fileList.length === 0 ? children : <Cards fileList={fileList} />}
+          {uploadList.length === 0 ? (
+            children
+          ) : (
+            <Cards uploadList={uploadList} />
+          )}
         </DropZone>
         <Actions>
           {failureList.length !== 0 && (
             <StyledButton
               type="primary"
               onClick={() => {
-                setFileList([])
+                setUploadList([])
                 uploadFiles(failureList)
               }}
             >

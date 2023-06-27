@@ -1,18 +1,14 @@
 import { Media } from '@21epub-ui/media'
 import { Progress } from 'antd'
-import type { UploadFile } from 'antd/lib/upload/interface'
+import type { UploadState } from '../../index.types'
 import { ErrorText } from './styles'
 
-interface Props {
-  file: UploadFile
-}
-
-const Status: React.FC<Props> = ({ file }) => {
-  if (file.status === 'done' && file.percent === 100) {
-    return <Media src={file.response?.data?.results[0].thumbnail} />
+const Status: React.FC<UploadState> = ({ status, percent, response }) => {
+  if (status === 'done' && percent === 100) {
+    return <Media src={response?.data?.results[0].thumbnail} />
   }
 
-  if (file.status === 'error') {
+  if (status === 'error') {
     return <ErrorText>上传失败</ErrorText>
   }
 
@@ -20,7 +16,7 @@ const Status: React.FC<Props> = ({ file }) => {
     <div>
       <div>素材上传中</div>
       <Progress
-        percent={file.percent}
+        percent={percent}
         size="small"
         showInfo={false}
         strokeWidth={2}

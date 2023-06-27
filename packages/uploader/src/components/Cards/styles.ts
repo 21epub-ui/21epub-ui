@@ -1,14 +1,14 @@
 import { red } from '@ant-design/colors'
 import styled from '@emotion/styled'
 import { Space } from 'antd'
-import type { UploadFileStatus } from 'antd/lib/upload/interface'
+import type { UploadStatus } from '../../index.types'
 
 export const Container = styled(Space)`
   padding-bottom: 16px;
 `
 
 interface CardProps {
-  status?: UploadFileStatus
+  status?: UploadStatus
 }
 
 export const Card = styled.div<CardProps>`

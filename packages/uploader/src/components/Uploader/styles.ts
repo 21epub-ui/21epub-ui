@@ -1,7 +1,5 @@
 import styled from '@emotion/styled'
-import { Button, Modal, Upload } from 'antd'
-
-const { Dragger } = Upload
+import { Button, Modal } from 'antd'
 
 export const StyledModal = styled(Modal)`
   .ant-modal-close-x {
@@ -21,20 +19,20 @@ export const ModalBody = styled.div`
   height: 50vh;
 `
 
-export const DropZone = styled(Dragger)`
+export const DropZone = styled.div`
+  height: 100%;
   padding: 16px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 2px;
+  transition: border-color 0.3s;
+  cursor: pointer;
 
-  .ant-upload.ant-upload-btn {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-
-    .ant-upload-drag-container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
+  :hover {
+    border-color: #40a9ff;
   }
 `
 
