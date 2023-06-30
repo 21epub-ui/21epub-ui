@@ -82,28 +82,16 @@ const Uploader: React.FC<UploaderProps> = ({
         e: ProgressEvent<EventTarget>,
         xhr: XMLHttpRequest
       ) => {
-        try {
-          const isDone = checkStatus(xhr.status)
-          const newUploadState: UploadState = {
-            ...uploadState,
-            status: isDone ? 'done' : 'error',
-            percent: isDone ? 100 : 0,
-            response: JSON.parse(xhr.response),
-          }
-
-          updateFile(newUploadState)
-          onUploaded?.(newUploadState)
-        } catch {
-          const newUploadState: UploadState = {
-            ...uploadState,
-            status: 'error',
-            percent: 0,
-            response: xhr.response,
-          }
-
-          updateFile(newUploadState)
-          onUploaded?.(newUploadState)
+        const isDone = checkStatus(xhr.status)
+        const newUploadState: UploadState = {
+          ...uploadState,
+          status: isDone ? 'done' : 'error',
+          percent: isDone ? 100 : 0,
+          response: xhr.response,
         }
+
+        updateFile(newUploadState)
+        onUploaded?.(newUploadState)
       }
 
       const addListeners = (xhr: XMLHttpRequest) => {
