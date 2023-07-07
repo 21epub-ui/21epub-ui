@@ -1,0 +1,32 @@
+{
+  "name": "@21epub-ui/charts",
+  "version": "0.0.0",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "preinstall": "node ../../scripts/preinstall.mjs",
+    "build": "node ../../scripts/build.mjs",
+    "lint": "node ../../scripts/lint.mjs",
+    "version": "node ../../scripts/version.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=17.*"
+  },
+  "dependencies": {
+    "@visx/group": "^3.0.0",
+    "@visx/scale": "^3.2.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^7.0.6",
+    "@types/react": "^18",
+    "@visx/mock-data": "^3.0.0",
+    "@visx/shape": "^3.2.0",
+    "react": "^18.2.0"
+  }
+}
