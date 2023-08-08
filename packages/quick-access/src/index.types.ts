@@ -10,6 +10,6 @@ export type LinkList = LinkData[]
 
 export interface QuickAccessProps extends Omit<DropDownProps, 'overlay'> {
   id: string
-  type: 'cbt' | 'quiz' | 'doc'
+  type: string
   style?: React.CSSProperties
 }
