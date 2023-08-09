@@ -1,8 +1,8 @@
 import { execute } from '@yarnpkg/shell'
 import { readJson } from 'fs-extra/esm'
 import process from 'node:process'
+import { parseArgs } from 'node:util'
 import simpleGit from 'simple-git'
-import getFirstArgv from './helpers/getFirstArgv.mjs'
 import printer from './utils/printer.mjs'
 
 const git = simpleGit()
@@ -14,7 +14,7 @@ if (!isClean()) {
 
   process.exitCode = 1
 } else {
-  const strategy = getFirstArgv()
+  const strategy = parseArgs({ allowPositionals: true }).positionals.at(0)
 
   await execute(`yarn version ${strategy}`)
   await execute('yarn stage')

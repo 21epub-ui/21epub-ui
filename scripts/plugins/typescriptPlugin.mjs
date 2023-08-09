@@ -22,7 +22,6 @@ const typescriptPlugin = ({
       })
 
       const basePath = cwd()
-
       const configPath = ts.findConfigFile(basePath, ts.sys.fileExists)
 
       if (configPath === undefined) throw new Error('tsconfig.json not found')
@@ -38,9 +37,9 @@ const typescriptPlugin = ({
         },
       }
 
-      const { config = {} } = ts.readConfigFile(configPath, ts.sys.readFile)
+      const { config } = ts.readConfigFile(configPath, ts.sys.readFile)
       const { options, fileNames } = ts.parseJsonConfigFileContent(
-        deepMergeAll(defaultOptions, config, typescriptOptions),
+        deepMergeAll(defaultOptions, config ?? {}, typescriptOptions),
         ts.sys,
         basePath
       )

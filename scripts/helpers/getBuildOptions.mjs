@@ -8,6 +8,7 @@ import typescriptPlugin from '../plugins/typescriptPlugin.mjs'
 import filterDependencies from './filterDependencies.mjs'
 import getManifest from './getManifest.mjs'
 import getPackageName from './getPackageName.mjs'
+import getTypescriptOptions from './getTypescriptOptions.mjs'
 
 const assetExtNames = [
   '.svg',
@@ -62,20 +63,20 @@ const getBuildOptions = async (format) => {
     },
   }
 
-  const targets = browserslist.loadConfig({ path: cwd(), env: env.NODE_ENV })
+  const basePath = cwd()
 
   const swcOptions = {
     rootMode: 'upward',
     jsc: {
       transform: {
         react: {
-          importSource: dependencies.includes('@emotion/react')
-            ? '@emotion/react'
-            : 'react',
+          importSource: getTypescriptOptions(basePath)?.jsxImportSource,
         },
       },
     },
-    env: { targets },
+    env: {
+      targets: browserslist.loadConfig({ path: basePath, env: env.NODE_ENV }),
+    },
   }
 
   if (format === 'esm') {
@@ -93,7 +94,7 @@ const getBuildOptions = async (format) => {
   return {
     ...buildOptions,
     outfile: manifest.main,
-    plugins: [swcPlugin(swcOptions)],
+    plugins: [swcPlugin({ swcOptions })],
   }
 }
 

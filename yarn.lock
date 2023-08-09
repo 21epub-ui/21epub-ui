@@ -121,7 +121,6 @@ __metadata:
     "@types/fs-extra": ^11
     "@types/react": ^18
     "@types/react-dom": ^18
-    "@types/yargs": ^17
     "@typescript-eslint/eslint-plugin": ^5.59.0
     "@typescript-eslint/parser": ^5.59.0
     "@yarnpkg/shell": ^3.2.3
@@ -145,7 +144,6 @@ __metadata:
     terser-webpack-plugin: ^5.3.6
     typescript: ^5.0.4
     yaml-eslint-parser: ^1.1.0
-    yargs: ^17.6.2
   languageName: unknown
   linkType: soft
 
@@ -5833,7 +5831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs@npm:^17, @types/yargs@npm:^17.0.8":
+"@types/yargs@npm:^17.0.8":
   version: 17.0.24
   resolution: "@types/yargs@npm:17.0.24"
   dependencies:
@@ -15653,7 +15651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.0.0, yargs@npm:^17.6.2":
+"yargs@npm:^17.0.0":
   version: 17.6.2
   resolution: "yargs@npm:17.6.2"
   dependencies:

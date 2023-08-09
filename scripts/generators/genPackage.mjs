@@ -1,15 +1,13 @@
 import { execute } from '@yarnpkg/shell'
 import { resolve } from 'node:path'
-import getFirstArgv from '../helpers/getFirstArgv.mjs'
 import getManifest from '../helpers/getManifest.mjs'
 import getPackagePath from '../helpers/getPackagePath.mjs'
 import getScopedPackageName from '../helpers/getScopedPackageName.mjs'
 import outputJson from '../helpers/outputJson.mjs'
 import pick from '../utils/pick.mjs'
 
-const genPackage = async () => {
+const genPackage = async (packageName) => {
   const manifest = await getManifest('root')
-  const packageName = getFirstArgv()
   const scopedPackageName = await getScopedPackageName(packageName)
 
   const dirPath = getPackagePath(packageName)

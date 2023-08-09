@@ -88,7 +88,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/react", "npm:18.0.37"],\
             ["@types/react-dom", "npm:18.0.5"],\
-            ["@types/yargs", "npm:17.0.24"],\
             ["@typescript-eslint/eslint-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.59.0"],\
             ["@typescript-eslint/parser", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.59.0"],\
             ["@yarnpkg/shell", "npm:3.2.3"],\
@@ -111,8 +110,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["storybook-addon-swc", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.2.0"],\
             ["terser-webpack-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.3.7"],\
             ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"],\
-            ["yaml-eslint-parser", "npm:1.1.0"],\
-            ["yargs", "npm:17.6.2"]\
+            ["yaml-eslint-parser", "npm:1.1.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -279,7 +277,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/react", "npm:18.0.37"],\
             ["@types/react-dom", "npm:18.0.5"],\
-            ["@types/yargs", "npm:17.0.24"],\
             ["@typescript-eslint/eslint-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.59.0"],\
             ["@typescript-eslint/parser", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.59.0"],\
             ["@yarnpkg/shell", "npm:3.2.3"],\
@@ -302,8 +299,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["storybook-addon-swc", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:1.2.0"],\
             ["terser-webpack-plugin", "virtual:3b43ed8a27d72ccd8d3424fe366b700f8d7fec224759072e26536786caa03e84c83d22ee0472e35e27cfc43f79c1e8992a2f0ed5601605d1b0a222f1aca4abc8#npm:5.3.7"],\
             ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"],\
-            ["yaml-eslint-parser", "npm:1.1.0"],\
-            ["yargs", "npm:17.6.2"]\
+            ["yaml-eslint-parser", "npm:1.1.0"]\
           ],\
           "linkType": "SOFT"\
         }]\
