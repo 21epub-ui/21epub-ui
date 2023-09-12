@@ -152,7 +152,7 @@ const Uploader: React.FC<UploaderProps> = ({
             handleReceive(Array.from(files))
 
             if (inputElementRef.current !== null) {
-              inputElementRef.current.files = null
+              inputElementRef.current.value = ''
             }
           }
         }}

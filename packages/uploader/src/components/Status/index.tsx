@@ -3,9 +3,9 @@ import { Progress } from 'antd'
 import type { UploadState } from '../../index.types'
 import { ErrorText } from './styles'
 
-const Status: React.FC<UploadState> = ({ status, percent, response }) => {
+const Status: React.FC<UploadState> = ({ status, percent, file }) => {
   if (status === 'done' && percent === 100) {
-    return <Media src={response?.data?.results[0].thumbnail} />
+    return <Media src={URL.createObjectURL(file)} />
   }
 
   if (status === 'error') {
