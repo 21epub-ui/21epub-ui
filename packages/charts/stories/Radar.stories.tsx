@@ -29,7 +29,9 @@ export const Radar: StoryObj<typeof RadarChart> = {
         strokeWidth={2}
       />
     ),
-    renderDataMarker: (props) => <circle {...props} r={4} fill="#3399ff" />,
+    renderDataMarker: ({ key, x, y }) => (
+      <circle key={key} cx={x} cy={y} r={4} fill="#3399ff" />
+    ),
   },
 }
 

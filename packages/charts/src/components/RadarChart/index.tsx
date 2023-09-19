@@ -29,10 +29,11 @@ const getDataPoints = (
   const step = (Math.PI * 2) / data.length
 
   return Array.from({ length: data.length }).map((_, index) => {
-    const x = getLength(data[index]) * Math.sin((index + 1) * step)
-    const y = getLength(data[index]) * Math.cos((index + 1) * step)
+    const value = data[index]
+    const x = getLength(value) * Math.sin((index + 1) * step)
+    const y = getLength(value) * Math.cos((index + 1) * step)
 
-    return { x, y }
+    return { x, y, value }
   })
 }
 
@@ -61,8 +62,9 @@ export interface RadarChartProps extends React.SVGAttributes<SVGElement> {
   }) => React.ReactElement
   renderDataMarker?: (props: {
     key: React.Key
-    cx: number
-    cy: number
+    x: number
+    y: number
+    value: number
   }) => React.ReactElement
   renderBackground?: (props: {
     width: number
@@ -127,7 +129,7 @@ const RadarChart = ({
           })
         })}
         {dataPoints.flat().map((point, index) => {
-          return renderDataMarker?.({ key: index, cx: point.x, cy: point.y })
+          return renderDataMarker?.({ key: index, ...point })
         })}
       </Group>
     </svg>
