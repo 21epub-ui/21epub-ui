@@ -1,4 +1,5 @@
 import { Group } from '@visx/group'
+import type { ContinuousDomain } from '@visx/scale'
 import { scaleLinear } from '@visx/scale'
 import getPointsString from '../../helpers/getPointersString'
 import type { Point } from '../../index.types'
@@ -45,6 +46,7 @@ export interface RadarChartProps extends React.SVGAttributes<SVGElement> {
   height: number
   margin?: { top: number; right: number; bottom: number; left: number }
   levels?: number
+  domain?: ContinuousDomain
   renderGridLine?: (props: {
     key: React.Key
     data: number[]
@@ -76,8 +78,9 @@ const RadarChart = ({
   data,
   width,
   height,
-  levels = 5,
   margin = defaultMargin,
+  levels = 5,
+  domain,
   renderBackground,
   renderGridLine,
   renderAngleLine,
@@ -96,7 +99,7 @@ const RadarChart = ({
 
   const getLength = scaleLinear({
     range: [0, radius],
-    domain: [0, Math.max(...data.flat())],
+    domain: domain ?? [0, Math.max(...data.flat())],
   })
 
   const length = Math.max(...data.map((item) => item.length))
