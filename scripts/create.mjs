@@ -10,11 +10,11 @@ import genTypes from './generators/genTypes.mjs'
 const packageName = parseArgs({ allowPositionals: true }).positionals.at(0)
 
 if (packageName !== undefined) {
-  await genPackage()
-  await genTsConfig()
-  await genTemplate()
-  await genStories()
-  await genTypes()
-  await genIndex()
-  await genReadMe()
+  await genPackage(packageName)
+  await genTsConfig(packageName)
+  await genTemplate(packageName)
+  await genStories(packageName)
+  await genTypes(packageName)
+  await genIndex(packageName)
+  await genReadMe(packageName)
 }
