@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import uploadFile from '../../api/uploadFile'
 import type { UploadState, UploaderProps } from '../../index.types'
 import Cards from '../Cards'
+import ConcurrentQueue from './helpers/ConcurrentQueue'
 import checkStatus from './helpers/checkStatus'
 import createState from './helpers/createState'
 import {
@@ -17,6 +18,7 @@ const Uploader: React.FC<UploaderProps> = ({
   uploadUrl,
   onVisibleChange,
   accept,
+  concurrent,
   uploadData,
   onReceive,
   onUploaded,
@@ -26,6 +28,7 @@ const Uploader: React.FC<UploaderProps> = ({
   const [uploadList, setUploadList] = useState<UploadState[]>([])
 
   const inputElementRef = useRef<HTMLInputElement>(null)
+  const concurrentQueue = useRef(new ConcurrentQueue(concurrent))
   const contextRef = useRef({
     uploadUrl,
     uploadData,
@@ -64,7 +67,7 @@ const Uploader: React.FC<UploaderProps> = ({
 
     setUploadList((fileList) => fileList.concat(newUploadList))
 
-    const requestList = newUploadList.map(async (uploadState) => {
+    newUploadList.forEach(async (uploadState) => {
       if (uploadState.file === undefined) return
 
       const { uid } = uploadState
@@ -94,20 +97,41 @@ const Uploader: React.FC<UploaderProps> = ({
         onUploaded?.(newUploadState)
       }
 
-      const addListeners = (xhr: XMLHttpRequest) => {
-        xhr.upload.addEventListener('progress', (e) => onProgress(e))
-        xhr.addEventListener('loadend', (e) => onLoadEnd(e, xhr))
-      }
-
       const data =
         typeof uploadData === 'function'
           ? await uploadData(uploadState)
           : uploadData
 
-      uploadFile(uploadUrl, { ...data, file: uploadState.file }, addListeners)
-    })
+      concurrentQueue.current.enqueue(() => {
+        return new Promise((resolve, reject) => {
+          const addListeners = (xhr: XMLHttpRequest) => {
+            xhr.upload.addEventListener('progress', (e) => onProgress(e))
+            xhr.addEventListener('load', (e) => {
+              onLoadEnd(e, xhr)
+              resolve(xhr)
+            })
+            xhr.addEventListener('timeout', (e) => {
+              onLoadEnd(e, xhr)
+              reject(xhr)
+            })
+            xhr.addEventListener('abort', (e) => {
+              onLoadEnd(e, xhr)
+              reject(xhr)
+            })
+            xhr.addEventListener('error', (e) => {
+              onLoadEnd(e, xhr)
+              reject(xhr)
+            })
+          }
 
-    Promise.all(requestList)
+          uploadFile(
+            uploadUrl,
+            { ...data, file: uploadState.file },
+            addListeners
+          )
+        })
+      })
+    })
   }
 
   const handleReceive = async (files: File[]) => {

@@ -1,6 +1,6 @@
 import type { ModalProps } from 'antd'
 
-export type UploadStatus = 'error' | 'success' | 'done' | 'uploading'
+export type UploadStatus = 'error' | 'done' | 'uploading'
 
 export interface UploadState {
   uid: string
@@ -33,6 +33,7 @@ export interface UploaderProps
   > {
   uploadUrl: string
   accept?: string[]
+  concurrent?: number
   uploadData?:
     | UploadData
     | ((uploadState: UploadState) => UploadData | Promise<UploadData>)
