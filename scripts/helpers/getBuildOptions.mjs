@@ -5,10 +5,10 @@ import { cwd, env } from 'node:process'
 import eslintPlugin from '../plugins/eslintPlugin.mjs'
 import swcPlugin from '../plugins/swcPlugin.mjs'
 import typescriptPlugin from '../plugins/typescriptPlugin.mjs'
-import filterDependencies from './filterDependencies.mjs'
 import getManifest from './getManifest.mjs'
 import getPackageName from './getPackageName.mjs'
 import getTypescriptOptions from './getTypescriptOptions.mjs'
+import getPackages from './getPackages.mjs'
 
 const assetExtNames = [
   '.svg',
@@ -22,11 +22,7 @@ const assetExtNames = [
 
 const getBuildOptions = async (format) => {
   const manifest = await readJson('package.json')
-
-  const dependencies = Object.keys({
-    ...manifest.dependencies,
-    ...manifest.peerDependencies,
-  })
+  const packages = await getPackages(manifest.name)
 
   const buildOptions = {
     format,
@@ -34,7 +30,8 @@ const getBuildOptions = async (format) => {
     sourcemap: true,
     logLevel: 'info',
     entryPoints: [manifest.source],
-    external: dependencies,
+    external: packages,
+    packages: 'external',
     loader: Object.fromEntries(
       assetExtNames.map((extName) => {
         return [extName, 'dataurl']
@@ -42,23 +39,20 @@ const getBuildOptions = async (format) => {
     ),
   }
 
-  const packageMap = await filterDependencies(manifest).reduce(
-    async (previousPackageMap, currentScopedPackageName) => {
-      const packageMap = await previousPackageMap
-
-      const packageName = getPackageName(currentScopedPackageName)
+  const packagePaths = await Promise.all(
+    packages.map(async (scopedPackageName) => {
+      const packageName = getPackageName(scopedPackageName)
       const manifest = await getManifest(packageName)
       const packagePath = `../${packageName}/${dirname(manifest.typings)}`
 
-      return packageMap.set(currentScopedPackageName, [packagePath])
-    },
-    Promise.resolve(new Map())
+      return [scopedPackageName, [packagePath]]
+    })
   )
 
   const typescriptOptions = {
     compilerOptions: {
       noEmit: false,
-      paths: Object.fromEntries(packageMap),
+      paths: Object.fromEntries(packagePaths),
       declarationDir: dirname(manifest.typings),
     },
   }

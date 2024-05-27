@@ -3,41 +3,46 @@ import { build, context } from 'esbuild'
 import { readJson } from 'fs-extra/esm'
 import { parseArgs } from 'node:util'
 import getBuildOptions from './helpers/getBuildOptions.mjs'
-import getDependencies from './helpers/getDependencies.mjs'
+import getPackages from './helpers/getPackages.mjs'
+import printer from './utils/printer.mjs'
 
-const manifest = await readJson('package.json')
+try {
+  const manifest = await readJson('package.json')
 
-const { watch, isolated } = parseArgs({
-  options: {
-    watch: {
-      type: 'boolean',
-      short: 'w',
+  const { watch, isolated } = parseArgs({
+    options: {
+      watch: {
+        type: 'boolean',
+        short: 'w',
+      },
+      isolated: {
+        type: 'boolean',
+      },
     },
-    isolated: {
-      type: 'boolean',
-    },
-  },
-}).values
+  }).values
 
-if (!isolated) {
-  const dependencies = await getDependencies(manifest.name)
+  if (!isolated) {
+    const packages = await getPackages(manifest.name)
 
-  console.log(`Running build in ${dependencies.length + 1} packages\n`)
+    console.log(`Running build in ${packages.length} packages\n`)
 
-  for (const dependency of dependencies.reverse()) {
-    await execute(`yarn workspace ${dependency} run build --isolated`)
+    for (const packageName of packages.slice(0, -1)) {
+      await execute(`yarn workspace ${packageName} run build --isolated`)
+    }
   }
-}
 
-console.log(`Building ${manifest.name}...`)
+  console.log(`Building ${manifest.name}...`)
 
-if (!watch) {
-  await build(await getBuildOptions('cjs'))
-  await build(await getBuildOptions('esm'))
-} else {
-  const cjsContext = await context(await getBuildOptions('cjs'))
-  const esmContext = await context(await getBuildOptions('esm'))
+  if (watch) {
+    const esmContext = await context(await getBuildOptions('esm'))
+    const cjsContext = await context(await getBuildOptions('cjs'))
 
-  await esmContext.watch()
-  await cjsContext.watch()
+    await esmContext.watch()
+    await cjsContext.watch()
+  } else {
+    await build(await getBuildOptions('esm'))
+    await build(await getBuildOptions('cjs'))
+  }
+} catch (error) {
+  console.error(printer.red(error))
 }
