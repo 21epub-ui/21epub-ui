@@ -1,5 +1,7 @@
 import type { CSSProperties, PointerEvent } from 'react'
 
+export const controlSize = 8
+
 export interface ControlProps {
   className?: string
   style?: CSSProperties

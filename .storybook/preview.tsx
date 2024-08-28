@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react'
 import React from 'react'
 import { StrictMode } from 'react'
+import './preset.css'
 
 const preview: Preview = {
   parameters: {

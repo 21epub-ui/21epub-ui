@@ -3,25 +3,26 @@ import getControlOffset from '../../helpers/getControlOffset'
 import isAscending from '../../helpers/isAscending'
 import getResizeCursor from '../../utils/getResizeCursor'
 import type { ControlProps } from '../Control'
-import Control from '../Control'
+import Control, { controlSize } from '../Control'
 
 const className = 'resize-control-corner'
-const controlSize = 7
-const controlOffset = -4
 
 export interface ResizeControlCornerProps
   extends Omit<ControlProps, 'cursor' | 'onAction'> {
   rotation: number
+  zoom: number
   direction: number
   onAction: (event: PointerEvent, cursorAngle: number) => void
 }
 
 const ResizeControlCorner: React.FC<ResizeControlCornerProps> = ({
   rotation,
+  zoom,
   direction,
   onAction,
   ...props
 }) => {
+  const size = controlSize / zoom
   const cursorAngle = isAscending(direction) ? 45 : -45
 
   return (
@@ -29,11 +30,11 @@ const ResizeControlCorner: React.FC<ResizeControlCornerProps> = ({
       className={className}
       style={{
         position: 'absolute',
-        width: controlSize,
-        height: controlSize,
-        outline: '1px solid #3399ff',
+        width: size,
+        height: size,
+        border: `${1 / zoom}px solid #39f`,
         backgroundColor: 'white',
-        ...getControlOffset(direction, controlOffset),
+        ...getControlOffset(direction, -size / 2),
       }}
       cursor={getResizeCursor(rotation + cursorAngle)}
       onAction={(event) => onAction(event, cursorAngle)}

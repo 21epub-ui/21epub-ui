@@ -2,12 +2,10 @@ import type { PointerEvent } from 'react'
 import getControlOffset from '../../helpers/getControlOffset'
 import getRotateCursor from '../../utils/getRotateCursor'
 import type { ControlProps } from '../Control'
-import Control from '../Control'
+import Control, { controlSize } from '../Control'
 import { east, north, south, west } from '../Transformer'
 
 const className = 'rotate-control-corner'
-const controlSize = 14
-const controlOffset = -11
 
 const getCursorAngle = (direction: number) => {
   if (direction === (north | east)) return 90
@@ -22,16 +20,19 @@ const getCursorAngle = (direction: number) => {
 export interface RotateControlCornerProps
   extends Omit<ControlProps, 'cursor' | 'onAction'> {
   rotation: number
+  zoom: number
   direction: number
   onAction: (event: PointerEvent, cursorAngle: number) => void
 }
 
 const RotateControlCorner: React.FC<RotateControlCornerProps> = ({
   rotation,
+  zoom,
   direction,
   onAction,
   ...props
 }) => {
+  const size = (controlSize / zoom) * 2
   const cursorAngle = getCursorAngle(direction)
 
   return (
@@ -39,9 +40,9 @@ const RotateControlCorner: React.FC<RotateControlCornerProps> = ({
       className={className}
       style={{
         position: 'absolute',
-        width: controlSize,
-        height: controlSize,
-        ...getControlOffset(direction, controlOffset),
+        width: size,
+        height: size,
+        ...getControlOffset(direction, -size * 0.75),
       }}
       cursor={getRotateCursor(rotation + cursorAngle)}
       onAction={(event) => onAction(event, cursorAngle)}

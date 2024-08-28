@@ -1,0 +1,15 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  border-style: solid;
+  border-width: 0;
+}
+
+html {
+  font-family: system-ui;
+  font-synthesis: none;
+  text-size-adjust: none;
+  touch-action: manipulation;
+}

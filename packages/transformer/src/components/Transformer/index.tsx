@@ -139,7 +139,10 @@ const Transformer: React.FC<TransformerProps> = ({
         width,
         height,
         position: 'absolute',
-        outline: '1px solid #3399ff',
+        left: 0,
+        top: 0,
+        outline: `${1 / zoom}px solid #39f`,
+        outlineOffset: -0.5 / zoom,
         userSelect: 'none',
         touchAction: isTransforming ? 'none' : undefined,
         transform: `translate(${left}px, ${top}px) rotate(${rotation}deg)`,
@@ -152,6 +155,7 @@ const Transformer: React.FC<TransformerProps> = ({
             key={direction}
             disabled={isTransforming}
             rotation={rotation}
+            zoom={zoom}
             direction={compass[direction]}
             onAction={handleRotate}
           />
@@ -164,6 +168,7 @@ const Transformer: React.FC<TransformerProps> = ({
               key={direction}
               disabled={isTransforming}
               rotation={rotation}
+              zoom={zoom}
               direction={compass[direction]}
               onAction={(event, cursorAngle) => {
                 handleResize(event, cursorAngle, compass[direction])
@@ -178,6 +183,7 @@ const Transformer: React.FC<TransformerProps> = ({
               key={direction}
               disabled={isTransforming}
               rotation={rotation}
+              zoom={zoom}
               direction={compass[direction]}
               onAction={(event, cursorAngle) => {
                 handleResize(event, cursorAngle, compass[direction])
